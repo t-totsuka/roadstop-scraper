@@ -212,7 +212,7 @@ def save_index(index: IndexData, index_path: Path) -> None: ...
 
 ##### State Management
 - State model: `geo-json/index.json`が唯一の永続状態。メモリ上の`IndexData`は不変(immutable)で、更新のたびに新しいインスタンスを生成する
-- Persistence & consistency: `load → upsert_entry → save`の呼び出し順序は利用側(`05`/`06`)が制御する。本コンポーネント自体はトランザクション境界を持たない
+- Persistence & consistency: `load → upsert_entry → save`の呼び出し順序は利用側(`05`/`06`)が制御する。本コンポーネント自体はトランザクション境界を持たない。`save_index`は一時ファイル+`os.replace`によるアトミック書き込みで、書き込み途中の停止による既存`index.json`の破損を防ぐ
 - Concurrency strategy: 排他制御なし。単一プロセスでの逐次実行を前提とする(`research.md`のRisks & Mitigations参照)
 
 **Implementation Notes**
@@ -292,7 +292,7 @@ class ResumeStore:
 
 ##### State Management
 - State model: `.resume/<key>.json`がキー単位の唯一の永続状態(`research.md`のDesign Decisions参照)
-- Persistence & consistency: `save`は対象ファイルの全体を都度上書きする。部分更新は呼び出し側が`load`した`dict`を変更して`save`し直すことで行う
+- Persistence & consistency: `save`は対象ファイルの全体を都度上書きする。部分更新は呼び出し側が`load`した`dict`を変更して`save`し直すことで行う。書き込みは一時ファイル+`os.replace`によるアトミック書き込みで、書き込み途中の停止による既存状態ファイルの破損を防ぐ
 - Concurrency strategy: 排他制御なし。単一プロセスでの逐次実行を前提とする(`research.md`のRisks & Mitigations参照)
 
 **Implementation Notes**
@@ -348,7 +348,7 @@ stateDiagram-v2
 
 ### Error Categories and Responses
 - **index.json破損**(`IndexStore.load_index`がJSON構文エラー、または`files`がリストでない・エントリに`path`/`updated_at`が欠落しているなどの構造不正を検出): いずれの場合も`IndexFileCorruptedError`(`ValueError`のサブクラス、`python_util`の例外設計方針を踏襲)に正規化して送出し、呼び出し側に破損データの手動確認を促す。個別の`KeyError`/`TypeError`等を呼び出し側へ露出させない
-- **レジューム状態の読み込み失敗**(`.resume/<key>.json`が存在しない): エラーではなく`None`を返し、「最初から開始」として扱う(4.3)
+- **レジューム状態の読み込み失敗**(`.resume/<key>.json`が存在しない、またはJSON構文不正・辞書以外の内容に破損している): エラーではなく`None`を返し、「最初から開始」として扱う(4.3)。破損時は警告ログを出力する(レジューム状態は一時的な進捗データであり、破棄しても最初からやり直すことで安全に復旧できるため、`index.json`と異なり例外を送出しない)
 - **不正なレート制限値**(`min_interval_seconds < 0`): `ValueError`を送出し、設定ミスを早期に検知する
 
 ### Monitoring
