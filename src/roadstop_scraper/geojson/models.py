@@ -142,10 +142,11 @@ def _parking_to_dict(parking: Parking) -> dict[str, object]:
 
 
 def _properties_to_dict(properties: FacilityProperties) -> dict[str, object]:
-    # 必須4項目は常に出力する。StrEnumは素の文字列値へ落としてから格納する。
+    # 必須4項目は常に出力する。列挙項目はvalidationが生文字列も適合と扱う契約の
+    # ため、enum・生文字列のどちらで渡されても列挙型を通して素の文字列値へ揃える。
     result: dict[str, object] = {
         "name": properties.name,
-        "kind": properties.kind.value,
+        "kind": FacilityKind(properties.kind).value,
         "pref_code": properties.pref_code,
         "pref_name": properties.pref_name,
     }
@@ -167,7 +168,7 @@ def _properties_to_dict(properties: FacilityProperties) -> dict[str, object]:
     if properties.parking is not None:
         result["parking"] = _parking_to_dict(properties.parking)
     if properties.direction is not None:
-        result["direction"] = properties.direction.value
+        result["direction"] = Direction(properties.direction).value
     if properties.websites:
         result["websites"] = list(properties.websites)
     if properties.facilities:

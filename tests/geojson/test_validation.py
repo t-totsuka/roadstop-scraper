@@ -1,6 +1,8 @@
 import math
 from datetime import UTC, datetime
 
+import pytest
+
 from roadstop_scraper.common.index_store import (
     IndexData,
     IndexEntry,
@@ -236,9 +238,7 @@ def test_無副作用の検証_validate_featuresが_違反を検出した場合_
 
 
 def test_例外型の検証_ValidationIssueが_構築された場合_不変である():
-    # ValidationIssueがfrozen dataclustであり構築後に変更できないことを確認する
-    import pytest
-
+    # ValidationIssueがfrozen dataclassであり構築後に変更できないことを確認する
     issue = ValidationIssue(location="features[0].properties.name", message="施設名称が空です")
 
     with pytest.raises((AttributeError, TypeError)):
