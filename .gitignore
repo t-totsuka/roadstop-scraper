@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.pdm-build/
+.pdm-python
+
+.venv/
+
+report/
+
+.coverage
+
+.claude/settings.local.json

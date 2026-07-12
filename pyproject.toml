@@ -1,0 +1,54 @@
+[project]
+name = "roadstop-scraper"
+version = "0.1.0"
+description = "道の駅・SA/PAの位置情報をスクレイピングしてGeoJSON形式で収集するデータ収集アプリケーション"
+requires-python = ">=3.11"
+dependencies = [
+    "python-util @ git+https://github.com/t-totsuka/python_util.git"
+]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[dependency-groups]
+lint = ["ruff>=0.15.21"]
+test = [
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle errors
+    "F", # pyflakes
+    "I", # isort
+    "UP", # pyupgrade
+    "B", # flake8-bugbear
+
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["python_util"]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["E501"]
+
+[tool.pytest.ini_options]
+addopts = "--cov=src/roadstop_scraper --cov-report=html:report --cov-report=term-missing"
+
+[tool.pdm]
+distribution = true
+

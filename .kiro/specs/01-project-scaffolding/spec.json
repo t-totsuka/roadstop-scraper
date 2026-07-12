@@ -1,0 +1,22 @@
+{
+  "feature_name": "01-project-scaffolding",
+  "created_at": "2026-07-12T00:02:04Z",
+  "updated_at": "2026-07-12T00:30:00Z",
+  "language": "ja",
+  "phase": "tasks-approved",
+  "approvals": {
+    "requirements": {
+      "generated": true,
+      "approved": true
+    },
+    "design": {
+      "generated": true,
+      "approved": true
+    },
+    "tasks": {
+      "generated": true,
+      "approved": true
+    }
+  },
+  "ready_for_implementation": true
+}
