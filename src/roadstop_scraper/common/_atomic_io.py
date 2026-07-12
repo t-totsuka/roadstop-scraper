@@ -28,6 +28,11 @@ def write_text_atomic(path: Path, content: str, encoding: str = "utf-8") -> None
     try:
         with os.fdopen(fd, "w", encoding=encoding) as tmp_file:
             tmp_file.write(content)
+        # mkstempの一時ファイルは0600で作成されるため、通常のファイル作成と
+        # 同じ権限(0666からumaskを引いたもの)に合わせてから置き換える
+        current_umask = os.umask(0)
+        os.umask(current_umask)
+        os.chmod(tmp_name, 0o666 & ~current_umask)
         os.replace(tmp_name, path)
     except BaseException:
         Path(tmp_name).unlink(missing_ok=True)
