@@ -12,6 +12,8 @@ from dataclasses import dataclass, replace
 from datetime import datetime
 from pathlib import Path
 
+from roadstop_scraper.common._atomic_io import write_text_atomic
+
 __all__ = [
     "IndexEntry",
     "IndexData",
@@ -122,6 +124,8 @@ def save_index(index: IndexData, index_path: Path) -> None:
     """``IndexData`` を ``index.json`` へJSONとして書き込み永続化する。
 
     ``updated_at`` はISO 8601形式(``isoformat()``)でシリアライズする。
+    書き込みはアトミックに行い、途中でプロセスが停止しても既存の
+    ``index.json`` が部分書き込みで破損した状態にはならない。
     """
     payload = {
         "files": [
@@ -130,6 +134,6 @@ def save_index(index: IndexData, index_path: Path) -> None:
         ]
     }
     index_path.parent.mkdir(parents=True, exist_ok=True)
-    index_path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    write_text_atomic(
+        index_path, json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     )

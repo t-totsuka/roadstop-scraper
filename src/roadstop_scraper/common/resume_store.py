@@ -3,6 +3,8 @@
 呼び出し側が指定するキーごとに、進捗状態(JSONシリアライズ可能な ``dict``)を
 ``DEFAULT_STATE_DIR``(既定値 ``.resume/``)配下の ``<key>.json`` として永続化する。
 未保存キーの読み込みは ``None`` を返し、呼び出し側の「最初から開始」判断に使う。
+破損した状態ファイル(JSON構文不正・辞書以外の内容)も、警告ログを出力した
+うえで未保存と同様に ``None`` として扱う。
 排他制御は行わず、単一プロセスでの逐次実行を前提とする。
 """
 
@@ -12,9 +14,14 @@ import json
 from pathlib import Path
 from typing import Any
 
+from roadstop_scraper.common._atomic_io import write_text_atomic
+from roadstop_scraper.common.logging_setup import get_logger
+
 __all__ = ["DEFAULT_STATE_DIR", "ResumeStore"]
 
 DEFAULT_STATE_DIR: Path = Path(".resume")
+
+_logger = get_logger(__name__)
 
 
 class ResumeStore:
@@ -27,19 +34,38 @@ class ResumeStore:
     def save(self, key: str, state: dict[str, Any]) -> None:
         """指定キーの進捗状態を ``<state_dir>/<key>.json`` として保存する。
 
-        保存先ディレクトリが存在しなければ作成し、対象ファイルの全体を都度上書きする。
+        保存先ディレクトリが存在しなければ作成し、対象ファイルの全体を都度
+        上書きする。書き込みはアトミックに行い、途中でプロセスが停止しても
+        既存の状態ファイルが部分書き込みで破損した状態にはならない。
         """
         self._state_dir.mkdir(parents=True, exist_ok=True)
-        self._path_for(key).write_text(
-            json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        write_text_atomic(
+            self._path_for(key),
+            json.dumps(state, ensure_ascii=False, indent=2) + "\n",
         )
 
     def load(self, key: str) -> dict[str, Any] | None:
-        """指定キーの進捗状態を読み込む。未保存なら ``None`` を返す。"""
+        """指定キーの進捗状態を読み込む。未保存なら ``None`` を返す。
+
+        状態ファイルが破損している場合(JSON構文不正・辞書以外の内容)は、
+        警告ログを出力したうえで ``None`` を返す。レジューム状態は一時的な
+        進捗データであり、破損時は「最初から開始」で安全に復旧できるため。
+        """
         path = self._path_for(key)
         if not path.exists():
             return None
-        return json.loads(path.read_text(encoding="utf-8"))
+
+        try:
+            state = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            _logger.warning("レジューム状態のJSON構文が不正なため無視します(最初から開始): %s", path)
+            return None
+
+        if not isinstance(state, dict):
+            _logger.warning("レジューム状態が辞書ではないため無視します(最初から開始): %s", path)
+            return None
+
+        return state
 
     def clear(self, key: str) -> None:
         """指定キーの永続化状態を削除する(未保存キーでもエラーにしない)。"""
