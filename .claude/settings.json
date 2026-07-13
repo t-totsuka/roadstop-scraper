@@ -1,0 +1,67 @@
+{
+  "language": "日本語",
+  "autoCompactEnabled": true,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "env": {
+    "PYTHONUNBUFFERED": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(pdm run *)",
+      "Bash(pdm install*)",
+      "Bash(pdm list*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git switch *)",
+      "Bash(git checkout *)",
+      "Bash(git branch*)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(gh pr *)",
+      "Bash(gh auth *)",
+      "Skill(kiro:*)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // .tool_response.filePath // empty' | { read -r f; case \"$f\" in *.py) pdm run ruff format \"$f\" && pdm run ruff check --fix \"$f\";; esac; } 2>/dev/null || true",
+            "timeout": 30,
+            "statusMessage": "ruffで整形中..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"作業が完了しました\" with title \"Claude Code\"' 2>/dev/null || true",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
