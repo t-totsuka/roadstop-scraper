@@ -13,15 +13,18 @@ from roadstop_scraper.scraping.errors import (
     StructureChangedError,
 )
 from roadstop_scraper.scraping.fetcher import DEFAULT_USER_AGENT, FetchedContent, PageFetcher
+from roadstop_scraper.scraping.parser import HtmlPage, parse_html
 
 __all__ = [
     "DEFAULT_USER_AGENT",
     "ContentParseError",
     "FetchFailedError",
     "FetchedContent",
+    "HtmlPage",
     "PageFetcher",
     "ScrapingConfig",
     "ScrapingEngineError",
     "StructureChangedError",
     "load_scraping_config",
+    "parse_html",
 ]
