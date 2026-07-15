@@ -5,6 +5,7 @@ importすればよい。個別モジュール(``errors``・``config`` 等)への
 不要。
 """
 
+from roadstop_scraper.scraping.config import ScrapingConfig, load_scraping_config
 from roadstop_scraper.scraping.errors import (
     ContentParseError,
     FetchFailedError,
@@ -15,6 +16,8 @@ from roadstop_scraper.scraping.errors import (
 __all__ = [
     "ContentParseError",
     "FetchFailedError",
+    "ScrapingConfig",
     "ScrapingEngineError",
     "StructureChangedError",
+    "load_scraping_config",
 ]
