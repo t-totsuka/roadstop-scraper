@@ -10,6 +10,7 @@ from roadstop_scraper.geojson.models import (
     FacilityFeature,
     FacilityKind,
     FacilityProperties,
+    FacilityStatus,
     Parking,
     to_feature_collection_dict,
 )
@@ -44,6 +45,7 @@ __all__ = [
     "FacilityFeature",
     "FacilityKind",
     "FacilityProperties",
+    "FacilityStatus",
     "GeoJsonValidationError",
     "InvalidGeoJsonFilenameError",
     "Parking",

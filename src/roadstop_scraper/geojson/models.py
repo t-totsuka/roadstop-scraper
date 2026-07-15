@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
+from datetime import datetime
 from enum import StrEnum
 
 __all__ = [
@@ -18,6 +19,7 @@ __all__ = [
     "FacilityFeature",
     "FacilityKind",
     "FacilityProperties",
+    "FacilityStatus",
     "Parking",
     "to_feature_collection_dict",
 ]
@@ -28,6 +30,15 @@ class FacilityKind(StrEnum):
 
     MICHINOEKI = "michinoeki"
     SAPA = "sapa"
+
+
+class FacilityStatus(StrEnum):
+    """施設の削除状態。対象サイト一覧から消失した施設を即座に削除せず、
+    削除状態を明示した上で一定期間保持するための区分(8.1-8.5)。
+    """
+
+    ACTIVE = "active"
+    DELETED = "deleted"
 
 
 class Direction(StrEnum):
@@ -122,6 +133,12 @@ class FacilityProperties:
     mapcode: str | None = None
     """道の駅固有: マップコード。"""
 
+    status: FacilityStatus = FacilityStatus.ACTIVE
+    """削除状態。既定値ACTIVE。JSON出力ではACTIVE時はキーを省略する(8.2, 8.3)。"""
+
+    last_confirmed_at: datetime | None = None
+    """対象サイト一覧で最後に存在が確認された日時(8.1)。"""
+
 
 @dataclass(frozen=True)
 class FacilityFeature:
@@ -136,8 +153,7 @@ class FacilityFeature:
 
 def _parking_to_dict(parking: Parking) -> dict[str, object]:
     # 内訳ごとにNoneでないものだけをキーとして残す(値の無い内訳は省略する)
-    fields = (("large", parking.large), ("standard", parking.standard),
-              ("disabled", parking.disabled))
+    fields = (("large", parking.large), ("standard", parking.standard), ("disabled", parking.disabled))
     return {key: value for key, value in fields if value is not None}
 
 
@@ -173,6 +189,12 @@ def _properties_to_dict(properties: FacilityProperties) -> dict[str, object]:
         result["websites"] = list(properties.websites)
     if properties.facilities:
         result["facilities"] = list(properties.facilities)
+    # 削除状態: 既定(ACTIVE)はキー省略、DELETEDの場合のみ出力する(8.2, 8.3)
+    if FacilityStatus(properties.status) is FacilityStatus.DELETED:
+        result["status"] = FacilityStatus.DELETED.value
+    # 最終確認日時: 値がある場合は常にISO 8601文字列で出力する(index_storeのupdated_atと同じ方式)
+    if properties.last_confirmed_at is not None:
+        result["last_confirmed_at"] = properties.last_confirmed_at.isoformat()
     return result
 
 
