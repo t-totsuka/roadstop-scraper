@@ -21,6 +21,7 @@ __all__ = [
     "FacilityProperties",
     "FacilityStatus",
     "Parking",
+    "from_feature_collection_dict",
     "to_feature_collection_dict",
 ]
 
@@ -223,3 +224,64 @@ def to_feature_collection_dict(
         "type": "FeatureCollection",
         "features": [_feature_to_dict(feature) for feature in features],
     }
+
+
+def _parking_from_dict(data: dict[str, object]) -> Parking:
+    # 内訳ごとにキーが無ければNoneのまま(書き込み時に省略されたキーの逆変換)
+    return Parking(
+        large=data.get("large"),  # type: ignore[arg-type]
+        standard=data.get("standard"),  # type: ignore[arg-type]
+        disabled=data.get("disabled"),  # type: ignore[arg-type]
+    )
+
+
+def _properties_from_dict(data: dict[str, object]) -> FacilityProperties:
+    # 必須4項目は常に存在する前提で復元する(書き込み時に常に出力される契約の逆)
+    parking_data = data.get("parking")
+    direction_value = data.get("direction")
+    last_confirmed_at_value = data.get("last_confirmed_at")
+    return FacilityProperties(
+        name=data["name"],  # type: ignore[arg-type]
+        kind=FacilityKind(data["kind"]),
+        pref_code=data["pref_code"],  # type: ignore[arg-type]
+        pref_name=data["pref_name"],  # type: ignore[arg-type]
+        address=data.get("address"),  # type: ignore[arg-type]
+        postal_code=data.get("postal_code"),  # type: ignore[arg-type]
+        tel=data.get("tel"),  # type: ignore[arg-type]
+        opening_hours=data.get("opening_hours"),  # type: ignore[arg-type]
+        parking=_parking_from_dict(parking_data) if parking_data is not None else None,  # type: ignore[arg-type]
+        websites=tuple(data["websites"]) if "websites" in data else (),  # type: ignore[arg-type]
+        source_url=data.get("source_url"),  # type: ignore[arg-type]
+        facilities=tuple(data["facilities"]) if "facilities" in data else (),  # type: ignore[arg-type]
+        road_name=data.get("road_name"),  # type: ignore[arg-type]
+        direction=Direction(direction_value) if direction_value is not None else None,
+        area_direction=data.get("area_direction"),  # type: ignore[arg-type]
+        mapcode=data.get("mapcode"),  # type: ignore[arg-type]
+        status=FacilityStatus(data["status"]) if "status" in data else FacilityStatus.ACTIVE,
+        last_confirmed_at=(
+            datetime.fromisoformat(last_confirmed_at_value)  # type: ignore[arg-type]
+            if last_confirmed_at_value is not None
+            else None
+        ),
+    )
+
+
+def _feature_from_dict(data: dict[str, object]) -> FacilityFeature:
+    # geometry.coordinatesは[経度, 緯度]順(3.2)のため、その順序で読み戻す
+    geometry: dict[str, object] = data["geometry"]  # type: ignore[assignment]
+    longitude, latitude = geometry["coordinates"]  # type: ignore[misc]
+    return FacilityFeature(
+        coordinate=Coordinate(longitude=longitude, latitude=latitude),
+        properties=_properties_from_dict(data["properties"]),  # type: ignore[arg-type]
+    )
+
+
+def from_feature_collection_dict(data: dict[str, object]) -> list[FacilityFeature]:
+    """RFC 7946準拠のFeatureCollection辞書から施設情報の列へ復元する。
+
+    :func:`to_feature_collection_dict` の逆方向の変換。書き込み時にキーが省略
+    された任意項目は、対応するフィールドをNone・空タプル・既定値へ戻す(8.1,
+    8.2, 8.4)。往復変換(to→from、from→to)が元の値と一致することを前提とする。
+    """
+    features: list[dict[str, object]] = data["features"]  # type: ignore[assignment]
+    return [_feature_from_dict(feature) for feature in features]
