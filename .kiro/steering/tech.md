@@ -8,12 +8,12 @@
 
 - **Language**: Python
 - **Package Manager**: pdm
-- **Scraping**: BeautifulSoup / Scrapy(利用箇所により使い分けを検討中)
+- **Scraping**: requests + BeautifulSoup(確定)
 
 ## Key Libraries
 
-- **BeautifulSoup**: 静的HTMLの軽量なパース・抽出向け
-- **Scrapy**: クロール制御(リクエスト頻度・並行数・レジューム)が必要な収集向け
+- **requests**: HTTP取得・タイムアウト・エンコーディング解決を担う
+- **BeautifulSoup**: 静的HTMLのパース・要素抽出を担う
 - **python_util** ([t-totsuka/python_util](https://github.com/t-totsuka/python_util)): ログ出力を含む自作の共通ユーティリティ。git依存として導入する(`pdm add "python_util @ git+https://github.com/t-totsuka/python_util.git"`)
 
 ## Development Standards
@@ -70,6 +70,7 @@ logger.info("スクレイピング開始")
 - **リクエスト頻度制御**: サードパーティサーバへの負荷を避けるため、スクレイピング処理には意図的なリクエスト間隔・レート制限を組み込む
 - **レジューム機能**: 長時間・大量ページのスクレイピングを想定し、途中経過を保持して再実行時に続きから処理できるようにする
 - **ログ出力の共通化**: 標準の`logging`を都度セットアップするのではなく、既存の`python_util.logging`を再利用する。リクエスト間隔・レジューム状況・スクレイピング失敗などの動作状況を、設定変更のみでファイル出力に切り替えられるようにするため
+- **スクレイピング技術方針**: requests + BeautifulSoupに確定し、Scrapyは不採用とする(リクエスト頻度制御・レジューム機能が`common/`で既に自作実装されており、Scrapyの導入は機能重複とアーキテクチャ競合を招くため)
 
 ---
 
