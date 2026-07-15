@@ -77,6 +77,27 @@ class HtmlPage:
             value = " ".join(value)
         return value.strip()
 
+    def find_attrs(self, selector: str, attribute: str) -> list[str | None]:
+        """任意取得: セレクタに一致する全要素の、指定属性のトリム済み値をDOM順のリストで返す。
+
+        ``find_texts``の属性版。各要素について、指定属性が存在しなければ
+        当該位置に``None``を入れる(要素をスキップせず、リスト長を一致する
+        要素数と揃える)。呼び出し側が複数属性を同一インデックスで相関させる
+        ことを想定するため、欠損を理由に位置をずらしてはならない。
+        一致する要素がなければ空リストを返す。
+        """
+        results: list[str | None] = []
+        for element in self._soup.select(selector):
+            value = element.get(attribute)
+            if value is None:
+                results.append(None)
+                continue
+            if isinstance(value, list):
+                # class等の多値属性はbs4がlist[str]を返すため、空白区切りで結合する
+                value = " ".join(value)
+            results.append(value.strip())
+        return results
+
     def require_text(self, selector: str) -> str:
         """必須取得: セレクタに一致する最初の要素のトリム済みテキストを返す。
 
