@@ -14,6 +14,7 @@ from roadstop_scraper.scraping.errors import (
 )
 from roadstop_scraper.scraping.fetcher import DEFAULT_USER_AGENT, FetchedContent, PageFetcher
 from roadstop_scraper.scraping.parser import HtmlPage, parse_html
+from roadstop_scraper.scraping.resume import UrlResumeTracker
 
 __all__ = [
     "DEFAULT_USER_AGENT",
@@ -25,6 +26,7 @@ __all__ = [
     "ScrapingConfig",
     "ScrapingEngineError",
     "StructureChangedError",
+    "UrlResumeTracker",
     "load_scraping_config",
     "parse_html",
 ]
