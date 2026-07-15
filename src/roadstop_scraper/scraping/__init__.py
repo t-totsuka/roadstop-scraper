@@ -12,10 +12,14 @@ from roadstop_scraper.scraping.errors import (
     ScrapingEngineError,
     StructureChangedError,
 )
+from roadstop_scraper.scraping.fetcher import DEFAULT_USER_AGENT, FetchedContent, PageFetcher
 
 __all__ = [
+    "DEFAULT_USER_AGENT",
     "ContentParseError",
     "FetchFailedError",
+    "FetchedContent",
+    "PageFetcher",
     "ScrapingConfig",
     "ScrapingEngineError",
     "StructureChangedError",
