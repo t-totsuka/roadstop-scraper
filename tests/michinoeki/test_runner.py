@@ -33,12 +33,14 @@ from roadstop_scraper.geojson import (
     Coordinate,
     FacilityFeature,
     FacilityKind,
+    FacilityProperties,
     FacilityStatus,
     GeoJsonValidationError,
     ValidationIssue,
     build_geojson_filename,
     find_prefecture,
     read_geojson,
+    write_geojson,
 )
 from roadstop_scraper.michinoeki.detail import extract_station_properties
 from roadstop_scraper.michinoeki.listing import StationStub
@@ -710,3 +712,93 @@ def test_run_scopeの検証_範囲指定が不正な場合はHTTPリクエスト
     # 範囲解決に失敗した時点で処理が打ち切られ、一覧・詳細いずれの
     # HTTPリクエストも一切発生しない。
     assert session.calls == []
+
+
+def test_run_prefectureの検証_一部道の駅の詳細抽出失敗時に前回ACTIVE状態が誤って削除へ遷移せず他の道の駅の出力も欠落しない(
+    tmp_path,
+):
+    """7.2: 都道府県内で一部道の駅(X)の詳細抽出がStructureChangedErrorとなっても、
+    同一都道府県内の他の道の駅(Y)の処理が継続されること、抽出失敗した道の駅Xが
+    前回出力でACTIVEとして存在していた場合にDELETEDへ誤って遷移しないこと
+    (4.1-4.3, 8.2, design.md Testing Strategy Integration Tests 2項目目)を、
+    ``run_prefecture``を経由した結合テストとして検証する。
+
+    ``tests/michinoeki/test_merge.py``の
+    ``Test一覧には実在するが今回抽出できなかった施設は前回状態を維持``は
+    ``merge_with_previous``への直接入力でこの分岐を検証済みだが、一覧取得の
+    偽HTTP応答→実際の詳細抽出失敗→実際の``merge_with_previous``呼び出し→
+    実際の``write_geojson``出力という結合経路としては検証されていなかったため、
+    ここで追加する。前回出力ファイルは事前に``write_geojson``で書き込んでおく。
+    """
+    prefecture = find_prefecture("01")
+    listing_url = build_search_url(prefecture)
+    detail_url_x = "https://example.com/stations/x"
+    detail_url_y = "https://example.com/stations/y"
+    responses = {
+        listing_url: _listing_html(
+            [
+                ("道の駅X", detail_url_x, 43.0, 141.0),
+                ("道の駅Y", detail_url_y, 43.1, 141.1),
+            ]
+        ),
+        # Xの応答は名称ddが空文字のため詳細抽出がStructureChangedErrorで失敗する。
+        detail_url_x: _STRUCTURE_CHANGED_HTML,
+        detail_url_y: _SUCCESS_HTML_TEMPLATE.format(name="道の駅Y"),
+    }
+    fetcher, session = _make_fetcher(responses)
+    resume = _make_resume(tmp_path)
+    partial_result_store = _make_partial_result_store(tmp_path)
+    output_dir = tmp_path / "geo-json"
+
+    # 前回出力: 道の駅Xが前回ACTIVEとして存在していた状況を事前に書き込んでおく
+    # (detail_urlは今回の一覧取得にも含まれる=listed_urlsに含まれる)。
+    previous_confirmed_at = datetime(2026, 6, 1, 9, 0, 0, tzinfo=UTC)
+    previous_feature_x = FacilityFeature(
+        coordinate=Coordinate(longitude=141.0, latitude=43.0),
+        properties=FacilityProperties(
+            name="道の駅X",
+            kind=FacilityKind.MICHINOEKI,
+            pref_code=prefecture.code,
+            pref_name=prefecture.name_ja,
+            source_url=detail_url_x,
+            status=FacilityStatus.ACTIVE,
+            last_confirmed_at=previous_confirmed_at,
+        ),
+    )
+    filename = build_geojson_filename(prefecture, FacilityKind.MICHINOEKI)
+    write_geojson([previous_feature_x], filename, output_dir=output_dir)
+
+    result = run_prefecture(
+        prefecture,
+        fetcher=fetcher,
+        resume=resume,
+        confirmed_at=_CONFIRMED_AT,
+        output_dir=output_dir,
+        partial_result_store=partial_result_store,
+    )
+
+    # 一覧・両詳細ページ(X・Y)への取得が発生し、Xの失敗を挟んでもYの処理は継続する。
+    assert session.calls == [listing_url, detail_url_x, detail_url_y]
+    assert isinstance(result, PrefectureRunResult)
+    assert result.scraped_count == 1
+    assert result.skipped_count == 1
+    # 8.2: Xは「一覧には実在するが今回抽出できなかった」扱いのため、削除遷移・
+    # 復帰のいずれのカウントにも計上されない(merge_with_previousの現状維持分岐)。
+    assert result.newly_deleted_count == 0
+    assert result.reactivated_count == 0
+
+    written_features = read_geojson(output_dir / filename)
+    assert len(written_features) == 2
+
+    feature_x = next(f for f in written_features if f.properties.source_url == detail_url_x)
+    # 4.1-4.3, 8.2: 抽出失敗した道の駅Xは前回のACTIVE状態・last_confirmed_atの
+    # まま維持され、DELETEDへは誤って遷移しない。
+    assert feature_x.properties.status is FacilityStatus.ACTIVE
+    assert feature_x.properties.last_confirmed_at == previous_confirmed_at
+
+    feature_y = next(f for f in written_features if f.properties.source_url == detail_url_y)
+    # 4.1-4.3: 同一都道府県内の他の道の駅Yの出力は欠落せず、今回ACTIVEとして
+    # 新規追加される。
+    assert feature_y.properties.name == "道の駅Y"
+    assert feature_y.properties.status is FacilityStatus.ACTIVE
+    assert feature_y.properties.last_confirmed_at == _CONFIRMED_AT
