@@ -5,10 +5,11 @@
 スキップ件数を蓄積する収集ループ(design.md「都道府県単位の実行フロー」
 flowchart F〜J)を実装した。タスク5.2では、この収集ループへ一覧取得・前回
 GeoJSONとのマージ・出力・``index.json``更新を統合した公開関数``run_prefecture``
-を追加する(flowchart D〜O)。本タスク時点では中断・再開をまたいだ都道府県単位
-の部分結果キャッシュ(``_PartialResultStore``)は扱わず、1回の実行で最初から
-最後まで通す前提とする(5.3で追記予定)。範囲全体のオーケストレーション
-(``run_scope``)は5.4で追加される。
+を追加した(flowchart D〜O)。タスク5.3では、中断・再開をまたいだ都道府県単位
+の部分結果キャッシュ(``_PartialResultStore``)を追加し、都道府県処理の途中で
+中断されても中断前の成功結果・スキップ件数を失わずに再開できるようにする
+(flowchart D2・I・J・N・O)。範囲全体のオーケストレーション(``run_scope``)は
+5.4で追加される。
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ from typing import TYPE_CHECKING
 
 from roadstop_scraper.common import index_store
 from roadstop_scraper.common.logging_setup import get_logger, log_scrape_finished, log_scrape_started
+from roadstop_scraper.common.resume_store import ResumeStore
 from roadstop_scraper.geojson import (
     DEFAULT_OUTPUT_DIR,
     FacilityFeature,
@@ -27,7 +29,9 @@ from roadstop_scraper.geojson import (
     GeoJsonValidationError,
     Prefecture,
     build_geojson_filename,
+    from_feature_collection_dict,
     read_geojson,
+    to_feature_collection_dict,
     write_geojson,
 )
 from roadstop_scraper.michinoeki.detail import extract_station_properties
@@ -44,6 +48,79 @@ __all__ = ["PrefectureRunResult", "run_prefecture"]
 
 _logger = get_logger(__name__)
 
+_PARTIAL_FEATURES_KEY = "features"
+_PARTIAL_SKIPPED_COUNT_KEY = "skipped_count"
+_EMPTY_FEATURE_COLLECTION: dict[str, object] = {"type": "FeatureCollection", "features": []}
+
+
+class _PartialResultStore:
+    """都道府県単位の部分抽出結果(成功済み``FacilityFeature``列・スキップ件数)を
+    ``common.resume_store.ResumeStore``へ逐次永続化する内部専用キャッシュ。
+
+    design.md「都道府県単位の部分抽出結果の永続化」: ``UrlResumeTracker``はURL
+    単位の処理済みフラグのみを永続化し、抽出済みの``FacilityProperties``自体は
+    保持しない。都道府県の処理途中で中断された場合にこれを失わないよう、道の駅
+    1件の処理(成功/失敗)が確定するたびに``add_feature``/``add_skip``で逐次
+    追記・永続化する。都道府県処理の開始時に読み込んで復元し、``write_geojson``・
+    ``index_store``更新が正常完了した後にのみ``clear``で消去する(消去前に
+    プロセスが中断されても、次回起動時に同じキャッシュから正しく再開できる)。
+
+    ``michinoeki``パッケージの公開APIには含めない内部専用クラス。永続化する
+    ``FacilityFeature``のJSON変換は、``geojson.to_feature_collection_dict``/
+    ``from_feature_collection_dict``をそのまま再利用する最小実装で構わない
+    (design.md Implementation Notes、消費側フォーマットとの整合は不要)。
+    """
+
+    def __init__(self, prefecture: Prefecture, *, store: ResumeStore | None = None) -> None:
+        """``prefecture``に対応する部分結果を``store``から復元する(既定は新規``ResumeStore``)。"""
+        self._key = f"michinoeki-partial-{prefecture.code}"
+        self._store = store if store is not None else ResumeStore()
+
+        saved_state = self._store.load(self._key)
+        if saved_state is None:
+            self._features: list[FacilityFeature] = []
+            self._skipped_count = 0
+        else:
+            feature_collection = saved_state.get(_PARTIAL_FEATURES_KEY, _EMPTY_FEATURE_COLLECTION)
+            self._features = from_feature_collection_dict(feature_collection)  # type: ignore[arg-type]
+            self._skipped_count = int(saved_state.get(_PARTIAL_SKIPPED_COUNT_KEY, 0))
+
+    @property
+    def features(self) -> list[FacilityFeature]:
+        """これまでに確定した成功結果の複製を返す。"""
+        return list(self._features)
+
+    @property
+    def skipped_count(self) -> int:
+        """これまでに確定したスキップ件数を返す。"""
+        return self._skipped_count
+
+    def add_feature(self, feature: FacilityFeature) -> None:
+        """1件の道の駅の成功結果を追記し、状態全体を永続化する。"""
+        self._features.append(feature)
+        self._persist()
+
+    def add_skip(self) -> None:
+        """1件の道の駅のスキップを記録し、状態全体を永続化する。"""
+        self._skipped_count += 1
+        self._persist()
+
+    def clear(self) -> None:
+        """保持内容を空にし、永続化された状態も``ResumeStore``経由で削除する。"""
+        self._features = []
+        self._skipped_count = 0
+        self._store.clear(self._key)
+
+    def _persist(self) -> None:
+        """現在の成功結果・スキップ件数の全体を``ResumeStore``へ保存する。"""
+        self._store.save(
+            self._key,
+            {
+                _PARTIAL_FEATURES_KEY: to_feature_collection_dict(self._features),
+                _PARTIAL_SKIPPED_COUNT_KEY: self._skipped_count,
+            },
+        )
+
 
 @dataclass(frozen=True)
 class PrefectureRunResult:
@@ -53,10 +130,12 @@ class PrefectureRunResult:
     """処理対象の都道府県。"""
 
     scraped_count: int
-    """今回新たに詳細抽出に成功した件数(``_collect_stubs``の戻り値をそのまま用いる)。"""
+    """今回の都道府県処理で確定した詳細抽出成功件数(累計)。中断・再開をまたいだ場合は
+    ``_PartialResultStore``から復元した分と今回新規に成功した分の合算(5.3)。"""
 
     skipped_count: int
-    """今回新たにスキップした件数(``_collect_stubs``の戻り値をそのまま用いる)。"""
+    """今回の都道府県処理で確定したスキップ件数(累計)。中断・再開をまたいだ場合は
+    ``_PartialResultStore``から復元した分と今回新規にスキップした分の合算(4.3, 5.3)。"""
 
     reactivated_count: int
     """削除状態から有効状態へ復帰した件数(8.3、``MergeResult.reactivated_count``)。"""
@@ -74,12 +153,18 @@ def _collect_stubs(
     *,
     fetcher: PageFetcher,
     resume: UrlResumeTracker,
+    partial_store: _PartialResultStore | None = None,
 ) -> tuple[list[FacilityFeature], int]:
     """未処理のStationStubのみ詳細ページを取得・抽出し、成功結果とスキップ件数を返す。
 
     戻り値は(このループで新たに収集できたFacilityFeatureのリスト, このループで
     新たにスキップした件数)。resumeで既に処理済みと判定されたStationStubは
     詳細ページの取得すら行わずスキップする(重複処理の防止)。
+
+    ``partial_store``を渡した場合、道の駅1件の処理(成功/失敗)が確定するたびに
+    ``add_feature``/``add_skip``で``_PartialResultStore``へ逐次追記・永続化する
+    (5.3、design.md flowchart I・J)。既定の``None``では永続化を行わず、
+    タスク5.1時点の振る舞い(戻り値のみで結果を受け渡す)のまま動作する。
     """
     features: list[FacilityFeature] = []
     skipped_count = 0
@@ -107,10 +192,15 @@ def _collect_stubs(
             )
             skipped_count += 1
             resume.mark_processed(stub.detail_url)
+            if partial_store is not None:
+                partial_store.add_skip()
             continue
 
-        features.append(FacilityFeature(coordinate=stub.coordinate, properties=properties))
+        feature = FacilityFeature(coordinate=stub.coordinate, properties=properties)
+        features.append(feature)
         resume.mark_processed(stub.detail_url)
+        if partial_store is not None:
+            partial_store.add_feature(feature)
 
     return features, skipped_count
 
@@ -123,23 +213,28 @@ def run_prefecture(
     confirmed_at: datetime,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     index_path: Path | None = None,
+    partial_result_store: ResumeStore | None = None,
 ) -> PrefectureRunResult | None:
     """1都道府県分のパイプラインを実行する。
 
-    一覧取得(``fetch_station_stubs``)→ ``_collect_stubs``で未処理分の詳細抽出 →
-    ``read_geojson``で前回出力を読み戻し → ``merge_with_previous``で統合 →
-    ``write_geojson``で出力 → ``index_store``の``load_index``/``upsert_entry``/
-    ``save_index``で``index.json``を更新、という一連の処理を行う(design.md
-    「都道府県単位の実行フロー」flowchart D〜O)。
+    一覧取得(``fetch_station_stubs``)→ 中断前の部分結果を``_PartialResultStore``
+    から復元 → ``_collect_stubs``で未処理分の詳細抽出(結果は逐次
+    ``_PartialResultStore``へ永続化)→ ``read_geojson``で前回出力を読み戻し →
+    ``merge_with_previous``で統合 → ``write_geojson``で出力 → ``index_store``の
+    ``load_index``/``upsert_entry``/``save_index``で``index.json``を更新、
+    正常完了時のみ``_PartialResultStore``を消去、という一連の処理を行う
+    (design.md「都道府県単位の実行フロー」flowchart D〜O)。
 
     一覧取得失敗(``ListingUnavailableError``)・出力前検証違反
     (``GeoJsonValidationError``)の場合は``None``を返し、当該都道府県の処理のみを
     中断する(エラーはERRORログで報告する)。この場合``resume``は完了扱いにしない
     (``_collect_stubs``が処理した分の``mark_processed``はそのまま残ってよいが、
-    都道府県全体を完了扱いにする追加操作は行わない)。
+    都道府県全体を完了扱いにする追加操作は行わない)。同様に``_PartialResultStore``
+    も消去しない(次回再開時に同じ部分結果から続行するため、5.3)。
 
-    ``output_dir``・``index_path``はテスト用に出力先を差し替えるためのキーワード
-    専用引数(既定はそれぞれ``geo-json/``・``output_dir/index.json``)。
+    ``output_dir``・``index_path``・``partial_result_store``はテスト用に永続化先を
+    差し替えるためのキーワード専用引数(既定はそれぞれ``geo-json/``・
+    ``output_dir/index.json``・新規``ResumeStore()``、5.2/5.3)。
     """
     log_scrape_started(_logger, prefecture.name_ja)
 
@@ -155,7 +250,23 @@ def run_prefecture(
         )
         return None
 
-    features, skipped_count = _collect_stubs(listing_result.stubs, prefecture, fetcher=fetcher, resume=resume)
+    # 5.3: 都道府県処理開始時に、中断前の部分結果(scraped_features・
+    # skipped_count)を_PartialResultStoreから復元する(flowchart D2)。
+    partial_store = _PartialResultStore(prefecture, store=partial_result_store)
+    restored_features = partial_store.features
+    restored_skipped_count = partial_store.skipped_count
+
+    new_features, new_skipped_count = _collect_stubs(
+        listing_result.stubs,
+        prefecture,
+        fetcher=fetcher,
+        resume=resume,
+        partial_store=partial_store,
+    )
+
+    # 中断前後の成功結果・スキップ件数を合算する(6.1-6.3, 4.3)。
+    features = restored_features + new_features
+    skipped_count = restored_skipped_count + new_skipped_count
 
     filename = build_geojson_filename(prefecture, FacilityKind.MICHINOEKI)
     resolved_index_path = index_path if index_path is not None else output_dir / "index.json"
@@ -173,7 +284,8 @@ def run_prefecture(
     except GeoJsonValidationError as error:
         # 5.2: 出力前検証違反は当該都道府県の処理のみを中断する。ファイルは
         # write_geojson自体が書き込まないため、ここでの追加対応は不要。resumeも
-        # 完了扱いにせず、次回再開時に再試行させる。
+        # 完了扱いにせず、次回再開時に再試行させる。_PartialResultStoreも消去
+        # しない(次回同じ部分結果から再開できるようにするため、5.3)。
         _logger.error(
             "出力前検証違反のため都道府県処理を中断: prefecture=%s error=%s",
             prefecture.name_ja,
@@ -184,6 +296,9 @@ def run_prefecture(
     index = index_store.load_index(resolved_index_path)
     index = index_store.upsert_entry(index, filename, confirmed_at)
     index_store.save_index(index, resolved_index_path)
+
+    # 5.3: 出力まで正常完了した場合にのみ部分結果キャッシュを消去する(flowchart O)。
+    partial_store.clear()
 
     log_scrape_finished(_logger, prefecture.name_ja, len(merge_result.features))
     _logger.info(
