@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from urllib.parse import urljoin
 
 from roadstop_scraper.common.logging_setup import get_logger
 from roadstop_scraper.geojson import Coordinate, Prefecture
@@ -40,7 +41,12 @@ class StationStub:
     """道の駅名称。"""
 
     detail_url: str
-    """詳細ページの絶対/相対URL(``data-link``の値)。"""
+    """詳細ページの絶対URL(``data-link``の値を一覧ページURL基準で絶対化したもの)。
+
+    実サイトの``data-link``は相対URL(例: ``/stations/views/18786``)のため、
+    そのままでは取得に使えない。絶対URL化後の値はレジュームの処理済みキー・
+    ``FacilityProperties.source_url``(mergeの識別子)としてもそのまま用いる。
+    """
 
     coordinate: Coordinate
     """WGS84座標(``data-lat``/``data-lng``から構築)。"""
@@ -54,7 +60,7 @@ class ListingResult:
     """名称・詳細URL・座標がすべて解釈できた要素のみ。"""
 
     listed_urls: frozenset[str]
-    """``data-link``が解釈できた全要素の``data-link``集合。
+    """``data-link``が解釈できた全要素の詳細ページ絶対URL集合。
 
     座標欠落・名称欠落で``stubs``化できなかった要素の``data-link``も含む
     (8.1〜8.2、「一覧に実在した」という事実を呼び出し側の削除判定から
@@ -102,7 +108,13 @@ def fetch_station_stubs(fetcher: PageFetcher, prefecture: Prefecture) -> Listing
     # リストを返す前提のため、インデックスで4属性を相関させる
     # (research.md「Design Decisions」参照)。
     for name, link, lat, lng in zip(names, links, lats, lngs, strict=True):
-        if link is None or name is None or not link or not name:
+        # 実サイトのdata-linkは相対URL(例: "/stations/views/18786")のため、
+        # 一覧ページURLを基準に絶対URL化する。相対URLのままfetch_textへ渡すと
+        # requests層でMissingSchema(ScrapingEngineError外)となり全体が異常
+        # 終了する。絶対URLはそのまま維持される(タスク7.5の実疎通で検出)。
+        detail_url = urljoin(fetched.url, link) if link else None
+
+        if detail_url is None or name is None or not name:
             # data-link/data-nameが解釈できない要素はstub化できずスキップする。
             # data-linkが取れている場合は「一覧に実在した」事実をlisted_urlsへ
             # 残し、呼び出し側の削除判定(merge)で前回出力が誤って削除状態へ
@@ -114,8 +126,8 @@ def fetch_station_stubs(fetcher: PageFetcher, prefecture: Prefecture) -> Listing
                 name,
                 link,
             )
-            if link:
-                listed_urls.add(link)
+            if detail_url:
+                listed_urls.add(detail_url)
             continue
 
         coordinate = _parse_coordinate(lat, lng)
@@ -123,16 +135,16 @@ def fetch_station_stubs(fetcher: PageFetcher, prefecture: Prefecture) -> Listing
             skipped_count += 1
             _logger.warning(
                 "座標を解釈できないため道の駅をスキップ: url=%s prefecture=%s data-lat=%r data-lng=%r",
-                link,
+                detail_url,
                 prefecture.name_ja,
                 lat,
                 lng,
             )
-            listed_urls.add(link)
+            listed_urls.add(detail_url)
             continue
 
-        listed_urls.add(link)
-        stubs.append(StationStub(name=name, detail_url=link, coordinate=coordinate))
+        listed_urls.add(detail_url)
+        stubs.append(StationStub(name=name, detail_url=detail_url, coordinate=coordinate))
 
     if not listed_urls:
         # js-data-box要素が0件、または全要素のdata-linkが解釈できない場合。

@@ -151,6 +151,14 @@ class PageFetcher:
                     continue
                 self._logger.error("取得失敗: url=%s attempts=%d error=%s", url, attempt, exc)
                 raise FetchFailedError(url, None, attempt) from exc
+            except requests.exceptions.RequestException as exc:
+                # URL不正(スキーム欠落等)・リダイレクト超過などその他のrequests
+                # 例外は再送しても解消しないため、リトライせず即時確定する。
+                # ここで捕捉しないとエンジンの契約(全失敗モードを
+                # ScrapingEngineErrorへ正規化する)から漏れ、利用側の
+                # 都道府県単位・道の駅単位の継続処理が機能しない。
+                self._logger.error("取得失敗: url=%s attempts=%d error=%s", url, attempt, exc)
+                raise FetchFailedError(url, None, attempt) from exc
 
             status = response.status_code
             if 200 <= status < 300:
