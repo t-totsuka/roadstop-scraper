@@ -338,6 +338,62 @@ def test_run_prefectureの検証_1都道府県分の一覧取得から出力とi
     assert index.files[0].updated_at == _CONFIRMED_AT
 
 
+def test_run_prefectureの検証_一覧段階の座標欠落によるスキップ件数がskipped_countへ合算される(tmp_path):
+    """指摘1(NO-GO是正): fetch_station_stubsが返すListingResult.skipped_count
+    (一覧のjs-data-box要素で座標(data-lat/data-lng)が欠落・数値変換不能だった
+    件数、3.4)は、run_prefectureのskipped_count集計から漏れていた。一覧段階の
+    座標欠落1件(tests/michinoeki/test_listing.pyと同じdata-lat=""/data-lng=""
+    パターン)とdetail段階の抽出失敗1件を組み合わせ、PrefectureRunResult.
+    skipped_countが両方の合算(1+1=2)になることを検証する(4.3, 9.1)。
+    """
+    prefecture = find_prefecture("01")
+    listing_url = build_search_url(prefecture)
+    detail_url_a = "https://example.com/stations/1"
+    detail_url_missing_coordinate = "https://example.com/stations/missing-coordinate"
+    detail_url_b = "https://example.com/stations/2"
+    listing_html = f"""
+<html>
+  <body>
+    <main>
+      <div class="js-data-box" data-name="道の駅A" data-link="{detail_url_a}" data-lat="43.0" data-lng="141.0"></div>
+      <div class="js-data-box" data-name="道の駅座標欠落" data-link="{detail_url_missing_coordinate}" data-lat="" data-lng=""></div>
+      <div class="js-data-box" data-name="道の駅B" data-link="{detail_url_b}" data-lat="43.1" data-lng="141.1"></div>
+    </main>
+  </body>
+</html>
+"""
+    responses = {
+        listing_url: listing_html,
+        detail_url_a: _SUCCESS_HTML_TEMPLATE.format(name="道の駅A"),
+        # 道の駅Bはdetail段階で抽出失敗(4.1-4.3のスキップ)させる。
+        detail_url_b: _STRUCTURE_CHANGED_HTML,
+    }
+    fetcher, session = _make_fetcher(responses)
+    resume = _make_resume(tmp_path)
+    partial_result_store = _make_partial_result_store(tmp_path)
+    output_dir = tmp_path / "geo-json"
+
+    result = run_prefecture(
+        prefecture,
+        fetcher=fetcher,
+        resume=resume,
+        confirmed_at=_CONFIRMED_AT,
+        output_dir=output_dir,
+        partial_result_store=partial_result_store,
+    )
+
+    # 座標欠落の道の駅は詳細ページの取得すら行われない(stubs化されないため)。
+    assert session.calls == [listing_url, detail_url_a, detail_url_b]
+    assert isinstance(result, PrefectureRunResult)
+    assert result.scraped_count == 1
+    # 一覧段階の座標欠落1件(3.4)+detail段階の抽出失敗1件(4.1-4.3)の合算。
+    assert result.skipped_count == 2
+
+    filename = build_geojson_filename(prefecture, FacilityKind.MICHINOEKI)
+    written_features = read_geojson(output_dir / filename)
+    assert [f.properties.name for f in written_features] == ["道の駅A"]
+
+
 def test_run_prefectureの検証_出力前検証違反時にファイルが書き込まれず当該都道府県のみが中断される(
     tmp_path, monkeypatch
 ):

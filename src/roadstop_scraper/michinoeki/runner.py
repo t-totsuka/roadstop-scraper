@@ -146,7 +146,9 @@ class PrefectureRunResult:
 
     skipped_count: int
     """今回の都道府県処理で確定したスキップ件数(累計)。中断・再開をまたいだ場合は
-    ``_PartialResultStore``から復元した分と今回新規にスキップした分の合算(4.3, 5.3)。"""
+    ``_PartialResultStore``から復元した分と今回新規にスキップした分(detail段階、
+    4.3, 5.3)に加え、一覧段階で座標を解釈できずスキップされた件数
+    (``ListingResult.skipped_count``、3.4)も合算する。"""
 
     reactivated_count: int
     """削除状態から有効状態へ復帰した件数(8.3、``MergeResult.reactivated_count``)。"""
@@ -275,9 +277,14 @@ def run_prefecture(
         partial_store=partial_store,
     )
 
-    # 中断前後の成功結果・スキップ件数を合算する(6.1-6.3, 4.3)。
+    # 中断前後の成功結果・スキップ件数を合算する(6.1-6.3, 4.3)。さらに、
+    # 一覧段階で座標(data-lat/data-lng)を解釈できずスキップされた件数
+    # (listing_result.skipped_count、3.4)も都道府県単位の合計へ含める。
+    # 一覧取得(fetch_station_stubsの呼び出し自体)はrun_prefectureが呼ばれる
+    # たびに毎回行われ、_PartialResultStoreへは永続化されない値のため、
+    # ここで一度だけ加算しても中断・再開をまたいだ二重カウントは発生しない。
     features = restored_features + new_features
-    skipped_count = restored_skipped_count + new_skipped_count
+    skipped_count = restored_skipped_count + new_skipped_count + listing_result.skipped_count
 
     filename = build_geojson_filename(prefecture, FacilityKind.MICHINOEKI)
     resolved_index_path = index_path if index_path is not None else output_dir / "index.json"
