@@ -50,7 +50,13 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """コマンドライン引数を解釈しrun_scopeを実行する。正常終了0、範囲指定エラー時は非ゼロを返す。"""
+    """コマンドライン引数を解釈しrun_scopeを実行する。
+
+    全都道府県が正常完了した場合のみ0を返す。範囲指定エラー、または1都道府県
+    でも処理が失敗(``run_scope``の結果に``None``が含まれる)した場合は非ゼロを
+    返し、cron等の運用監視が終了コードで失敗を検知できるようにする(2.3の
+    「エラーを報告」の運用面の補完)。
+    """
     parser = _build_parser()
     args = parser.parse_args(argv)
 
@@ -65,5 +71,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"範囲指定が不正です: {error}", file=sys.stderr)
         return 1
 
-    run_scope(spec)
+    results = run_scope(spec)
+    failure_count = sum(1 for result in results if result is None)
+    if failure_count > 0:
+        print(
+            f"{failure_count}都道府県の処理に失敗しました(詳細はログを参照してください)",
+            file=sys.stderr,
+        )
+        return 1
     return 0

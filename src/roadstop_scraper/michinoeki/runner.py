@@ -39,7 +39,7 @@ from roadstop_scraper.geojson import (
     write_geojson,
 )
 from roadstop_scraper.michinoeki.detail import extract_station_properties
-from roadstop_scraper.michinoeki.listing import ListingUnavailableError, fetch_station_stubs
+from roadstop_scraper.michinoeki.listing import fetch_station_stubs
 from roadstop_scraper.michinoeki.merge import merge_with_previous
 from roadstop_scraper.michinoeki.scope import ScopeSpec, resolve_scope
 from roadstop_scraper.scraping import (
@@ -107,7 +107,14 @@ class _PartialResultStore:
         return self._skipped_count
 
     def add_feature(self, feature: FacilityFeature) -> None:
-        """1件の道の駅の成功結果を追記し、状態全体を永続化する。"""
+        """1件の道の駅の成功結果を追記し、状態全体を永続化する。
+
+        同一``source_url``の既存結果は新しい結果で置き換える(本永続化と
+        ``resume.mark_processed``の間でプロセスが中断された場合、再開時に同じ
+        道の駅を再処理して再登録するため、追記を冪等にして二重登録を防ぐ)。
+        """
+        url = feature.properties.source_url
+        self._features = [f for f in self._features if f.properties.source_url != url]
         self._features.append(feature)
         self._persist()
 
@@ -204,16 +211,21 @@ def _collect_stubs(
                 error,
             )
             skipped_count += 1
-            resume.mark_processed(stub.detail_url)
             if partial_store is not None:
                 partial_store.add_skip()
+            resume.mark_processed(stub.detail_url)
             continue
 
         feature = FacilityFeature(coordinate=stub.coordinate, properties=properties)
         features.append(feature)
-        resume.mark_processed(stub.detail_url)
+        # 結果の永続化(add_feature/add_skip)を先に行い、その後に処理済み
+        # フラグ(mark_processed)を立てる。逆順だと、両永続化の間で中断された
+        # 場合に「処理済みだが結果未保存」となり、当該駅が今回サイクルの出力
+        # から漏れる。この順序では再開時に同じ駅を再処理するだけで済む
+        # (add_featureはsource_urlで冪等、run_prefecture側でも合算時に重複排除)。
         if partial_store is not None:
             partial_store.add_feature(feature)
+        resume.mark_processed(stub.detail_url)
 
     return features, skipped_count
 
@@ -238,9 +250,10 @@ def run_prefecture(
     正常完了時のみ``_PartialResultStore``を消去、という一連の処理を行う
     (design.md「都道府県単位の実行フロー」flowchart D〜O)。
 
-    一覧取得失敗(``ListingUnavailableError``)・出力前検証違反
-    (``GeoJsonValidationError``)の場合は``None``を返し、当該都道府県の処理のみを
-    中断する(エラーはERRORログで報告する)。この場合``resume``は完了扱いにしない
+    一覧取得失敗(HTTP取得失敗・要素の全欠落等の``ScrapingEngineError``全般)・
+    前回GeoJSONの読み込み失敗・出力前検証違反(``GeoJsonValidationError``)の
+    場合は``None``を返し、当該都道府県の処理のみを中断する(エラーはERRORログで
+    報告する)。この場合``resume``は完了扱いにしない
     (``_collect_stubs``が処理した分の``mark_processed``はそのまま残ってよいが、
     都道府県全体を完了扱いにする追加操作は行わない)。同様に``_PartialResultStore``
     も消去しない(次回再開時に同じ部分結果から続行するため、5.3)。
@@ -253,9 +266,12 @@ def run_prefecture(
 
     try:
         listing_result = fetch_station_stubs(fetcher, prefecture)
-    except ListingUnavailableError as error:
-        # 2.3, 5.2: 一覧取得失敗は当該都道府県の処理のみを中断する。resumeは
-        # 完了扱いにせず、次回再開時に再試行させる。
+    except ScrapingEngineError as error:
+        # 2.3, 5.2: 一覧段階の失敗(HTTP取得の最終失敗FetchFailedError・要素の
+        # 全欠落ListingUnavailableError等)は、種別を問わず当該都道府県の処理のみを
+        # 中断する。基底例外で捕捉しないと、一覧ページの一時的なHTTP失敗が
+        # run_scopeのループごと巻き込んで他の都道府県の処理まで止めてしまう。
+        # resumeは完了扱いにせず、次回再開時に再試行させる。
         _logger.error(
             "一覧取得に失敗したため都道府県処理を中断: prefecture=%s error=%s",
             prefecture.name_ja,
@@ -283,13 +299,32 @@ def run_prefecture(
     # 一覧取得(fetch_station_stubsの呼び出し自体)はrun_prefectureが呼ばれる
     # たびに毎回行われ、_PartialResultStoreへは永続化されない値のため、
     # ここで一度だけ加算しても中断・再開をまたいだ二重カウントは発生しない。
-    features = restored_features + new_features
+    # 合算時はsource_urlで重複を排除し新結果を優先する(_PartialResultStoreへの
+    # 永続化とmark_processedの間で中断された駅は、復元結果と今回結果の両方に
+    # 現れうるため)。
+    new_urls = {feature.properties.source_url for feature in new_features}
+    features = [
+        feature for feature in restored_features if feature.properties.source_url not in new_urls
+    ] + new_features
     skipped_count = restored_skipped_count + new_skipped_count + listing_result.skipped_count
 
     filename = build_geojson_filename(prefecture, FacilityKind.MICHINOEKI)
     resolved_index_path = index_path if index_path is not None else output_dir / "index.json"
 
-    previous_features = read_geojson(output_dir / filename)
+    try:
+        previous_features = read_geojson(output_dir / filename)
+    except (KeyError, TypeError, ValueError) as error:
+        # 前回出力ファイルの破損(JSON構文不正・必須キー欠落・型不整合)は当該
+        # 都道府県の処理のみを中断する。破損ファイルを空扱いで上書きすると削除
+        # 状態・最終確認日時の履歴を失うため、自動再構築はせず運用者の対処に委ねる。
+        _logger.error(
+            "前回GeoJSONの読み込みに失敗したため都道府県処理を中断: prefecture=%s path=%s error=%r",
+            prefecture.name_ja,
+            output_dir / filename,
+            error,
+        )
+        return None
+
     merge_result = merge_with_previous(
         previous_features,
         features,

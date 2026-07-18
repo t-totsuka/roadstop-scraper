@@ -2,13 +2,17 @@
 
 対象都道府県の一覧ページを1回だけ取得し、``div.js-data-box``要素群から
 ``data-name``/``data-link``/``data-lat``/``data-lng``を相関抽出する。
-座標(``data-lat``/``data-lng``)のみが解釈できない要素は、その1件だけを
-``StationStub``化せずスキップし、他の要素の処理は継続する
+座標(``data-lat``/``data-lng``)・名称・詳細URLのいずれかが解釈できない要素は、
+その1件だけを``StationStub``化せずスキップし、他の要素の処理は継続する。
+詳細URL(``data-link``)を1件も確認できない場合は、属性レベルの構造変化を
+「全駅の一覧からの消失」と誤認しないよう``ListingUnavailableError``で
+当該都道府県の処理を中断させる
 (research.md「一覧/検索ページの構造実測とページネーション調査」参照)。
 """
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 from roadstop_scraper.common.logging_setup import get_logger
@@ -50,22 +54,29 @@ class ListingResult:
     """名称・詳細URL・座標がすべて解釈できた要素のみ。"""
 
     listed_urls: frozenset[str]
-    """``data-name``/``data-link``が解釈できた全要素の``data-link``集合。
+    """``data-link``が解釈できた全要素の``data-link``集合。
 
-    座標欠落で``stubs``化できなかった要素の``data-link``も含む(8.1〜8.2、
-    「一覧に実在した」という事実を呼び出し側の削除判定から除外するため)。
+    座標欠落・名称欠落で``stubs``化できなかった要素の``data-link``も含む
+    (8.1〜8.2、「一覧に実在した」という事実を呼び出し側の削除判定から
+    除外するため)。
     """
 
     skipped_count: int
-    """座標欠落・数値変換不能によりスキップされた要素数。"""
+    """名称欠落、または座標欠落・数値変換不能・非有限値によりスキップされた要素数。"""
 
 
 class ListingUnavailableError(ScrapingEngineError):
-    """一覧ページから``js-data-box``要素が1件も取得できなかった場合に送出される。"""
+    """一覧ページから道の駅のURL(``data-link``)を1件も確認できなかった場合に送出される。
+
+    ``js-data-box``要素が0件の場合に加え、要素は存在するが全要素の``data-link``が
+    解釈できない場合(属性リネーム等の構造変化)も含む。後者を「一覧から全駅が
+    消失した」と誤認すると、前回出力の全駅が削除状態へ一斉遷移してしまうため、
+    いずれも一覧取得の失敗として当該都道府県の処理を中断させる。
+    """
 
     def __init__(self, url: str) -> None:
         self.url = url
-        super().__init__(f"URL '{url}' の一覧ページから道の駅の要素を1件も取得できませんでした")
+        super().__init__(f"URL '{url}' の一覧ページから道の駅を1件も確認できませんでした")
 
 
 def fetch_station_stubs(fetcher: PageFetcher, prefecture: Prefecture) -> ListingResult:
@@ -83,9 +94,6 @@ def fetch_station_stubs(fetcher: PageFetcher, prefecture: Prefecture) -> Listing
     lats = page.find_attrs(_LISTING_SELECTOR, "data-lat")
     lngs = page.find_attrs(_LISTING_SELECTOR, "data-lng")
 
-    if not names:
-        raise ListingUnavailableError(fetched.url)
-
     stubs: list[StationStub] = []
     listed_urls: set[str] = set()
     skipped_count = 0
@@ -94,9 +102,20 @@ def fetch_station_stubs(fetcher: PageFetcher, prefecture: Prefecture) -> Listing
     # リストを返す前提のため、インデックスで4属性を相関させる
     # (research.md「Design Decisions」参照)。
     for name, link, lat, lng in zip(names, links, lats, lngs, strict=True):
-        if name is None or link is None:
-            # 実運用では発生しない想定の防御的経路。座標欠落とは別カテゴリのため
-            # listed_urls・skipped_countのいずれにも計上しない。
+        if link is None or name is None or not link or not name:
+            # data-link/data-nameが解釈できない要素はstub化できずスキップする。
+            # data-linkが取れている場合は「一覧に実在した」事実をlisted_urlsへ
+            # 残し、呼び出し側の削除判定(merge)で前回出力が誤って削除状態へ
+            # 遷移しないようにする(8.1〜8.2)。
+            skipped_count += 1
+            _logger.warning(
+                "名称または詳細URLを解釈できないため道の駅をスキップ: prefecture=%s data-name=%r data-link=%r",
+                prefecture.name_ja,
+                name,
+                link,
+            )
+            if link:
+                listed_urls.add(link)
             continue
 
         coordinate = _parse_coordinate(lat, lng)
@@ -115,6 +134,13 @@ def fetch_station_stubs(fetcher: PageFetcher, prefecture: Prefecture) -> Listing
         listed_urls.add(link)
         stubs.append(StationStub(name=name, detail_url=link, coordinate=coordinate))
 
+    if not listed_urls:
+        # js-data-box要素が0件、または全要素のdata-linkが解釈できない場合。
+        # 空のlisted_urlsを正常結果として返すと、merge側で前回出力の全駅が
+        # 「一覧から消失した」と誤判定され一斉に削除状態へ遷移するため、
+        # 一覧取得の失敗として当該都道府県の処理を中断させる。
+        raise ListingUnavailableError(fetched.url)
+
     return ListingResult(
         stubs=tuple(stubs),
         listed_urls=frozenset(listed_urls),
@@ -132,10 +158,18 @@ def _parse_coordinate(lat: str | None, lng: str | None) -> Coordinate | None:
 
 
 def _parse_float(value: str | None) -> float | None:
-    """文字列をfloatへ変換する。Noneまたは数値変換不能な場合はNoneを返す。"""
+    """文字列をfloatへ変換する。Noneまたは数値変換不能・非有限値の場合はNoneを返す。
+
+    ``"nan"``/``"inf"``等はfloat変換自体は成功するが、座標として通すと出力前検証
+    (``math.isfinite``チェック)で都道府県全体が中断されてしまうため、ここで
+    弾いて当該1件のスキップに収める。
+    """
     if value is None:
         return None
     try:
-        return float(value)
+        number = float(value)
     except ValueError:
         return None
+    if not math.isfinite(number):
+        return None
+    return number
