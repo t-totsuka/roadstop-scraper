@@ -1,0 +1,5226 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.8045499,
+          43.2466006
+        ]
+      },
+      "properties": {
+        "name": "三笠",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道三笠市岡山1056-1",
+        "postal_code": "068-2165",
+        "tel": "01267-2-5775",
+        "opening_hours": "9:00～18:00（4～9月） 9:00～17:00（10～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18786",
+        "mapcode": "180 276 269",
+        "parking": {
+          "large": 13,
+          "standard": 202,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/172/",
+          "http://www.city.mikasa.hokkaido.jp/hotnews/detail/00000036.html"
+        ],
+        "facilities": [
+          "ATM",
+          "ベビーベッド",
+          "レストラン",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.1888941,
+          43.5255178
+        ]
+      },
+      "properties": {
+        "name": "スタープラザ　芦別",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道芦別市北４条東1-1",
+        "postal_code": "075-0014",
+        "tel": "0124-23-1437",
+        "opening_hours": "9:00～19:00（5～10月）9:00～18:00（11～4月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18787",
+        "mapcode": "450 668 692",
+        "parking": {
+          "large": 12,
+          "standard": 114,
+          "disabled": 6
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/202/",
+          "https://go-to-ashibetsu.com/media/2018/04/01/20"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "美術館・博物館",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.5727983,
+          43.1697013
+        ]
+      },
+      "properties": {
+        "name": "南ふらの",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道空知郡南富良野町字幾寅687",
+        "postal_code": "079-2403",
+        "tel": "0167-52-2100",
+        "opening_hours": "9:00～17:00（6～9月は19:00まで）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18788",
+        "mapcode": "550 324 035",
+        "parking": {
+          "large": 10,
+          "standard": 74,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/222/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.189739,
+          42.990533
+        ]
+      },
+      "properties": {
+        "name": "しらぬか恋問館",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道白糠郡白糠町恋問3丁目2-1",
+        "postal_code": "088-0562",
+        "tel": "01547-5-3317",
+        "opening_hours": "9:00～19：00　テナント10：00～19：00(ラストオーダー18：30）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18789",
+        "mapcode": "630 263 487*38",
+        "parking": {
+          "large": 25,
+          "standard": 169
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/263/",
+          "https://michinoeki-shiranuka.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "EV充電施設",
+          "無線LAN",
+          "シャワー",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.3200331,
+          44.5588576
+        ]
+      },
+      "properties": {
+        "name": "びふか",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道中川郡美深町字大手307-1",
+        "postal_code": "098-2362",
+        "tel": "01656-2-1000",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18790",
+        "mapcode": "651 488 716",
+        "parking": {
+          "large": 18,
+          "standard": 200,
+          "disabled": 1
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/292/",
+          "http://www.bifuka-kankou.com/michinoeki.php"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "宿泊施設",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "美術館・博物館",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.1392891,
+          41.8943424
+        ]
+      },
+      "properties": {
+        "name": "江差",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道檜山郡江差町字尾山町1",
+        "postal_code": "043-0024",
+        "tel": "0139-52-1177",
+        "opening_hours": "9:00～17:00（4～11月） 10:00～16:00（12～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18791",
+        "mapcode": "482 512 003",
+        "parking": {
+          "large": 6,
+          "standard": 20,
+          "disabled": 1
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/321/",
+          "http://www.hokkaido-esashi.jp/modules/sightseeing/content0023.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "宿泊施設",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.0965891,
+          42.8551768
+        ]
+      },
+      "properties": {
+        "name": "望羊中山",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道虻田郡喜茂別町字川上345",
+        "postal_code": "044-0223",
+        "tel": "0136-33-2671",
+        "opening_hours": "8:30～17:30",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18792",
+        "mapcode": "759 672 331",
+        "parking": {
+          "large": 12,
+          "standard": 190,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/364/",
+          "http://ageimo.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.7936472,
+          44.7141204
+        ]
+      },
+      "properties": {
+        "name": "えんべつ富士見",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道天塩郡遠別町字富士見46-1",
+        "postal_code": "098-3534",
+        "tel": "01632-7-3939",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18793",
+        "mapcode": "830 170 350",
+        "parking": {
+          "large": 16,
+          "standard": 158,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/389/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "無線LAN",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.2991945,
+          42.5588618
+        ]
+      },
+      "properties": {
+        "name": "忠類",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道中川郡幕別町忠類白銀町384-12",
+        "postal_code": "089-1701",
+        "tel": "01558-8-3236",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18794",
+        "mapcode": "396 201 670",
+        "parking": {
+          "large": 12,
+          "standard": 269,
+          "disabled": 6
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/407/",
+          "https://hotel-arco.jp/sightseeing/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "美術館・博物館",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.4477187,
+          43.4923914
+        ]
+      },
+      "properties": {
+        "name": "摩周温泉",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道川上郡弟子屈町湯の島3-5-5",
+        "postal_code": "088-3203",
+        "tel": "015-482-2500",
+        "opening_hours": "8:00～18:00（11～4月は9:00～17:00）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18796",
+        "mapcode": "462 849 665",
+        "parking": {
+          "large": 9,
+          "standard": 69,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/440/",
+          "http://www.masyuko.or.jp/michinoeki/index.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.257872,
+          44.729078
+        ]
+      },
+      "properties": {
+        "name": "おといねっぷ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道中川郡音威子府村字音威子府155",
+        "postal_code": "098-2501",
+        "tel": "01656-8-7780",
+        "opening_hours": "売店6:00～22:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18797",
+        "mapcode": "684 226 192",
+        "parking": {
+          "large": 7,
+          "standard": 27,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/458/"
+        ],
+        "facilities": [
+          "EV充電施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.5956986,
+          44.1851816
+        ]
+      },
+      "properties": {
+        "name": "かみゆうべつ温泉チューリップの湯",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別郡湧別町中湧別中町3020-1",
+        "postal_code": "099-6329",
+        "tel": "01586-4-1126",
+        "opening_hours": "10:00～22:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18798",
+        "mapcode": "404 641 867",
+        "parking": {
+          "large": 8,
+          "standard": 414,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/472/",
+          "http://www.town.yubetsu.lg.jp/50shisetsu/6nou-kankou/spa-kamiyu.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "温泉施設",
+          "美術館・博物館",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.5167801,
+          42.9834347
+        ]
+      },
+      "properties": {
+        "name": "いわない",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道岩内郡岩内町字万代47-4",
+        "postal_code": "045-0003",
+        "tel": "0135-63-1155",
+        "opening_hours": "9:00～18:00（4～10月） 9:00～17:30（11～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18799",
+        "mapcode": "398 812 613",
+        "parking": {
+          "large": 8,
+          "standard": 94,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/499/",
+          "http://www.iwanai-kanko.org/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "公園",
+          "美術館・博物館",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.8440184,
+          43.0576697
+        ]
+      },
+      "properties": {
+        "name": "厚岸グルメパーク",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道厚岸郡厚岸町住の江町2-2",
+        "postal_code": "088-1119",
+        "tel": "0153-52-4139",
+        "opening_hours": "9:00～17:00（4～10月）　 10:00～18:00（11～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18801",
+        "mapcode": "637 191 532",
+        "parking": {
+          "large": 4,
+          "standard": 97,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/531/",
+          "http://www.conchiglie.net/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.875302,
+          43.7510483
+        ]
+      },
+      "properties": {
+        "name": "サンフラワー北竜",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道雨竜郡北竜町字板谷163-2",
+        "postal_code": "078-2511",
+        "tel": "0164-34-3321",
+        "opening_hours": "8:00～22:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18802",
+        "mapcode": "179 870 764",
+        "parking": {
+          "large": 16,
+          "standard": 110,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/546/",
+          "http://portal.hokuryu.info/sunflowerpark/roadsidestation"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "宿泊施設",
+          "温泉施設",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.6342261,
+          42.2208744
+        ]
+      },
+      "properties": {
+        "name": "みついし",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道日高郡新ひだか町三石鳧舞161-2",
+        "postal_code": "059-3233",
+        "tel": "0146-34-2333",
+        "opening_hours": "8:45～17:30",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18803",
+        "mapcode": "564 481 166",
+        "parking": {
+          "large": 14,
+          "standard": 266,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/564/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "無線LAN",
+          "シャワー",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.2161538,
+          41.9165731
+        ]
+      },
+      "properties": {
+        "name": "あっさぶ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道檜山郡厚沢部町緑町72-1",
+        "postal_code": "043-1112",
+        "tel": "0139-64-3738",
+        "opening_hours": "8:30～18:00（5～10月） 9:00～17:00（11～4月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18804",
+        "mapcode": "482 581 579",
+        "parking": {
+          "large": 8,
+          "standard": 75,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/576/"
+        ],
+        "facilities": [
+          "軽食・喫茶",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0134173,
+          42.6867269
+        ]
+      },
+      "properties": {
+        "name": "よってけ！島牧",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道島牧郡島牧村字千走11-1",
+        "postal_code": "048-0631",
+        "tel": "0136-74-5183",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18805",
+        "mapcode": "797 362 061",
+        "parking": {
+          "large": 11,
+          "standard": 36,
+          "disabled": 2
+        },
+        "websites": [
+          "https://michinoekishimamaki.jimdofree.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.876681,
+          42.212366
+        ]
+      },
+      "properties": {
+        "name": "てっくいランド大成",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道久遠郡せたな町大成区平浜378",
+        "postal_code": "043-0514",
+        "tel": "01398-4-6561",
+        "opening_hours": "9:00～17:00， 9:00～16:00（11～3月）， 9:00～19:00（7月中旬～8月中旬）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18806",
+        "mapcode": "718 750 138",
+        "parking": {
+          "large": 16,
+          "standard": 102,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/611/",
+          "http://www.hiyama.pref.hokkaido.lg.jp/ss/srk/tabi/04s_tais/parts/8401mtr.htm"
+        ],
+        "facilities": [
+          "EV充電施設",
+          "無線LAN",
+          "シャワー",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.3750043,
+          44.3283409
+        ]
+      },
+      "properties": {
+        "name": "オホーツク紋別",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別市元紋別11-6",
+        "postal_code": "094-0023",
+        "tel": "0158-23-5400",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18807",
+        "mapcode": "801 585 074",
+        "parking": {
+          "large": 10,
+          "standard": 120,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/626/",
+          "http://mombetsu.net/tourist-facilities/%E9%81%93%E3%81%AE%E9%A7%85-%E3%82%AA%E3%83%9B%E3%83%BC%E3%83"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "公園",
+          "美術館・博物館",
+          "無線LAN",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.568716,
+          42.098901
+        ]
+      },
+      "properties": {
+        "name": "YOU･遊･もり",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道茅部郡森町字上台町326-18",
+        "postal_code": "049-2311",
+        "tel": "01374-2-4886",
+        "opening_hours": "9:00～17:30（3/21～10/20） 9:00～17:00（10/21～3/20）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18808",
+        "mapcode": "490 638 470",
+        "parking": {
+          "large": 13,
+          "standard": 90,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/641/",
+          "http://mori-bussan.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "公園",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.50053189187454,
+          43.75352014534097
+        ]
+      },
+      "properties": {
+        "name": "おんねゆ温泉",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道北見市留辺蘂町松山1-4",
+        "postal_code": "091-0153",
+        "tel": "0157-45-3373",
+        "opening_hours": "9:00～17:30",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18809",
+        "mapcode": "402 600 106*24",
+        "parking": {
+          "large": 20,
+          "standard": 279,
+          "disabled": 8
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/685/",
+          "http://onneyu-aq.com/facility3"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "公園",
+          "美術館・博物館",
+          "EV充電施設",
+          "無線LAN",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.1062194,
+          42.0113971
+        ]
+      },
+      "properties": {
+        "name": "ルート229元和台",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道爾志郡乙部町字元和169",
+        "postal_code": "043-0114",
+        "tel": "0139-62-3009",
+        "opening_hours": "8:30～18:00（4～10月） 9:00～16:00（11～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18810",
+        "mapcode": "718 058 005",
+        "parking": {
+          "large": 9,
+          "standard": 40,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/704/",
+          "http://www.town.otobe.lg.jp/section/sangyou/e0taal0000000bz1.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "展望台",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.8888016,
+          43.4332722
+        ]
+      },
+      "properties": {
+        "name": "ハウスヤルビ奈井江",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道空知郡奈井江町字奈井江28-1",
+        "postal_code": "079-0312",
+        "tel": "0125-65-4601",
+        "opening_hours": "9:00～18:00（4～9月） 9:00～17:00（10～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18811",
+        "mapcode": "360 047 603",
+        "parking": {
+          "large": 20,
+          "standard": 38,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/722/",
+          "http://machiken292.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "公園",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.654956,
+          44.137022
+        ]
+      },
+      "properties": {
+        "name": "おびら鰊番屋",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道留萌郡小平町字鬼鹿広富",
+        "postal_code": "078-3454",
+        "tel": "0164-56-1828",
+        "opening_hours": "8:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18812",
+        "mapcode": "959 184 090",
+        "parking": {
+          "large": 10,
+          "standard": 63,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/744/",
+          "http://www.town.obira.hokkaido.jp/kanko/detail/00001365.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "公園",
+          "美術館・博物館",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.631813,
+          44.8783757
+        ]
+      },
+      "properties": {
+        "name": "マリーンアイランド岡島",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道枝幸郡枝幸町字岡島1978-13",
+        "postal_code": "098-5802",
+        "tel": "0163-62-2860",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18813",
+        "mapcode": "957 166 068",
+        "parking": {
+          "large": 13,
+          "standard": 45,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/768/"
+        ],
+        "facilities": [
+          "レストラン",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.116955,
+          44.469498
+        ]
+      },
+      "properties": {
+        "name": "おこっぺ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別郡興部町字興部（幸町）",
+        "postal_code": "098-1614",
+        "tel": "0158-82-2385",
+        "opening_hours": "5月～10月 9:00～18:00、11月～4月 9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18814",
+        "mapcode": "587 509 044",
+        "parking": {
+          "large": 20,
+          "standard": 73,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/795/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.1469574,
+          43.1440197
+        ]
+      },
+      "properties": {
+        "name": "阿寒丹頂の里",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道釧路市阿寒町上阿寒23-36-1",
+        "postal_code": "085-0245",
+        "tel": "0154-66-2969",
+        "opening_hours": "5月～9月　9:00～18:00　10月～4月　9:00～17:00　観光案内所10:00～16:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18815",
+        "mapcode": "556 183 843",
+        "parking": {
+          "large": 8,
+          "standard": 35
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/810/",
+          "https://www.akan.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "美術館・博物館",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.181694,
+          42.974917
+        ]
+      },
+      "properties": {
+        "name": "おとふけ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道河東郡音更町なつぞら2",
+        "postal_code": "080-0346",
+        "tel": "0155-65-0822",
+        "opening_hours": "9:00～19:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18816",
+        "mapcode": "124 802 666",
+        "parking": {
+          "large": 22,
+          "standard": 262,
+          "disabled": 4
+        },
+        "websites": [
+          "https://michinoeki-otofuke.jp/",
+          "http://www.hokkaido-michinoeki.jp/michinoeki/825/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.2134021,
+          44.8774622
+        ]
+      },
+      "properties": {
+        "name": "ピンネシリ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道枝幸郡中頓別町字敏音知72-7",
+        "postal_code": "098-5113",
+        "tel": "01634-7-8510",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18817",
+        "mapcode": "684 761 002",
+        "parking": {
+          "large": 6,
+          "standard": 12,
+          "disabled": 2
+        },
+        "websites": [
+          "https://pinneshiri-autocamp.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "キャンプ場等",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0949663,
+          41.8084965
+        ]
+      },
+      "properties": {
+        "name": "上ノ国もんじゅ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道檜山郡上ノ国町字原歌3",
+        "postal_code": "049-0602",
+        "tel": "0139-55-3955",
+        "opening_hours": "・文珠館　9：00～17：00 ・特産品販売所　9：00～17：00（4月～10月）、10：00～17：00（11月～3月）※月曜定休（11月～3月）月曜が祝日の場合は翌平日 ・レストラン　11：00～15：00（LO14：30）※月曜定休（11月～3月）月曜が祝日の場合は翌平日",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18819",
+        "mapcode": "807 791 624",
+        "parking": {
+          "large": 3,
+          "standard": 163,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/870/",
+          "http://www.kaminokuni.com/"
+        ],
+        "facilities": [
+          "レストラン",
+          "公園",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.3855694,
+          43.1653589
+        ]
+      },
+      "properties": {
+        "name": "オスコイ！かもえない",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道古宇郡神恵内村大字赤石村字大森292-１",
+        "postal_code": "045-0302",
+        "tel": "0135-76-5800",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18820",
+        "mapcode": "775 271 501",
+        "parking": {
+          "large": 4,
+          "standard": 29,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/881/",
+          "http://www.vill.kamoenai.hokkaido.jp/hotnews/detail/00000142.html"
+        ],
+        "facilities": [
+          "軽食・喫茶",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.126839,
+          42.69214
+        ]
+      },
+      "properties": {
+        "name": "なかさつない",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道河西郡中札内村大通南7-14",
+        "postal_code": "089-1330",
+        "tel": "0155-67-2811",
+        "opening_hours": "9:00～18:00（4～10月） 9:00～17:00（11～3月）営業時間、定休日は店舗により異なります",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18821",
+        "mapcode": "396 660 680",
+        "parking": {
+          "large": 15,
+          "standard": 155,
+          "disabled": 5
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/892/",
+          "http://www.michinoeki-nakasatsunai.jp/index.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "美術館・博物館",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.716616,
+          42.94998
+        ]
+      },
+      "properties": {
+        "name": "マオイの丘公園",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道夕張郡長沼町東10線南7番地",
+        "postal_code": "069-1460",
+        "tel": "0123-84-2120",
+        "opening_hours": "9:00～18:00(4月～11月)、9:00～17:00(11月～3月)、※「ピッツェリアトニーノ北海道長沼」は営業時間が異なります。詳しくは、公式ホームページよりご確認下さい。",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18822",
+        "mapcode": "230 416 613",
+        "parking": {
+          "large": 14
+        },
+        "websites": [
+          "https://maoinooka.jp/",
+          "http://www.hokkaido-michinoeki.jp/michinoeki/906/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "公園",
+          "展望台",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.4420074,
+          42.8767898
+        ]
+      },
+      "properties": {
+        "name": "樹海ロード日高",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道沙流郡日高町本町東1-298-1",
+        "postal_code": "055-2301",
+        "tel": "01457-6-2001",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18823",
+        "mapcode": "694 128 794",
+        "parking": {
+          "large": 12,
+          "standard": 115,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/921/",
+          "http://www.hidaka.pref.hokkaido.lg.jp/ss/srk/hkd/thidaka/008.htm"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "美術館・博物館",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.8990485,
+          42.559133
+        ]
+      },
+      "properties": {
+        "name": "そうべつ情報館ｉ（アイ）",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道有珠郡壮瞥町字滝之町384-1",
+        "postal_code": "052-0101",
+        "tel": "0142-66-4200",
+        "opening_hours": "9:00～17:30 （11/16～3/31は17:00迄）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18824",
+        "mapcode": "321 498 699",
+        "parking": {
+          "large": 5,
+          "standard": 95,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/937/",
+          "http://sobetsu-fp.co.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.7023947,
+          42.7994921
+        ]
+      },
+      "properties": {
+        "name": "ニセコビュープラザ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道虻田郡ニセコ町字元町77-10",
+        "postal_code": "048-1544",
+        "tel": "0136-43-2051",
+        "opening_hours": "情報プラザ棟：9:00-18:00農産物直売コーナー：9:00-17:00（4月下旬～10月：8:30-17:00）テイクアウトコーナー：10:00-16:00（4月下旬～10月：9:30-16:30）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18825",
+        "mapcode": "398 174 561",
+        "parking": {
+          "large": 10,
+          "standard": 101,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/949/",
+          "http://www.niseko-ta.jp/index.php?id=87"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.3358339,
+          41.6012589
+        ]
+      },
+      "properties": {
+        "name": "しりうち",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道上磯郡知内町字湯の里48-13",
+        "postal_code": "049-1221",
+        "tel": "01392-6-2270",
+        "opening_hours": "8:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18826",
+        "mapcode": "584 340 741",
+        "parking": {
+          "large": 2,
+          "standard": 49,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/961/",
+          "http://www.town.shiriuchi.hokkaido.jp/kanko/meisho/michinoeki.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.255731,
+          41.479134
+        ]
+      },
+      "properties": {
+        "name": "横綱の里ふくしま",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道松前郡福島町字福島143-1",
+        "postal_code": "049-1312",
+        "tel": "0139-47-4072",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18827",
+        "mapcode": "676 526 123",
+        "parking": {
+          "large": 3,
+          "standard": 32
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/973/",
+          "http://www.yokodunanosato-fukushima.info/"
+        ],
+        "facilities": [
+          "美術館・博物館",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.3156908,
+          42.3598362
+        ]
+      },
+      "properties": {
+        "name": "サラブレッドロード新冠",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道新冠郡新冠町字中央町1-20",
+        "postal_code": "059-2402",
+        "tel": "0146-45-7070",
+        "opening_hours": "10:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18828",
+        "mapcode": "551 068 789",
+        "parking": {
+          "large": 2,
+          "standard": 115,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/988/",
+          "http://www.niikappu.jp/kurashi/sekatsu/kotsu/miti.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "美術館・博物館",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.23924295,
+          43.14434238
+        ]
+      },
+      "properties": {
+        "name": "ピア21しほろ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道河東郡士幌町字士幌西2線147",
+        "postal_code": "080-1200",
+        "tel": "01564-5-3940",
+        "opening_hours": "9:00～18:00（4月～11月）　9:00～17:00（12月～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18829",
+        "mapcode": "424 524 005*35",
+        "parking": {
+          "large": 11,
+          "standard": 151,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1001/",
+          "http://shihoroinfo.com/road-station"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.090986,
+          44.19689
+        ]
+      },
+      "properties": {
+        "name": "香りの里たきのうえ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別郡滝上町旭町",
+        "postal_code": "099-5602",
+        "tel": "0158-29-3300",
+        "opening_hours": "8:30 ～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18830",
+        "mapcode": "570 701 311",
+        "parking": {
+          "large": 6,
+          "standard": 38,
+          "disabled": 1
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1016/",
+          "http://town.takinoue.hokkaido.jp/shokai/shisetsu/kankou/michinoeki.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "公園",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.8940224,
+          43.6625089
+        ]
+      },
+      "properties": {
+        "name": "田園の里うりゅう",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道雨竜郡雨竜町字満寿28-3",
+        "postal_code": "078-2600",
+        "tel": "0125-79-2100",
+        "opening_hours": "9:00～18:00（5～10月） 10:00～16:00（11～4月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18831",
+        "mapcode": "179 572 202",
+        "parking": {
+          "large": 10,
+          "standard": 44,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1026/",
+          "http://www.michinoeki-uryu.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "美術館・博物館",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.943745,
+          42.342012
+        ]
+      },
+      "properties": {
+        "name": "みたら室蘭",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道室蘭市祝津町4-16-15",
+        "postal_code": "051-0036",
+        "tel": "0143-26-2030",
+        "opening_hours": "9:30～19:00 （11～3月は17:00まで、毎週木曜・祝日の場合は金曜定休日)　※館内各店舗の営業時間は店舗により異なる",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18832",
+        "mapcode": "159 308 650",
+        "parking": {
+          "large": 6,
+          "standard": 46,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1039/",
+          "http://muro-kanko.com/visit/roadside_station.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "無線LAN",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.4895,
+          43.844134
+        ]
+      },
+      "properties": {
+        "name": "とうま",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道上川郡当麻町字園別２区",
+        "postal_code": "078-1332",
+        "tel": "0166-58-8639",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18833",
+        "mapcode": "79 659 005",
+        "parking": {
+          "large": 10,
+          "standard": 40,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1677/",
+          "http://www.densukesan.net/2018/kau.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.7887813,
+          43.1885383
+        ]
+      },
+      "properties": {
+        "name": "スペース・アップルよいち",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道余市郡余市町黒川町6-4",
+        "postal_code": "046-0003",
+        "tel": "0135-22-1515",
+        "opening_hours": "4月中旬～11月上旬 9:00～18:00 11月上旬～4月中旬 9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18834",
+        "mapcode": "164 665 300",
+        "parking": {
+          "large": 5,
+          "standard": 42,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1699/",
+          "https://www.spacedome.jp"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "美術館・博物館",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.7065768,
+          44.3673322
+        ]
+      },
+      "properties": {
+        "name": "ほっと♡はぼろ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道苫前郡羽幌町北3条1-29",
+        "postal_code": "078-4113",
+        "tel": "0164-62-3800",
+        "opening_hours": "7:00～22:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18835",
+        "mapcode": "508 700 697",
+        "parking": {
+          "large": 23,
+          "standard": 224,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1747/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "宿泊施設",
+          "温泉施設",
+          "公園",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.8241425,
+          44.0999179
+        ]
+      },
+      "properties": {
+        "name": "サロマ湖",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道常呂郡佐呂間町字浪速121-3",
+        "postal_code": "093-0421",
+        "tel": "01587-5-2828",
+        "opening_hours": "9:00～18:00（11～3月は9:00～17:00）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18836",
+        "mapcode": "955 054 611",
+        "parking": {
+          "large": 3,
+          "standard": 78,
+          "disabled": 1
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1787/",
+          "http://saroma.jp"
+        ],
+        "facilities": [
+          "軽食・喫茶",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.7192064,
+          44.1308204
+        ]
+      },
+      "properties": {
+        "name": "愛ランド湧別",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別郡湧別町志撫子6-2",
+        "postal_code": "093-0652",
+        "tel": "01586-8-2455",
+        "opening_hours": "9:00～17:30",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18837",
+        "mapcode": "404 476 382",
+        "parking": {
+          "large": 5,
+          "standard": 203,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1951/",
+          "http://www.town.yubetsu.lg.jp/60kanko/03annai/you.html"
+        ],
+        "facilities": [
+          "レストラン",
+          "無線LAN",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.9597327,
+          44.5830367
+        ]
+      },
+      "properties": {
+        "name": "おうむ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別郡雄武町字雄武1885-14",
+        "postal_code": "098-1702",
+        "tel": "0158-84-2403",
+        "opening_hours": "8:00～21:00 （5～10月） 8:00～20:00 （11～4月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18838",
+        "mapcode": "587 880 619",
+        "parking": {
+          "large": 2,
+          "standard": 46,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/1975/",
+          "http://www.town.oumu.hokkaido.jp/hotnews/detail/00000065.html"
+        ],
+        "facilities": [
+          "軽食・喫茶",
+          "展望台",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.177348,
+          45.329219
+        ]
+      },
+      "properties": {
+        "name": "さるふつ公園",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道宗谷郡猿払村字浜鬼志別241-7",
+        "postal_code": "098-6222",
+        "tel": "01635-2-2311",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18839",
+        "mapcode": "680 591 232",
+        "parking": {
+          "large": 28,
+          "standard": 112,
+          "disabled": 5
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2010/",
+          "http://www.vill.sarufutsu.hokkaido.jp/hotnews/detail/00000356.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "キャンプ場等",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.139546,
+          44.114633
+        ]
+      },
+      "properties": {
+        "name": "森と湖の里ほろかない",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道雨竜郡幌加内町字政和第1",
+        "postal_code": "074-0425",
+        "tel": "0165-37-2070",
+        "opening_hours": "10:00～21:00　冬期10：30～21：00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18840",
+        "mapcode": "701 707 425",
+        "parking": {
+          "large": 5,
+          "standard": 37,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2038/",
+          "https://horokanaisoba.com/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.00583873202555,
+          43.50329330668253
+        ]
+      },
+      "properties": {
+        "name": "うたしないチロルの湯",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道歌志内市字中村72-1",
+        "postal_code": "073-0406",
+        "tel": "0125-42-5566",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18841",
+        "mapcode": "179 016 094*73",
+        "parking": {
+          "large": 15,
+          "standard": 56,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2066/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.3800337,
+          42.6727094
+        ]
+      },
+      "properties": {
+        "name": "くろまつない",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道寿都郡黒松内町字白井川8-10",
+        "postal_code": "048-0134",
+        "tel": "0136-71-2222",
+        "opening_hours": "9:00～18:00（4～10月） 9:00～17:00（11～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18842",
+        "mapcode": "521 616 330",
+        "parking": {
+          "large": 5,
+          "standard": 79,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2088/",
+          "http://www.kuromatsunai.com/toitvert2/index.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.941478,
+          43.6234396
+        ]
+      },
+      "properties": {
+        "name": "たきかわ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道滝川市江部乙町東11-13-3",
+        "postal_code": "079-0463",
+        "tel": "0125-26-5500",
+        "opening_hours": "9:00～18:00（4～10月） 10:00～17:00（11～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18843",
+        "mapcode": "179 428 432",
+        "parking": {
+          "standard": 50
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2107/"
+        ],
+        "facilities": [
+          "レストラン",
+          "無線LAN",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.4383704,
+          43.2616741
+        ]
+      },
+      "properties": {
+        "name": "スワン44ねむろ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道根室市酪陽1",
+        "postal_code": "086-0073",
+        "tel": "0153-25-3055",
+        "opening_hours": "9:00～17:00（4～6,10月） 9:00～18:00（7～9月） 9:00～16:00（11～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18844",
+        "mapcode": "734 353 062",
+        "parking": {
+          "large": 4,
+          "standard": 70,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2143/",
+          "http://www.swan44nemuro.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.8356403,
+          43.4501752
+        ]
+      },
+      "properties": {
+        "name": "つるぬま",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道樺戸郡浦臼町字キナウスナイ188",
+        "postal_code": "061-0600",
+        "tel": "0125-68-2626",
+        "opening_hours": "10:00～18:00（5～9月） 10:00～17:00（10～4月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18845",
+        "mapcode": "360 100 682",
+        "parking": {
+          "large": 10,
+          "standard": 67,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2164/",
+          "http://www.town.urausu.hokkaido.jp/kankou/guide/michinoeki.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.1016303,
+          41.7794873
+        ]
+      },
+      "properties": {
+        "name": "なとわ・えさん",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道函館市日ノ浜町31-2",
+        "postal_code": "041-0525",
+        "tel": "0138-85-4010",
+        "opening_hours": "9:00～18:00（4～9月） 9:00～17:00（10～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18846",
+        "mapcode": "582 417 198",
+        "parking": {
+          "large": 3,
+          "standard": 109,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.natowaesan.com/roadside_station.htm",
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2179/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "無線LAN",
+          "シャワー",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.6673361,
+          42.1253109
+        ]
+      },
+      "properties": {
+        "name": "つど～る・プラザ・さわら",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道茅部郡森町砂原2-358-1",
+        "postal_code": "049-2222",
+        "tel": "01374-8-2828",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18847",
+        "mapcode": "490 740 674",
+        "parking": {
+          "large": 3,
+          "standard": 40,
+          "disabled": 1
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2200/",
+          "http://kankou.mori.hokkaido.jp/201510/07-1619.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "展望台",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.1920893,
+          44.0174537
+        ]
+      },
+      "properties": {
+        "name": "知床・らうす",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道目梨郡羅臼町本町361-1",
+        "postal_code": "086-1833",
+        "tel": "0153-87-5151",
+        "opening_hours": "9:00～17:00（5～10月） 10:00～16:00（11～4月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18848",
+        "mapcode": "757 353 676",
+        "parking": {
+          "large": 3,
+          "standard": 25,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2217/",
+          "http://www.nemuro.pref.hokkaido.lg.jp/ss/srk/kanko/nmrgsdb/3k-spot/3ks-shiretoko-rausu.htm"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.2718483,
+          42.6333115
+        ]
+      },
+      "properties": {
+        "name": "さらべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道河西郡更別村字弘和464-1",
+        "postal_code": "089-1573",
+        "tel": "0155-53-3663",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18849",
+        "mapcode": "396 468 572",
+        "parking": {
+          "large": 7,
+          "standard": 65,
+          "disabled": 2
+        },
+        "websites": [
+          "https://www.instagram.com/mitinoekisarabetsu/",
+          "http://www.sarabetsu-pipopa.jp/michinoeki/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.87549148029083,
+          42.47050228223599
+        ]
+      },
+      "properties": {
+        "name": "だて歴史の杜",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道伊達市松ヶ枝町34-1",
+        "postal_code": "052-0012",
+        "tel": "0142-25-5567",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18850",
+        "mapcode": "159 780 134*41",
+        "parking": {
+          "large": 7,
+          "standard": 166,
+          "disabled": 5
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2253/",
+          "http://www.city.date.hokkaido.jp/hotnews/detail/00001549.html"
+        ],
+        "facilities": [
+          "軽食・喫茶",
+          "公園",
+          "無線LAN",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.3484462,
+          43.7600001
+        ]
+      },
+      "properties": {
+        "name": "あさひかわ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道旭川市神楽4条6-1-12",
+        "postal_code": "070-8004",
+        "tel": "0166-61-2283",
+        "opening_hours": "9:00～21:00 （売店は19:00（夏季）まで・フードコートは店舗により異なります)",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18851",
+        "mapcode": "79 312 788",
+        "parking": {
+          "large": 6,
+          "standard": 100,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.asahikawa-jibasan.com",
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2272/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.39758,
+          42.978859
+        ]
+      },
+      "properties": {
+        "name": "自然体感しむかっぷ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道勇払郡占冠村字中央",
+        "postal_code": "079-2201",
+        "tel": "0167-39-8010",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18852",
+        "mapcode": "694 513 094",
+        "parking": {
+          "large": 5,
+          "standard": 123,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2298/",
+          "http://www.vill.shimukappu.lg.jp/shimukappu/section/kikaku/nmudtq0000002gk4.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.8680679,
+          44.3359883
+        ]
+      },
+      "properties": {
+        "name": "にしおこっぺ花夢",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別郡西興部村字上興部37",
+        "postal_code": "098-1421",
+        "tel": "0158-87-2333",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18853",
+        "mapcode": "1009 014 019",
+        "parking": {
+          "large": 2,
+          "standard": 66,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2325/",
+          "https://www.vill.nishiokoppe.lg.jp/section/kamu/kamu.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "公園",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.742367,
+          43.467863
+        ]
+      },
+      "properties": {
+        "name": "オーロラタウン93りくべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道足寄郡陸別町大通",
+        "postal_code": "089-4315",
+        "tel": "0156-27-2012",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18854",
+        "mapcode": "596 464 737",
+        "parking": {
+          "large": 5,
+          "standard": 74,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2355/",
+          "https://www.rikubetsu.jp/kanko/michinoeki/"
+        ],
+        "facilities": [
+          "宿泊施設",
+          "公園",
+          "美術館・博物館",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.453268,
+          43.9339211
+        ]
+      },
+      "properties": {
+        "name": "はなやか（葉菜野花）小清水",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道斜里郡小清水町字浜小清水474-7",
+        "postal_code": "099-3452",
+        "tel": "0152-67-7752",
+        "opening_hours": "9:00～18:00 　レストランは11：00～15：00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18855",
+        "mapcode": "958 054 715",
+        "parking": {
+          "large": 9,
+          "standard": 57,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2375/",
+          "http://www.town.koshimizu.hokkaido.jp/hanayaka/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.070593,
+          43.6994831
+        ]
+      },
+      "properties": {
+        "name": "ライスランドふかがわ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道深川市音江町字広里59-7",
+        "postal_code": "074-1271",
+        "tel": "0164-26-3636",
+        "opening_hours": "4月・5月～10月：9：00～18：00、6月～9月：9：00～19：00、11月～3月：9：00～17：00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18856",
+        "mapcode": "179 713 597",
+        "parking": {
+          "large": 11,
+          "standard": 135,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2390/",
+          "http://mypage.fukanavi.com/riceland/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "ガソリンスタンド",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.0673479,
+          44.8016913
+        ]
+      },
+      "properties": {
+        "name": "なかがわ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道中川郡中川町字誉498-1",
+        "postal_code": "098-2805",
+        "tel": "01656-7-2683",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18857",
+        "mapcode": "640 473 826",
+        "parking": {
+          "large": 10,
+          "standard": 40,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2424/",
+          "http://www.nakagawa-showya.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.8845626,
+          42.7399293
+        ]
+      },
+      "properties": {
+        "name": "230ルスツ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道虻田郡留寿都村字留寿都127",
+        "postal_code": "048-1731",
+        "tel": "0136-47-2068",
+        "opening_hours": "9:00～18:00（4月下旬～10月） 9:00～17:00（11～４月下旬）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18858",
+        "mapcode": "385 256 437",
+        "parking": {
+          "large": 18,
+          "standard": 73,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2442/",
+          "http://www.rusutsu.gr.jp/shopping/687.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.7477551,
+          44.8845723
+        ]
+      },
+      "properties": {
+        "name": "てしお",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道天塩郡天塩町新開通4-7227-2",
+        "postal_code": "098-3305",
+        "tel": "01632-9-2155",
+        "opening_hours": "4月~10月  9:00～19:00                      11月~3月 9:00~17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18859",
+        "mapcode": "530 150 785",
+        "parking": {
+          "large": 6,
+          "standard": 55,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2467/",
+          "http://www.teshiotown.hokkaido.jp/?page_id=660"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.273259,
+          42.489824
+        ]
+      },
+      "properties": {
+        "name": "コスモール大樹",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道広尾郡大樹町西本通98",
+        "postal_code": "089-2152",
+        "tel": "01558-6-5220",
+        "opening_hours": "特産品コーナー 9：00〜17：30 （十勝バス大樹案内所【乗車券販売など】）休館 年末年始（12月31日〜1月3日)             ショッピングセンター 9：00〜20：00 （衣料品すずき、100円ショップ、写真店、オリーブ薬局、 コープさっぽろ、ヘアークラブMock、クリーニング、 理療整体院、ラーメンハウスMAMO）休館　1月1日（各テナント臨時休業あり）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18860",
+        "mapcode": "454 858 397",
+        "parking": {
+          "large": 4,
+          "standard": 160,
+          "disabled": 6
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2483/",
+          "http://taiki-sci.jp/cosmall/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "EV充電施設",
+          "無線LAN",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.2478543319179,
+          43.648286095455596
+        ]
+      },
+      "properties": {
+        "name": "ぐるっとパノラマ美幌峠",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道網走郡美幌町字古梅",
+        "postal_code": "092-0022",
+        "tel": "0152-77-6001",
+        "opening_hours": "4月～10月　9:00～18:00　　12月～3月　10：00～16：00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18861",
+        "mapcode": "638 225 426*43",
+        "parking": {
+          "large": 14,
+          "standard": 120,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2502/",
+          "https://bihoropass.jp/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.4789853,
+          42.7620988
+        ]
+      },
+      "properties": {
+        "name": "らんこし・ふるさとの丘",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道磯谷郡蘭越町字相生969",
+        "postal_code": "048-1251",
+        "tel": "0136-55-3251",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18862",
+        "mapcode": "730 057 146",
+        "parking": {
+          "large": 2,
+          "standard": 16,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2519/",
+          "http://www.town.rankoshi.hokkaido.jp/topics/2012/02/post_58.html"
+        ],
+        "facilities": [
+          "軽食・喫茶",
+          "キャンプ場等",
+          "公園",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.722382,
+          42.577551
+        ]
+      },
+      "properties": {
+        "name": "とようら",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道虻田郡豊浦町字旭町65-8",
+        "postal_code": "049-5412",
+        "tel": "0142-83-1010",
+        "opening_hours": "直売所9:00～17:00　　　　　　　　　　テイクアウトコーナー10:00～16:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18863",
+        "mapcode": "662 267 873",
+        "parking": {
+          "large": 2,
+          "standard": 41,
+          "disabled": 3
+        },
+        "websites": [
+          "https://toyoura-rss.amebaownd.com/",
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2533/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.1884881,
+          43.9173357
+        ]
+      },
+      "properties": {
+        "name": "メルヘンの丘めまんべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道網走郡大空町女満別昭和96",
+        "postal_code": "099-2356",
+        "tel": "0152-75-6160",
+        "opening_hours": "8:45～17:30",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18864",
+        "mapcode": "305 278 692",
+        "parking": {
+          "large": 4,
+          "standard": 86,
+          "disabled": 10
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2548/",
+          "http://www.town.ozora.hokkaido.jp/docs/2014112700039/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.9254643,
+          42.5739733
+        ]
+      },
+      "properties": {
+        "name": "むかわ四季の館",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道勇払郡むかわ町美幸3-3-1",
+        "postal_code": "054-0042",
+        "tel": "0145-42-4171",
+        "opening_hours": "6:00～22:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18865",
+        "mapcode": "455 261 494",
+        "parking": {
+          "large": 3,
+          "standard": 200,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2569/",
+          "http://www.shikinoyakata.com/eki.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "EV充電施設",
+          "無線LAN",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.980525,
+          43.545622
+        ]
+      },
+      "properties": {
+        "name": "あいおい",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道網走郡津別町字相生",
+        "postal_code": "092-0361",
+        "tel": "0152-75-9101",
+        "opening_hours": "9:00～17:00【火曜日定休日(トイレは24時間開放)】",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18866",
+        "mapcode": "866 463 123",
+        "parking": {
+          "large": 8,
+          "standard": 94,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2585/",
+          "https://michinoeki-aioi.com/"
+        ],
+        "facilities": [
+          "レストラン",
+          "公園",
+          "無線LAN",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.98857,
+          43.098188
+        ]
+      },
+      "properties": {
+        "name": "しかおい",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道河東郡鹿追町東町3-2",
+        "postal_code": "081-0222",
+        "tel": "0156-66-1125",
+        "opening_hours": "9:00～17:00（3～6月、10～11月） 10:00～16:00（12～2月） 9:00～18:00（7～9月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18867",
+        "mapcode": "343 646 393",
+        "parking": {
+          "large": 5,
+          "standard": 173,
+          "disabled": 8
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2605/",
+          "http://michinoeki-shikaoi.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "公園",
+          "美術館・博物館",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.076278,
+          43.870061
+        ]
+      },
+      "properties": {
+        "name": "しらたき",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別郡遠軽町奥白滝",
+        "postal_code": "099-0126",
+        "tel": "0158-48-2175",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18868",
+        "mapcode": "787 429 108",
+        "parking": {
+          "large": 9,
+          "standard": 25,
+          "disabled": 1
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2623/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.546455,
+          43.244332
+        ]
+      },
+      "properties": {
+        "name": "あしょろ銀河ホール21",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道足寄郡足寄町北１条1丁目",
+        "postal_code": "089-3701",
+        "tel": "0156-25-6131",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18869",
+        "mapcode": "481 561 871",
+        "parking": {
+          "large": 10,
+          "standard": 80,
+          "disabled": 12
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2639/",
+          "http://www.ashoro-kanko.jp"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.65933,
+          42.833788
+        ]
+      },
+      "properties": {
+        "name": "サーモンパーク千歳",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道千歳市花園2-4-2",
+        "postal_code": "066-0028",
+        "tel": "0123-29-3972",
+        "opening_hours": "9:00～17:00（一部店舗は16:00まで）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18870",
+        "mapcode": "113 889 645",
+        "parking": {
+          "large": 12,
+          "standard": 222,
+          "disabled": 6
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2654/",
+          "http://salmonpark.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "美術館・博物館",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.5088143,
+          43.6973051
+        ]
+      },
+      "properties": {
+        "name": "ひがしかわ「道草館」",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道上川郡東川町東町1丁目1番15号",
+        "postal_code": "071-1423",
+        "tel": "0166-68-4777",
+        "opening_hours": "9:00～19:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18871",
+        "mapcode": "389 406 315",
+        "parking": {
+          "large": 2,
+          "standard": 51
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2668/"
+        ],
+        "facilities": [
+          "軽食・喫茶",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.5856753,
+          42.8972354
+        ]
+      },
+      "properties": {
+        "name": "花ロードえにわ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道恵庭市南島松817-18",
+        "postal_code": "061-1375",
+        "tel": "0123-37-8787",
+        "opening_hours": "9:00～18:00（施設・時期により異なる）＜休：12/31～1/2＞",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18872",
+        "mapcode": "230 220 351",
+        "parking": {
+          "large": 25,
+          "standard": 423,
+          "disabled": 11
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2684/",
+          "https://hanafuru.jp/facility/hanaroad.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "キャンプ場等",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "シャワー",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.370027,
+          42.8801825
+        ]
+      },
+      "properties": {
+        "name": "シェルプラザ・港",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道磯谷郡蘭越町港町1402-2",
+        "postal_code": "048-1341",
+        "tel": "0136-56-2700",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18873",
+        "mapcode": "730 464 294",
+        "parking": {
+          "large": 2,
+          "standard": 33,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2702/",
+          "http://www.town.rankoshi.hokkaido.jp/topics/2012/02/post_59.html"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "美術館・博物館",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.8077046,
+          42.7623215
+        ]
+      },
+      "properties": {
+        "name": "真狩フラワーセンター",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道虻田郡真狩村字光8-3",
+        "postal_code": "048-1611",
+        "tel": "0136-48-2007",
+        "opening_hours": "9:00～17:30（4月下旬～10/31） 9:30～16:30（11/1～4月下旬）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18874",
+        "mapcode": "385 337 130",
+        "parking": {
+          "large": 7,
+          "standard": 140,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2715/",
+          "http://www.pref.hokkaido.lg.jp/kn/tkn/hana/place/c010.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.9659629,
+          43.7648305
+        ]
+      },
+      "properties": {
+        "name": "鐘のなるまち・ちっぷべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道雨竜郡秩父別町2085",
+        "postal_code": "078-2100",
+        "tel": "0164-33-3902",
+        "opening_hours": "9:00～17:00（4～10月） 9:00～16:00（11～3月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18875",
+        "mapcode": "495 041 431",
+        "parking": {
+          "large": 5,
+          "standard": 196,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2732/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "美術館・博物館",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.7787362,
+          42.5289975
+        ]
+      },
+      "properties": {
+        "name": "あぷた",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道虻田郡洞爺湖町入江84-2",
+        "postal_code": "049-5603",
+        "tel": "0142-76-5501",
+        "opening_hours": "9::00～18:00（冬期17:00）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18876",
+        "mapcode": "321 393 146",
+        "parking": {
+          "large": 3,
+          "standard": 51,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2751/",
+          "http://www.pref.hokkaido.lg.jp/ns/shs/data/ar10018.htm"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.0250228,
+          43.1697466
+        ]
+      },
+      "properties": {
+        "name": "うりまく",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道河東郡鹿追町瓜幕西3-1外",
+        "postal_code": "081-0341",
+        "tel": "0156-67-2626",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18877",
+        "mapcode": "702 018 043",
+        "parking": {
+          "large": 3,
+          "standard": 81,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2766/",
+          "http://www.urimaku.net/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "公園",
+          "無線LAN",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.3909798,
+          44.0938311
+        ]
+      },
+      "properties": {
+        "name": "絵本の里けんぶち",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道上川郡剣淵町東町2420",
+        "postal_code": "098-0341",
+        "tel": "0165-34-3811",
+        "opening_hours": "9:00～17:00（5～10月中旬） 9:00～16:00（10月中旬～4月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18878",
+        "mapcode": "470 617 851",
+        "parking": {
+          "large": 12,
+          "standard": 42,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2782/",
+          "http://michi-ehon.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.6564717,
+          44.3133031
+        ]
+      },
+      "properties": {
+        "name": "風Ｗとままえ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道苫前郡苫前町字苫前119-１",
+        "postal_code": "078-3701",
+        "tel": "0164-64-2810",
+        "opening_hours": "7:00～21:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18879",
+        "mapcode": "508 514 246",
+        "parking": {
+          "large": 10,
+          "standard": 78,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2805/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "展望台",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.367911,
+          43.138881
+        ]
+      },
+      "properties": {
+        "name": "しほろ温泉",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道河東郡士幌町字下居辺西２-134",
+        "postal_code": "080-1285",
+        "tel": "01564-5-3630",
+        "opening_hours": "10:00～21:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18880",
+        "mapcode": "424 509 317",
+        "parking": {
+          "large": 12,
+          "standard": 111,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2824/",
+          "http://www.shihoro-spa.co.jp/"
+        ],
+        "facilities": [
+          "レストラン",
+          "宿泊施設",
+          "温泉施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.8709024,
+          42.8589072
+        ]
+      },
+      "properties": {
+        "name": "名水の郷きょうごく",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道虻田郡京極町字川西45-1",
+        "postal_code": "044-0131",
+        "tel": "0136-42-2292",
+        "opening_hours": "売店　9：00～17：00　　　　　　　　　　レストラン　11：00～16：00　　　　　　　休館日　毎週水曜日及び年末年始（12/31～1/3）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18881",
+        "mapcode": "385 674 688",
+        "parking": {
+          "large": 25,
+          "standard": 271,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2841/",
+          "http://meisui-plaza.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.4637855,
+          43.5921253
+        ]
+      },
+      "properties": {
+        "name": "びえい「丘のくら」",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道上川郡美瑛町本町1-9-21",
+        "postal_code": "071-0208",
+        "tel": "0166-92-0920",
+        "opening_hours": "9:00～18:00（6～８月）　9:00～17:00（3～5月、9～11月）　10:00～17:00（12～2月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18882",
+        "mapcode": "389 011 663",
+        "parking": {
+          "large": 2,
+          "standard": 21,
+          "disabled": 1
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2854/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.7768178,
+          44.5635037
+        ]
+      },
+      "properties": {
+        "name": "☆ロマン街道しょさんべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道苫前郡初山別村字豊岬153-1",
+        "postal_code": "078-4431",
+        "tel": "0164-67-2525",
+        "opening_hours": "10:00～21:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18883",
+        "mapcode": "692 513 320",
+        "parking": {
+          "large": 5,
+          "standard": 122,
+          "disabled": 5
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2870/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "宿泊施設",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.9906685,
+          44.0690729
+        ]
+      },
+      "properties": {
+        "name": "うとろ・シリエトク",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道斜里郡斜里町ウトロ西186-8",
+        "postal_code": "099-4354",
+        "tel": "0152-22-5000",
+        "opening_hours": "9：00～17：00（レストラン 10：00～15：00）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18884",
+        "mapcode": "894 824 850",
+        "parking": {
+          "large": 12,
+          "standard": 87,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2884/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.6642138,
+          43.9117709
+        ]
+      },
+      "properties": {
+        "name": "しゃり",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道斜里郡斜里町本町37",
+        "postal_code": "099-4113",
+        "tel": "0152-26-8888",
+        "opening_hours": "9:00～19:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18885",
+        "mapcode": "642 575 095",
+        "parking": {
+          "large": 2,
+          "standard": 19,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2905/",
+          "http://www.sharimichi.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.5339946,
+          43.7904595
+        ]
+      },
+      "properties": {
+        "name": "パパスランドさっつる",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道斜里郡清里町字神威1071",
+        "postal_code": "099-4522",
+        "tel": "0152-26-2288",
+        "opening_hours": "9:00～21:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18886",
+        "mapcode": "444 439 466",
+        "parking": {
+          "large": 5,
+          "standard": 95,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2920/",
+          "http://www.papasland-satturu.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "温泉施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.4137718,
+          44.2874188
+        ]
+      },
+      "properties": {
+        "name": "もち米の里☆なよろ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道名寄市風連町西町334-1",
+        "postal_code": "098-0507",
+        "tel": "01655-7-8686",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18887",
+        "mapcode": "272 440 153",
+        "parking": {
+          "large": 13,
+          "standard": 65,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2939/",
+          "http://www.mochigome.jp"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.2318241,
+          42.7955338
+        ]
+      },
+      "properties": {
+        "name": "みなとま～れ寿都",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道寿都郡寿都町字大磯町29-1",
+        "postal_code": "048-0404",
+        "tel": "0136-62-2550",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18888",
+        "mapcode": "797 778 127",
+        "parking": {
+          "large": 2,
+          "standard": 36,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2959/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.8218199,
+          42.6645114
+        ]
+      },
+      "properties": {
+        "name": "とうや湖",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道虻田郡洞爺湖町香川9-4",
+        "postal_code": "049-5831",
+        "tel": "0142-87-2200",
+        "opening_hours": "4月～10月（8:30～17:00）　11月～3月（9：00～16：00）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18889",
+        "mapcode": "321 879 391",
+        "parking": {
+          "large": 3,
+          "standard": 50,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2974/",
+          "http://www.michinoeki-toyako.jp/"
+        ],
+        "facilities": [
+          "レストラン",
+          "展望台",
+          "無線LAN",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.273893,
+          44.022034
+        ]
+      },
+      "properties": {
+        "name": "流氷街道網走",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道網走市南3条東4丁目",
+        "postal_code": "093-0003",
+        "tel": "0152-67-5007",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18890",
+        "mapcode": "305 678 280",
+        "parking": {
+          "large": 16,
+          "standard": 106,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/2986/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.1072323,
+          41.4265145
+        ]
+      },
+      "properties": {
+        "name": "北前船 松前",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道松前郡松前町字唐津379",
+        "postal_code": "049-1506",
+        "tel": "0139-46-2211",
+        "opening_hours": "9:00～18:00（4～9月） 9:00～17:00（10～3月）　定休日：毎週火曜日（10～3月、火曜日が祝日の場合は翌日水曜日）及び年末年始（お問い合わせください）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18891",
+        "mapcode": "862 028 757",
+        "parking": {
+          "large": 3,
+          "standard": 79,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3007/",
+          "http://michinoeki-matsumae.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.6132503,
+          43.1256342
+        ]
+      },
+      "properties": {
+        "name": "ステラ★ほんべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道中川郡本別町北3-1-1",
+        "postal_code": "089-3334",
+        "tel": "0156-22-5819",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18892",
+        "mapcode": "481 149 660",
+        "parking": {
+          "large": 5,
+          "standard": 97,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3021/",
+          "https://www.facebook.com/道の駅ステラほんべつ-213161028715975/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.6946488,
+          42.6999513
+        ]
+      },
+      "properties": {
+        "name": "ウトナイ湖",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道苫小牧市字植苗156-30",
+        "postal_code": "059-1365",
+        "tel": "0144-58-4137",
+        "opening_hours": "9:00～18:00（11月～2月は9:00～17:00）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18893",
+        "mapcode": "113 413 623",
+        "parking": {
+          "large": 10,
+          "standard": 93,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3038/",
+          "http://www.michinoeki-utonaiko.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.6636566,
+          42.81399805
+        ]
+      },
+      "properties": {
+        "name": "うらほろ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道十勝郡浦幌町字北町16-3",
+        "postal_code": "089-5621",
+        "tel": "015-576-5678",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18894",
+        "mapcode": "511 530 242",
+        "parking": {
+          "large": 5,
+          "standard": 74,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3057/",
+          "http://www.michinoeki-urahoro.com/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.6427006,
+          43.2141162
+        ]
+      },
+      "properties": {
+        "name": "しんしのつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道石狩郡新篠津村第45線北２",
+        "postal_code": "068-1100",
+        "tel": "0126-58-3166",
+        "opening_hours": "7：00～22：00 ※休館日の翌日は10：00開館 　道の駅グッズ販売は21：00まで",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18895",
+        "mapcode": "139 767 407",
+        "parking": {
+          "large": 7,
+          "standard": 159
+        },
+        "websites": [
+          "https://tappunoyuonsen.com/",
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3070/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.038078,
+          42.93699
+        ]
+      },
+      "properties": {
+        "name": "夕張メロード",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道夕張市紅葉山529",
+        "postal_code": "068-0755",
+        "tel": "0123-53-8111",
+        "opening_hours": "10:00～18:30",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18896",
+        "mapcode": "700 080 120",
+        "parking": {
+          "large": 0,
+          "standard": 34,
+          "disabled": 1
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3083/",
+          "http://www.yubari-melon.or.jp/modules/meroad/"
+        ],
+        "facilities": [
+          "ATM",
+          "軽食・喫茶",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          145.2368756,
+          43.533413
+        ]
+      },
+      "properties": {
+        "name": "おだいとう",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道野付郡別海町尾岱沼5-27",
+        "postal_code": "086-1641",
+        "tel": "0153-86-2449",
+        "opening_hours": "9:00～17:00（5～10月） 9:00～16:00（11～4月）　火曜日定休（10月～6月）　※７～9月無休",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18897",
+        "mapcode": "448 418 627",
+        "parking": {
+          "large": 7,
+          "standard": 47,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3099/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "展望台",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.9447498,
+          41.9279214
+        ]
+      },
+      "properties": {
+        "name": "縄文ロマン　南かやべ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道函館市臼尻町551-1",
+        "postal_code": "041-1613",
+        "tel": "0138-25-2030",
+        "opening_hours": "9:00～17:00（4～10月） 9:00～16:30（11～3月）　定休日：毎週月曜日※月曜日が祝日の場合は翌日，年末年始（12月29日～1月3日）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18898",
+        "mapcode": "744 053 054",
+        "parking": {
+          "large": 5,
+          "standard": 33,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3114/",
+          "http://www.hjcc.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "美術館・博物館",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.677348,
+          45.41725
+        ]
+      },
+      "properties": {
+        "name": "わっかない",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道稚内市開運2丁目",
+        "postal_code": "097-0023",
+        "tel": "0162-29-0277",
+        "opening_hours": "10:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/18899",
+        "mapcode": "353 876 712",
+        "parking": {
+          "large": 11,
+          "standard": 88,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3126/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.844843,
+          43.05086768
+        ]
+      },
+      "properties": {
+        "name": "あかいがわ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道余市郡赤井川村字都190-16",
+        "postal_code": "046-0541",
+        "tel": "0135-34-6699",
+        "opening_hours": "8:30～18:00(5～10月)、9:00～17:00(11～4月)",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19821",
+        "mapcode": "164 161 744",
+        "parking": {
+          "large": 10,
+          "standard": 57,
+          "disabled": 3
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3143/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.4353634,
+          41.6780521
+        ]
+      },
+      "properties": {
+        "name": "みそぎの郷　きこない",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道上磯郡木古内町字本町338-14",
+        "postal_code": "049-0400",
+        "tel": "01392-2-3161",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19840",
+        "mapcode": "584 652 022",
+        "parking": {
+          "large": 7,
+          "standard": 143,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/3158/",
+          "http://kikonai.jp/"
+        ],
+        "facilities": [
+          "ATM",
+          "ベビーベッド",
+          "レストラン",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.8305528,
+          42.0285219
+        ]
+      },
+      "properties": {
+        "name": "しかべ間歇泉公園",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道茅部郡鹿部町字鹿部18-1",
+        "postal_code": "041-1402",
+        "tel": "01372-7-5655",
+        "opening_hours": "【3月20日−11月30日】 月〜木　9時～17時 金〜日·祝　8時半～18時 定休日なし  【12月1日−3月19日】 月～木　10時～15時 金〜日·祝　9時～18時　定休日　1月4日～3月19日の毎週水曜日、年末年始（12月30日～1月1日）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19841",
+        "mapcode": "744 400 092",
+        "parking": {
+          "large": 6,
+          "standard": 45,
+          "disabled": 3
+        },
+        "websites": [
+          "https://shikabe-tara.com/",
+          "http://www.town.shikabe.lg.jp/hotnews/detail/00001756.html"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "展望台",
+          "EV充電施設",
+          "無線LAN",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.294951,
+          43.845319
+        ]
+      },
+      "properties": {
+        "name": "ノンキーランドひがしもこと",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道網走郡大空町東藻琴100",
+        "postal_code": "099-3244",
+        "tel": "0152-66-3600",
+        "opening_hours": "9:00～18:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19888",
+        "mapcode": "305 050 115",
+        "parking": {
+          "large": 3,
+          "standard": 45,
+          "disabled": 2
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/13538/",
+          "http://www.nonkyland.com/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "シャワー",
+          "観光案内",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.448498,
+          43.177254
+        ]
+      },
+      "properties": {
+        "name": "北欧の風 道の駅とうべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道石狩郡当別町当別太774-11",
+        "postal_code": "061-3773",
+        "tel": "0133-27-5260",
+        "opening_hours": "【3月～12月】9:00~17:00、【1月～2月】10:00~16:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19889",
+        "mapcode": "514 024 818",
+        "parking": {
+          "large": 42,
+          "standard": 129,
+          "disabled": 4
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/13542/",
+          "https://tobest.co.jp/michinoeki/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.43118,
+          43.403873
+        ]
+      },
+      "properties": {
+        "name": "石狩「あいろーど厚田」",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道石狩市厚田区厚田98-2",
+        "postal_code": "061-3601",
+        "tel": "0133-78-2300",
+        "opening_hours": "10:00～16:00（11/1-3/31）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19897",
+        "mapcode": "",
+        "parking": {
+          "large": 4,
+          "standard": 200
+        },
+        "websites": [
+          "http://aikaze.co.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "キャンプ場等",
+          "公園",
+          "展望台",
+          "美術館・博物館",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.655973,
+          41.925666
+        ]
+      },
+      "properties": {
+        "name": "なないろ・ななえ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道亀田郡七飯町字峠下380-2",
+        "postal_code": "041-1102",
+        "tel": "0138-86-5195",
+        "opening_hours": "9:00～18:00〔時期により異なる〕",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19898",
+        "mapcode": "",
+        "parking": {
+          "large": 23,
+          "standard": 148,
+          "disabled": 8
+        },
+        "websites": [
+          "http://nanairo-nanae.jp/",
+          "https://shop.nanairo-nanae.jp/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "軽食・喫茶",
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.597342,
+          43.503071
+        ]
+      },
+      "properties": {
+        "name": "びえい「白金ビルケ」",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道上川郡美瑛町字白金",
+        "postal_code": "071-0235",
+        "tel": "0166-94-3355",
+        "opening_hours": "9:00～18:00（6～８月）　9:00～17:00（3～5月、9～11月）　10:00～17:00（12～2月）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19914",
+        "mapcode": "349 627 064",
+        "parking": {
+          "large": 5,
+          "standard": 229
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/16028/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "無線LAN",
+          "シャワー",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.360437,
+          45.124936
+        ]
+      },
+      "properties": {
+        "name": "北オホーツクはまとんべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道枝幸郡浜頓別町中央北21番1",
+        "postal_code": "098-5704",
+        "tel": "",
+        "opening_hours": "",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19927",
+        "mapcode": "644 748 651*03",
+        "parking": {
+          "standard": 96
+        },
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.818766,
+          42.876095
+        ]
+      },
+      "properties": {
+        "name": "あびらD51ステーション",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道勇払郡安平町追分柏が丘49番地1",
+        "postal_code": "059-1921",
+        "tel": "",
+        "opening_hours": "",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19928",
+        "mapcode": "320 128 741*52",
+        "parking": {
+          "standard": 117
+        },
+        "websites": [
+          "https://d51-station.com/"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.498488,
+          44.023759
+        ]
+      },
+      "properties": {
+        "name": "遠軽 森のオホーツク",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道紋別郡遠軽町野上150番地1",
+        "postal_code": "099-0344",
+        "tel": "0158-42-4536",
+        "opening_hours": "9:00～18:00（冬季のスキー場は9：00～20：00）※ゲレンデ状況等により変動あり",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19936",
+        "mapcode": "617 389 329*80",
+        "parking": {
+          "large": 9,
+          "standard": 178
+        },
+        "websites": [
+          "https://engaru-mori-no-okhotsk.jp/",
+          "https://www.engaru-kankou.jp/"
+        ],
+        "facilities": [
+          "ATM",
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "EV充電施設",
+          "無線LAN",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.29178,
+          43.224637
+        ]
+      },
+      "properties": {
+        "name": "かみしほろ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "tel": "01564-7-7722",
+        "opening_hours": "9:00～18:00（冬季～17:00）◆レストラン「La Table de KAMISHIHORO」11:00～16:00(モーニング8:00～10:00)",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19942",
+        "mapcode": "",
+        "parking": {
+          "large": 12,
+          "standard": 265
+        },
+        "websites": [
+          "https://karch.jp/michinoeki/",
+          "https://michinoeki-kamishihoro.shop/"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "軽食・喫茶",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.648817,
+          43.944454
+        ]
+      },
+      "properties": {
+        "name": "るもい",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道留萌市船場町2丁目114",
+        "postal_code": "077-0005",
+        "tel": "0164-43-1501",
+        "opening_hours": "9:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19943",
+        "mapcode": "",
+        "parking": {
+          "large": 9,
+          "standard": 98
+        },
+        "websites": [
+          "http://www.hokkaido-michinoeki.jp/michinoeki/23225/",
+          "https://web.michinoeki-rumoi.info/"
+        ],
+        "facilities": [
+          "公園",
+          "無線LAN",
+          "観光案内",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          143.300835,
+          42.933438
+        ]
+      },
+      "properties": {
+        "name": "ガーデンスパ十勝川温泉",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道河東郡音更町十勝川温泉北14丁目1番地",
+        "postal_code": "080-0261",
+        "tel": "0155-46-2447",
+        "opening_hours": "5月～10月　9：00～19：00（月～木）9：00～21：00（金～日・祝日）　　　　　　11月～4月　9：00～19：00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19955",
+        "mapcode": "",
+        "parking": {
+          "large": 3,
+          "standard": 90
+        },
+        "websites": [
+          "http://www.tokachigawa.jp/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "温泉施設",
+          "無線LAN",
+          "シャワー",
+          "体験施設",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.3928839,
+          44.1767258
+        ]
+      },
+      "properties": {
+        "name": "羊のまち 侍・しべつ",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道士別市大通東5丁目440番地23",
+        "postal_code": "095-0019",
+        "tel": "（0165）26-7353",
+        "opening_hours": "夏季　５月～１０月　9:00～18:00、冬季　１１月～４月　10:00～17:00",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/19962",
+        "mapcode": "272 017 828*30",
+        "parking": {
+          "large": 11,
+          "standard": 24,
+          "disabled": 2
+        },
+        "websites": [
+          "https://machi-shibetsu.securesite.jp"
+        ],
+        "facilities": [
+          "ベビーベッド",
+          "レストラン",
+          "EV充電施設",
+          "観光案内"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.68022928649899,
+          43.341421444717824
+        ]
+      },
+      "properties": {
+        "name": "275つきがた",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "tel": "0126-37-2188",
+        "opening_hours": "【道の駅】9：００～２１：００（毎月第３火曜日休館※祝日の場合は翌日）　【日帰り温泉】１１：００～２１：００（最終入場２０：３０）（毎月第３火曜日休館※祝日の場合は翌日）　【レストラン】１１：３０～１９：３０【LO１９：００】（毎週火曜日休館※祝日の場合は翌日）",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/22522",
+        "mapcode": "575 322 602*00",
+        "parking": {
+          "large": 20,
+          "standard": 154
+        },
+        "websites": [
+          "https://ad.t-norte.com/lp/275tsukigata_open/",
+          "https://tsukigataonsen-hotel.com/"
+        ],
+        "facilities": [
+          "レストラン",
+          "軽食・喫茶",
+          "宿泊施設",
+          "温泉施設",
+          "キャンプ場等",
+          "公園",
+          "EV充電施設",
+          "無線LAN",
+          "シャワー",
+          "体験施設",
+          "観光案内",
+          "身障者トイレ",
+          "ショップ"
+        ],
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.6384463,
+          43.2653305
+        ]
+      },
+      "properties": {
+        "name": "ふるびらたらこミュージアム",
+        "kind": "michinoeki",
+        "pref_code": "01",
+        "pref_name": "北海道",
+        "address": "北海道古平郡古平町大字浜町40-4",
+        "postal_code": "046-0121",
+        "tel": "",
+        "opening_hours": "",
+        "source_url": "https://www.michi-no-eki.jp/stations/views/22681",
+        "mapcode": "938 347 484*82",
+        "parking": {},
+        "last_confirmed_at": "2026-07-18T16:53:57.495961+09:00"
+      }
+    }
+  ]
+}
