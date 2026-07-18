@@ -10,7 +10,9 @@ from roadstop_scraper.geojson.models import (
     FacilityFeature,
     FacilityKind,
     FacilityProperties,
+    FacilityStatus,
     Parking,
+    from_feature_collection_dict,
     to_feature_collection_dict,
 )
 from roadstop_scraper.geojson.naming import (
@@ -25,6 +27,7 @@ from roadstop_scraper.geojson.prefectures import (
     UnknownPrefectureError,
     find_prefecture,
 )
+from roadstop_scraper.geojson.reader import read_geojson
 from roadstop_scraper.geojson.validation import (
     ValidationIssue,
     validate_features,
@@ -44,6 +47,7 @@ __all__ = [
     "FacilityFeature",
     "FacilityKind",
     "FacilityProperties",
+    "FacilityStatus",
     "GeoJsonValidationError",
     "InvalidGeoJsonFilenameError",
     "Parking",
@@ -52,7 +56,9 @@ __all__ = [
     "ValidationIssue",
     "build_geojson_filename",
     "find_prefecture",
+    "from_feature_collection_dict",
     "parse_geojson_filename",
+    "read_geojson",
     "to_feature_collection_dict",
     "validate_features",
     "validate_filename",

@@ -4,8 +4,13 @@ version = "0.1.0"
 description = "道の駅・SA/PAの位置情報をスクレイピングしてGeoJSON形式で収集するデータ収集アプリケーション"
 requires-python = ">=3.11"
 dependencies = [
-    "python-util @ git+https://github.com/t-totsuka/python_util.git"
+    "python-util @ git+https://github.com/t-totsuka/python_util.git",
+    "requests>=2.34",
+    "beautifulsoup4>=4.15",
 ]
+
+[project.scripts]
+michinoeki-scrape = "roadstop_scraper.michinoeki.cli:main"
 
 [build-system]
 requires = ["pdm-backend"]

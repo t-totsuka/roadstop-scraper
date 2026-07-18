@@ -32,6 +32,7 @@ from roadstop_scraper.geojson.models import (
     FacilityFeature,
     FacilityKind,
     FacilityProperties,
+    FacilityStatus,
 )
 from roadstop_scraper.geojson.naming import (
     InvalidGeoJsonFilenameError,
@@ -87,23 +88,15 @@ def _is_non_empty_string(value: object) -> bool:
     return isinstance(value, str) and value.strip() != ""
 
 
-def _check_required_strings(
-    properties: FacilityProperties, prefix: str, issues: list[ValidationIssue]
-) -> None:
+def _check_required_strings(properties: FacilityProperties, prefix: str, issues: list[ValidationIssue]) -> None:
     # 必須文字列(name・pref_name)の非空を検証する。
     if not _is_non_empty_string(properties.name):
-        issues.append(
-            ValidationIssue(f"{prefix}.name", "施設名称は必須で、空にできません")
-        )
+        issues.append(ValidationIssue(f"{prefix}.name", "施設名称は必須で、空にできません"))
     if not _is_non_empty_string(properties.pref_name):
-        issues.append(
-            ValidationIssue(f"{prefix}.pref_name", "都道府県名は必須で、空にできません")
-        )
+        issues.append(ValidationIssue(f"{prefix}.pref_name", "都道府県名は必須で、空にできません"))
 
 
-def _check_enums(
-    properties: FacilityProperties, prefix: str, issues: list[ValidationIssue]
-) -> None:
+def _check_enums(properties: FacilityProperties, prefix: str, issues: list[ValidationIssue]) -> None:
     # 施設種別(必須)と上り/下り区分(任意)の列挙値を検証する。
     if not _is_valid_enum_value(properties.kind, FacilityKind):
         valid = ", ".join(member.value for member in FacilityKind)
@@ -113,9 +106,7 @@ def _check_enums(
                 f"施設種別が列挙値ではありません: {properties.kind!r}(有効値: {valid})",
             )
         )
-    if properties.direction is not None and not _is_valid_enum_value(
-        properties.direction, Direction
-    ):
+    if properties.direction is not None and not _is_valid_enum_value(properties.direction, Direction):
         valid = ", ".join(member.value for member in Direction)
         issues.append(
             ValidationIssue(
@@ -123,11 +114,17 @@ def _check_enums(
                 f"上り/下り区分が列挙値ではありません: {properties.direction!r}(有効値: {valid})",
             )
         )
+    if not _is_valid_enum_value(properties.status, FacilityStatus):
+        valid = ", ".join(member.value for member in FacilityStatus)
+        issues.append(
+            ValidationIssue(
+                f"{prefix}.status",
+                f"削除状態が列挙値ではありません: {properties.status!r}(有効値: {valid})",
+            )
+        )
 
 
-def _check_prefecture(
-    properties: FacilityProperties, prefix: str, issues: list[ValidationIssue]
-) -> None:
+def _check_prefecture(properties: FacilityProperties, prefix: str, issues: list[ValidationIssue]) -> None:
     # 都道府県番号の実在と、番号に対応する日本語名との整合を検証する。
     try:
         prefecture = find_prefecture(properties.pref_code)
@@ -150,9 +147,7 @@ def _check_prefecture(
         )
 
 
-def _check_coordinate(
-    coordinate: Coordinate, prefix: str, issues: list[ValidationIssue]
-) -> None:
+def _check_coordinate(coordinate: Coordinate, prefix: str, issues: list[ValidationIssue]) -> None:
     # 緯度・経度の値域を検証する。NaN/infはmath.isfiniteで弾き値域違反として扱う。
     checks = (
         ("longitude", coordinate.longitude, _LONGITUDE_RANGE),

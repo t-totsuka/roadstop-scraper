@@ -329,7 +329,7 @@ class HtmlPage:
 ```
 
 - Preconditions: `text`は`PageFetcher`がエンコーディング解決済みの文字列
-- Postconditions: `require_*`は非空の結果を返すか、`StructureChangedError(url, selector)`を送出する。送出前にWARNINGログを出す(4.3)
+- Postconditions: `require_*`は非空の結果を返すか、`StructureChangedError(url, selector)`を送出する。送出前にWARNINGログを出す(4.3)。**要素が存在してもトリム後のテキスト・属性値が空文字の場合は「取得できない」(4.1)と同一視して欠落扱いとする**(必須項目が正当に空になるサイトは想定せず、空値は構造変化のシグナルとみなす)
 - Invariants: 戻り値のテキストは前後空白をトリムした文字列。bs4の型(`Tag`等)はシグネチャに現れない(3.3)
 - パース不能な入力(3.4)について: `html.parser`は壊れたHTMLも寛容に解析するため実質的に例外を出さない。パース結果が空文書になる場合は後続の`require_*`が構造変化として検知する。`fetch_json`側のJSON構文不正は`ContentParseError`で扱う(3.4の主経路)
 
@@ -367,6 +367,7 @@ def extract_record(page: HtmlPage, specs: Sequence[FieldSpec]) -> ExtractedRecor
 - Preconditions: `specs`の`name`は重複しない
 - Postconditions: 返り値の`values`は全`spec.name`をキーに持つ(任意項目の欠損も`None`でキー自体は存在し、「未抽出」と「抽出したが欠損」を区別しない単純な契約とする)。必須項目が1つでも欠落すれば`StructureChangedError`を送出しレコードは返さない
 - Invariants: エンジンは項目名の意味(name・tel等)を解釈しない。`FacilityProperties`へのマッピング・値の正規化は05/06の責務(6.1はマッピング可能な形の提供まで)
+- **運用規約**: `specs`には最低1つ`required=True`の項目(例: 名称)を含めること(05/06のレビュー観点)。全項目任意だと、エラーページ等が全`None`のレコードとして素通りし、4.1の構造変化検知が働かないため。防御として`extract_record`は全値が`None`のレコードを生成した場合にWARNINGログ(対象URL付き)を出す
 - NEXCO西日本のJSONソースは本APIの対象外: `fetch_json`の結果を05/06が直接マッピングする(HTMLパースを経ないため。research.md)
 
 **Implementation Notes**
