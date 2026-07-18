@@ -9,6 +9,9 @@ dependencies = [
     "beautifulsoup4>=4.15",
 ]
 
+[project.scripts]
+michinoeki-scrape = "roadstop_scraper.michinoeki.cli:main"
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
