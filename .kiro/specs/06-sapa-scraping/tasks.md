@@ -56,7 +56,7 @@
   - _Boundary: sapa.sites.central_
   - _Depends: 2.3_
 
-- [ ] 3.3 (P) NEXCO西日本アダプタの実装
+- [x] 3.3 (P) NEXCO西日本アダプタの実装
   - 道路別一覧のURL構成とパース、詳細ページからの各項目抽出を実装する(実ページ数件の実測でセレクタ確定・名称欠落は構造変化扱い、3.1と同様の方針)
   - サイトレジストリへの登録は行わない(3.4が所有)
   - 観測可能な完了条件: フィクスチャHTMLで一覧・詳細抽出がテスト確認できる
@@ -146,3 +146,4 @@
 - タスク2.2(`sapa.geocoding`): `GsiGeocoder.geocode(address)`はdesign.mdの固定シグネチャ上URLを受け取れないため、施設URL・住所・座標のINFOログ(要件4.4)のうち施設URL部分はここでは出力していない。タスク4.2(`sapa.collector`)またはタスク5.2(`sapa.runner`)側で、詳細URLを保持している呼び出し元がURL込みのログを追加し、4.4を完全に満たすこと。
 - タスク3.1(`sapa.sites.east`): 実サイト(driveplaza.com)の`span.c-labelRight`や`<h2>`分割で得られる上り/下りは括弧や接尾辞のない裸の「上り」「下り」文字列だが、タスク2.3の共通`normalize_direction`は裸表記(接尾辞`線`/`方面`なし)を受理しない(`normalize_direction("上り")`は`None`)。3.1では`east.py`内にローカルな厳密一致ヘルパを実装して回避した(共有ヘルパは変更せず)。タスク3.2・3.3(中日本・西日本)で同じ裸表記パターンに遭遇した場合、重複実装になる前に共有ヘルパ側への昇格を検討すること。
 - タスク3.2(`sapa.sites.central`): 実サイト(sapa.c-nexco.co.jp)の一覧・見出しの方向表記は括弧付き(「（上り）」「（上り：東京方面）」)のため、タスク2.3の共通`normalize_direction`/`strip_direction_notation`がそのまま使える。詳細ページの`h3.heading`が「名称（上り：方面）」の3要素複合形式にマッチしない場合(方面情報なしの「名称（上り）」形式)のフォールバックとして、共有ヘルパへ委譲する実装とした(レビューで一度、フォールバックが方向情報を握り潰す欠陥を検出・修正済み)。また、詳細ページのGoogleマップリンク(`a[href*="google.com/maps"]`の`@lat,lon,zoom`)から直接座標を取得できることを確認した(この点は「3サイトとも座標非掲載」という従来の前提と異なり、タスク4.2の座標解決順序(サイト直接値優先→ジオコーディング補完)に影響する)。一覧のページネーション(216件中20件/ページ)はJS駆動で静的解析では再現できず、`listing_urls`は1ページ目のみを返す既知の制約としてドキュメント化した(タスク6.3で実サイト調査により解消を検討)。
+- タスク3.3(`sapa.sites.west`): 実サイト(w-holdings.co.jp)には一覧のサーバレンダリングHTMLが存在せず(`/service_search/`・`/purpose_search/`とも実測0件)、実データは`https://www.w-holdings.co.jp/sapa/json/map-search.json`(310件・緯度経度含む)からJSで取得される構造だった。`HtmlPage`/`parse_html`はJSONを構造化データへ復元できないため、`SapaSite`プロトコルへ`listing_kind: Literal["html", "json"]`を追加し`parse_listing`の引数型を`HtmlPage | object`へ拡張した(東日本・中日本へは`listing_kind = "html"`の1行追加のみ・既存ロジック無変更、既存テストへの影響なしを確認済み)。design.md・research.mdへも本変更を反映済み。西日本のJSON側にのみ存在する直接座標(`latitude`/`longitude`)は現行`SapaStub`/`SapaListingResult`に運搬用フィールドが無く活用できないため、西日本の全施設は常にジオコーディング(4.2)へフォールバックする。タスク3.4は`listing_kind`を意識したレジストリ配線を行い、タスク4.2の収集ループは`listing_kind`に応じて`fetch_text+parse_html`/`fetch_json`を使い分ける実装が必要。

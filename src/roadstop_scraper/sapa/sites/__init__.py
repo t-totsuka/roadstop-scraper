@@ -16,7 +16,7 @@ from __future__ import annotations
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Literal, Protocol
 
 from roadstop_scraper.geojson import Coordinate, Direction, Parking, Prefecture
 from roadstop_scraper.scraping.parser import HtmlPage
@@ -141,11 +141,27 @@ class SapaSite(Protocol):
 
     HTTP取得は行わない(純粋なURL構成とパースのみ。取得は``sapa.collector``が
     ``PageFetcher``で行う)。
+
+    一覧の供給形態はサイトによって異なる(タスク3.3、NEXCO西日本の実測で判明):
+    east/centralはサーバ側でHTMLレンダリングされた一覧ページを持つが、
+    westには一覧の静的HTMLが存在せず、地図検索機能が単一のJSONエンドポイント
+    (``sapa/json/map-search.json``)から全件を読み込む構成になっている。
+    ``listing_kind``はこの違いを(未実装の)collectorが取得方法・パース対象を
+    切り替えるための識別子であり、``"html"``の場合は``PageFetcher.fetch_text``
+    + ``parse_html``で得た``HtmlPage``を、``"json"``の場合は
+    ``PageFetcher.fetch_json``で得た生のJSON値(パース済みのPython値。通常
+    ``list[dict]``)をそのまま``parse_listing``へ渡すことを想定する。
     """
 
     key: str
     """サイト識別子("east" | "central" | "west")。レジューム・ログ・サイト
     帰属の識別子として用いる。"""
+
+    listing_kind: Literal["html", "json"]
+    """一覧の供給形態。``"html"``なら``parse_listing``へ``HtmlPage``を、
+    ``"json"``なら``fetch_json``で得た生のJSON値を渡す(collectorが参照する
+    ディスパッチ用の識別子。本タスクでは属性の追加のみでcollector側の実装は
+    別タスクの責務)。"""
 
     def owns_url(self, url: str) -> bool:
         """``url`` が当該サイトの詳細ページに帰属するかを判定する(サイト失敗隔離用)。"""
@@ -155,8 +171,15 @@ class SapaSite(Protocol):
         """対象都道府県列から関連する一覧URL群を構成する。"""
         ...
 
-    def parse_listing(self, page: HtmlPage) -> SapaListingResult:
-        """一覧ページをパースし、スタブ列と存在確認できたURL集合を返す。"""
+    def parse_listing(self, content: HtmlPage | object) -> SapaListingResult:
+        """一覧をパースし、スタブ列と存在確認できたURL集合を返す。
+
+        ``listing_kind == "html"``のサイトは``content``を``HtmlPage``として
+        扱う(east/central)。``listing_kind == "json"``のサイトは``content``を
+        ``fetch_json``で得た生のJSON値として扱う(west、通常``list[dict]``)。
+        Python自体はこの型の使い分けを実行時に強制しないため、各アダプタの
+        実装が自身の``listing_kind``と整合する型として扱う責務を負う。
+        """
         ...
 
     def extract_detail(self, page: HtmlPage, detail_url: str) -> SapaDetail:

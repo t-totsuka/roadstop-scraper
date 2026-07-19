@@ -115,6 +115,7 @@ class CentralSite:
     """NEXCO中日本(sapa.c-nexco.co.jp)のSA/PAサイトアダプタ。"""
 
     key = "central"
+    listing_kind = "html"
 
     def owns_url(self, url: str) -> bool:
         """``url``のホスト名が``sapa.c-nexco.co.jp``と完全一致するかを判定する。"""

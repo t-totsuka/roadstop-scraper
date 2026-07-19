@@ -86,6 +86,7 @@ class EastSite:
     """NEXCO東日本(ドラぷら/driveplaza.com)のSA/PAサイトアダプタ。"""
 
     key = "east"
+    listing_kind = "html"
 
     def owns_url(self, url: str) -> bool:
         """``url``のホスト名がdriveplaza.com系かどうかを判定する。"""
