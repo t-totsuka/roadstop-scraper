@@ -59,12 +59,15 @@ _CONFIRMED_AT = datetime(2026, 7, 19, 9, 0, 0, tzinfo=UTC)
 _TOKYO = find_prefecture("13")
 _NAGANO = find_prefecture("20")
 
-# 東日本(driveplaza.com)のarealist別一覧URL(east.py._LISTING_URL_TEMPLATEと
-# 同じ構成。実装を直接importせず、実サイトのURL構成を模したフィクスチャとして
-# 独立に構成する。tests/sapa/test_integration_deletion.pyと同じ値になるのは
-# サイト側のURL構成そのものが同一のためであり、フィクスチャの共有ではない)。
-_EAST_TOKYO_LISTING_URL = "https://www.driveplaza.com/dp/SAPAServRes?arealist=3&HIGHWAY=AA"
-_EAST_NAGANO_LISTING_URL = "https://www.driveplaza.com/dp/SAPAServRes?arealist=4&HIGHWAY=AA"
+# 東日本(driveplaza.com)の一覧URL(east.py._LISTING_URL_TEMPLATEと同じ構成。
+# タスク6.3の実サイト疎通確認で、arealistはHIGHWAY=AA併用時に値によらず東日本
+# 管内全域を返すことが判明したため、EastSite.listing_urlsは東京都・長野県の
+# いずれの単独指定でも同一の単一URL(arealist=0)を返す。実装を直接importせず、
+# 実サイトのURL構成を模したフィクスチャとして独立に構成する。
+# tests/sapa/test_integration_deletion.pyと同じ値になるのはサイト側のURL構成
+# そのものが同一のためであり、フィクスチャの共有ではない)。
+_EAST_TOKYO_LISTING_URL = "https://www.driveplaza.com/dp/SAPAServRes?arealist=0&HIGHWAY=AA"
+_EAST_NAGANO_LISTING_URL = "https://www.driveplaza.com/dp/SAPAServRes?arealist=0&HIGHWAY=AA"
 _CENTRAL_SEARCH_URL = "https://sapa.c-nexco.co.jp/search/result"
 
 
@@ -373,8 +376,8 @@ def test_run_scopeの検証_一部サイトの一覧取得が失敗した場合_
     対偶)。``ALL_SITES``はモンキーパッチせず実際の東日本・中日本・西日本の
     3サイトをそのまま使う(``tests/sapa/test_integration_deletion.py``の
     サイト失敗隔離テストと同じ「実アダプタのまま」の方針。長野県は
-    ``EastSite``のarealist=4・``CentralSite``の管轄が交差するため、この
-    組み合わせで両方に実際のHTTPリクエストが発生する)。
+    ``EastSite``の管轄(東日本管内全域)・``CentralSite``の管轄が交差するため、
+    この組み合わせで両方に実際のHTTPリクエストが発生する)。
     """
     url_nagano = "https://www.driveplaza.com/sapa/2020/3020001/1/"
     html_by_url = {

@@ -3,12 +3,23 @@
 対象エリア・道路の一覧URL構成、一覧からのスタブ抽出、詳細ページからの
 名称・路線名・上下線・住所等の抽出を実装する(design.md「sapa.sites」節参照)。
 
+既知の制限(タスク6.3の実サイト疎通確認で確認、修正不可能な実サイトの制約):
 一覧ページ(``https://www.driveplaza.com/dp/SAPAServRes``)は「NEXCO東日本管内の
-サービスエリアのみ検索可能」であるため、``arealist``のうち北海道・東北・関東・
-信越・北陸(1〜5)のみを対象とし、東海・近畿・中国・四国・九州沖縄(6〜10、
-中日本・西日本の管轄)は問い合わせない(過剰取得の抑制、design.md Implementation
-Notes参照)。エリア→都道府県の対応表はベストエフォートの近似であり、タスク6.3の
-実サイト疎通確認でのスポットチェック対象とする(完全な正当性の保証はしない)。
+サービスエリアのみ検索可能」だが、検索フォームの``arealist``パラメータは
+``HIGHWAY=AA``と併用した場合、値によらず常に東日本管内全域(実測約875件、
+北海道から北陸まで)を返すことをcurlによるライブ検証で確認した
+(``arealist=0``と``arealist=1``が完全に同一のレスポンスを返す。``HIGHWAY``の
+指定自体は必須だが値は結果に影響しない)。つまり``arealist``による一覧の
+サーバ側絞り込みは実質的に機能していない。この絞り込みが実際にどのような
+機構(JS駆動のフォーム送信等)で行われているかは静的なGETリクエストでは
+再現できず、都道府県単位の一覧フィルタは実サイト側に存在しないと結論づけた。
+そのため``listing_urls``は要求都道府県が東日本管内(北海道〜北陸)と1件でも
+交差する限り、常に単一の全域一覧URL(``arealist=0``)のみを返す。都道府県への
+絞り込みは一覧取得の時点では行わず、``sapa.collector``が各施設の住所から
+導出した都道府県によって完全に担う(collector側の既存ロジックで対応済み、
+本アダプタの変更は不要)。以前は``arealist``値ごとに複数のURLを構成していたが、
+これらは互いに重複する同一内容の再取得に過ぎず、サードパーティサーバへの
+不要な負荷だったため単一URLへ整理した。
 
 詳細ページには実測で2種類のテンプレートが確認されている:
 「標準」テンプレート(``h1.c-titleH1``に施設名、``span.c-labelRight``に上り/下りの
@@ -32,17 +43,35 @@ __all__ = ["EastSite"]
 
 _LISTING_URL_TEMPLATE = "https://www.driveplaza.com/dp/SAPAServRes?arealist={arealist}&HIGHWAY=AA"
 
-# arealist(検索フォームの地域コード)→ NEXCO東日本管内に該当する都道府県コード。
-# 6(東海)〜10(九州・沖縄)は中日本・西日本の管轄のため対応表に含めない
-# (含めても実際には該当施設が0件になるだけで害はないが、過剰な問い合わせを
-# 避けるため定義しない)。
-_AREA_PREFECTURE_CODES: dict[str, tuple[str, ...]] = {
-    "1": ("01",),  # 北海道
-    "2": ("02", "03", "04", "05", "06", "07"),  # 東北
-    "3": ("08", "09", "10", "11", "12", "13", "14"),  # 関東
-    "4": ("15", "20"),  # 信越(新潟・長野)
-    "5": ("16", "17", "18"),  # 北陸(富山・石川・福井)
-}
+# NEXCO東日本管内に該当する都道府県コード(北海道・東北・関東・信越・北陸の
+# 全都道府県の和集合)。モジュールdocstring記載のとおり、arealistの値は
+# 一覧の絞り込みには寄与しない(常に東日本管内全域が返る)ため、ここでは
+# 「東日本管内かどうか」の判定にのみ用いる単純な集合とする
+# (central.py/west.pyの``_CENTRAL_PREFECTURE_CODES``/``_WEST_PREFECTURE_CODES``と
+# 同じ平坦集合の規約に倣う)。
+_EAST_PREFECTURE_CODES: frozenset[str] = frozenset(
+    {
+        "01",  # 北海道
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",  # 東北
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",  # 関東
+        "15",
+        "20",  # 信越(新潟・長野)
+        "16",
+        "17",
+        "18",  # 北陸(富山・石川・福井)
+    }
+)
 
 _OWNED_HOSTS = frozenset({"driveplaza.com", "www.driveplaza.com"})
 
@@ -93,18 +122,23 @@ class EastSite:
         return urlparse(url).hostname in _OWNED_HOSTS
 
     def listing_urls(self, prefectures: Sequence[Prefecture]) -> tuple[str, ...]:
-        """対象都道府県列と交差するNEXCO東日本管内エリアの一覧URL群を構成する。
+        """対象都道府県列がNEXCO東日本管内と交差する場合、単一の一覧URLを返す。
 
-        いずれのエリアとも交差しない場合(九州のみ等)は空タプルを返す。これは
+        モジュールdocstring記載のとおり``arealist``は一覧の絞り込みには寄与
+        しない(値によらず東日本管内全域・実測約875件が返る)ため、要求都道府県
+        がいずれか1件でも東日本管内(北海道〜北陸)と交差すれば、常に高々1件
+        (``arealist=0``の全域URL)を返す。都道府県ごとに複数のURLを構成しても
+        全て同一内容の重複取得になるだけで、サードパーティサーバへの不要な
+        負荷にしかならないため、意図的に単一URLへ集約している。
+
+        いずれの都道府県とも交差しない場合(九州のみ等)は空タプルを返す。これは
         NEXCO東日本が単に当該地域に施設を持たないという正当な結果であり、
         呼び出し側(collector)は当該サイトから0件のスタブを得るだけでよい。
         """
         requested_codes = {prefecture.code for prefecture in prefectures}
-        return tuple(
-            _LISTING_URL_TEMPLATE.format(arealist=arealist)
-            for arealist, codes in _AREA_PREFECTURE_CODES.items()
-            if requested_codes.intersection(codes)
-        )
+        if requested_codes.intersection(_EAST_PREFECTURE_CODES):
+            return (_LISTING_URL_TEMPLATE.format(arealist=0),)
+        return ()
 
     def parse_listing(self, page: HtmlPage) -> SapaListingResult:
         """一覧ページの``div.box-sapa``要素群からスタブ列を抽出する。

@@ -189,23 +189,31 @@ class TestURL帰属判定:
 
 
 class Test一覧URL構成:
-    def test_一覧URL構成の検証_北海道のみ指定された場合_arealist1のURLのみ返る(self) -> None:
+    # タスク6.3の実サイト疎通確認で、arealistパラメータはHIGHWAY=AA併用時に
+    # 値によらず東日本管内全域(実測約875件)を返すことが判明した(east.py
+    # モジュールdocstring参照)。そのため、arealistの具体的な数値自体には
+    # 意味が無い(常に単一の全域URLを構成するための固定値)。以下のURL文字列は
+    # 実装の固定出力を確認しているだけであり、「特定の都道府県にarealist=Nが
+    # 対応する」という意味は無い。
+
+    def test_一覧URL構成の検証_北海道のみ指定された場合_単一の全域URLが返る(self) -> None:
         urls = EastSite().listing_urls((find_prefecture("01"),))
 
-        assert urls == ("https://www.driveplaza.com/dp/SAPAServRes?arealist=1&HIGHWAY=AA",)
+        assert urls == ("https://www.driveplaza.com/dp/SAPAServRes?arealist=0&HIGHWAY=AA",)
 
     def test_一覧URL構成の検証_九州の都道府県のみ指定された場合_空タプルが返る(self) -> None:
         urls = EastSite().listing_urls((find_prefecture("40"),))
 
         assert urls == ()
 
-    def test_一覧URL構成の検証_関東と新潟が混在する場合_arealist3と4のURLが返る(self) -> None:
+    def test_一覧URL構成の検証_関東と新潟が混在する場合でも単一の全域URLのみ返る(self) -> None:
+        # 修正前は都道府県ごとに複数のarealist URLを構成していたが、いずれも
+        # 同一内容(東日本管内全域)を返す重複取得に過ぎなかったため、複数の
+        # 都道府県が交差する場合でも常に1件のみを返すことを検証する
+        # (このテストが本バグ修正の回帰防止テスト)。
         urls = EastSite().listing_urls((find_prefecture("11"), find_prefecture("15")))
 
-        assert urls == (
-            "https://www.driveplaza.com/dp/SAPAServRes?arealist=3&HIGHWAY=AA",
-            "https://www.driveplaza.com/dp/SAPAServRes?arealist=4&HIGHWAY=AA",
-        )
+        assert urls == ("https://www.driveplaza.com/dp/SAPAServRes?arealist=0&HIGHWAY=AA",)
 
     def test_一覧URL構成の検証_都道府県が指定されない場合_空タプルが返る(self) -> None:
         urls = EastSite().listing_urls(())
