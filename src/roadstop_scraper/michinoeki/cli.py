@@ -16,7 +16,7 @@ import sys
 from typing import TYPE_CHECKING
 
 from roadstop_scraper.michinoeki.runner import run_scope
-from roadstop_scraper.michinoeki.scope import InvalidScopeError, ScopeSpec, resolve_scope
+from roadstop_scraper.pipeline import InvalidScopeError, ScopeSpec, resolve_scope
 
 if TYPE_CHECKING:
     from collections.abc import Sequence

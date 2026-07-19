@@ -17,7 +17,7 @@ from __future__ import annotations
 import pytest
 
 from roadstop_scraper.michinoeki import cli
-from roadstop_scraper.michinoeki.scope import ScopeSpec
+from roadstop_scraper.pipeline import ScopeSpec
 
 
 @pytest.fixture

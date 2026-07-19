@@ -3,7 +3,7 @@ from dataclasses import FrozenInstanceError
 import pytest
 
 from roadstop_scraper.geojson import PREFECTURES
-from roadstop_scraper.michinoeki.scope import (
+from roadstop_scraper.pipeline.scope import (
     REGIONS,
     InvalidScopeError,
     ScopeSpec,

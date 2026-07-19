@@ -51,8 +51,8 @@ from roadstop_scraper.michinoeki.runner import (
     run_prefecture,
     run_scope,
 )
-from roadstop_scraper.michinoeki.scope import InvalidScopeError, ScopeSpec
 from roadstop_scraper.michinoeki.site_urls import build_search_url
+from roadstop_scraper.pipeline import InvalidScopeError, ScopeSpec
 from roadstop_scraper.scraping import PageFetcher, ScrapingConfig, UrlResumeTracker, parse_html
 
 _CONFIRMED_AT = datetime(2026, 7, 18, 9, 0, 0, tzinfo=UTC)
