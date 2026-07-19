@@ -79,9 +79,35 @@ class Test施設名からの方向表記除去:
         assert strip_direction_notation("上尾サービスエリア") == "上尾サービスエリア"
 
 
+_EAST_URL = "https://www.driveplaza.com/sapa/1040/1040021/1/"
+_CENTRAL_URL = "https://sapa.c-nexco.co.jp/sapa?sapainfoid=17"
+_WEST_URL = "https://www.w-holdings.co.jp/sapa/30020/"
+
+
 class Test全サイト登録:
-    def test_全サイト登録の検証_タスク2_3時点だった場合_ALL_SITESは空タプルである(self) -> None:
-        assert ALL_SITES == ()
+    def test_全サイト登録の検証_3アダプタ登録後だった場合_東中西の順で3件登録される(self) -> None:
+        assert len(ALL_SITES) == 3
+        assert tuple(site.key for site in ALL_SITES) == ("east", "central", "west")
+
+    def test_全サイト登録の検証_ALL_SITESの各サイトだった場合_listing_kindがhtml_html_jsonの順である(self) -> None:
+        assert tuple(site.listing_kind for site in ALL_SITES) == ("html", "html", "json")
+
+    @pytest.mark.parametrize(
+        ("key", "own_url", "other_urls"),
+        [
+            ("east", _EAST_URL, (_CENTRAL_URL, _WEST_URL)),
+            ("central", _CENTRAL_URL, (_EAST_URL, _WEST_URL)),
+            ("west", _WEST_URL, (_EAST_URL, _CENTRAL_URL)),
+        ],
+    )
+    def test_全サイト登録の検証_各サイトのowns_urlだった場合_自サイトのURLにのみ真を返す(
+        self, key: str, own_url: str, other_urls: tuple[str, ...]
+    ) -> None:
+        site = next(s for s in ALL_SITES if s.key == key)
+
+        assert site.owns_url(own_url) is True
+        for other_url in other_urls:
+            assert site.owns_url(other_url) is False
 
 
 class _FakeSapaSite:

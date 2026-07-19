@@ -7,8 +7,11 @@ NEXCO東日本・中日本・西日本の3サイトの差異(URL構成・HTML構
 ここへ集約し、各アダプタから利用する)。
 
 サイト固有のURL構成・セレクタ・パースロジックは本モジュールでは扱わない
-(各アダプタ ``east``/``central``/``west`` の責務。タスク3.1-3.3で実装する)。
-``ALL_SITES`` は3アダプタが揃うタスク3.4で登録するため、現時点では空。
+(各アダプタ ``east``/``central``/``west`` の責務。タスク3.1-3.3で実装済み)。
+``ALL_SITES`` はタスク3.4で東・中・西の順に登録済み(本モジュール末尾を参照)。
+各アダプタ(``east``/``central``/``west``)は本モジュールで定義された型を
+モジュールレベルでインポートするため、循環インポートを避けるべく登録用
+importは本モジュールの末尾(型定義がすべて完了した後)に置く。
 """
 
 from __future__ import annotations
@@ -187,6 +190,12 @@ class SapaSite(Protocol):
         ...
 
 
-# east/central/west の3アダプタが揃うタスク3.4で登録順(east, central, west)に
-# 差し替える。本タスク時点ではアダプタが未実装のため空タプル。
-ALL_SITES: tuple[SapaSite, ...] = ()
+# east/central/westの3アダプタは本モジュールの型(SapaDetail等)をモジュール
+# レベルでインポートするため、循環インポートを避けるためこのimportは本モジュール
+# の型定義がすべて完了した末尾で行う(タスク3.4)。
+from roadstop_scraper.sapa.sites.central import CentralSite  # noqa: E402
+from roadstop_scraper.sapa.sites.east import EastSite  # noqa: E402
+from roadstop_scraper.sapa.sites.west import WestSite  # noqa: E402
+
+# 登録順(east, central, west。design.md「sapa.sites」節参照)。
+ALL_SITES: tuple[SapaSite, ...] = (EastSite(), CentralSite(), WestSite())
