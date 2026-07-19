@@ -79,7 +79,7 @@
   - _Boundary: sapa.collector(部分結果キャッシュ)_
   - _Depends: 1.2_
 
-- [ ] 4.2 サイト単位の収集ループ
+- [x] 4.2 サイト単位の収集ループ
   - 一覧の全URL取得成功を要求し、1ページでも失敗または存在確認URLが空の場合はサイト単位の失敗として上位へ通知する
   - 未処理スタブのみ詳細取得し、必須項目(名称・路線名)検査→住所分離→都道府県導出→範囲外は処理済み記録のみ→座標解決(サイト直接値を優先し、無ければ補完、両方不可でスキップ)→プロパティ変換(施設種別・都道府県・詳細URL付与)→部分結果保存→処理済み記録、の順で処理する
   - スキップは対象URLを含む警告ログと都道府県別件数へ記録し、個々の失敗で処理を止めない
@@ -147,3 +147,4 @@
 - タスク3.1(`sapa.sites.east`): 実サイト(driveplaza.com)の`span.c-labelRight`や`<h2>`分割で得られる上り/下りは括弧や接尾辞のない裸の「上り」「下り」文字列だが、タスク2.3の共通`normalize_direction`は裸表記(接尾辞`線`/`方面`なし)を受理しない(`normalize_direction("上り")`は`None`)。3.1では`east.py`内にローカルな厳密一致ヘルパを実装して回避した(共有ヘルパは変更せず)。タスク3.2・3.3(中日本・西日本)で同じ裸表記パターンに遭遇した場合、重複実装になる前に共有ヘルパ側への昇格を検討すること。
 - タスク3.2(`sapa.sites.central`): 実サイト(sapa.c-nexco.co.jp)の一覧・見出しの方向表記は括弧付き(「（上り）」「（上り：東京方面）」)のため、タスク2.3の共通`normalize_direction`/`strip_direction_notation`がそのまま使える。詳細ページの`h3.heading`が「名称（上り：方面）」の3要素複合形式にマッチしない場合(方面情報なしの「名称（上り）」形式)のフォールバックとして、共有ヘルパへ委譲する実装とした(レビューで一度、フォールバックが方向情報を握り潰す欠陥を検出・修正済み)。また、詳細ページのGoogleマップリンク(`a[href*="google.com/maps"]`の`@lat,lon,zoom`)から直接座標を取得できることを確認した(この点は「3サイトとも座標非掲載」という従来の前提と異なり、タスク4.2の座標解決順序(サイト直接値優先→ジオコーディング補完)に影響する)。一覧のページネーション(216件中20件/ページ)はJS駆動で静的解析では再現できず、`listing_urls`は1ページ目のみを返す既知の制約としてドキュメント化した(タスク6.3で実サイト調査により解消を検討)。
 - タスク3.3(`sapa.sites.west`): 実サイト(w-holdings.co.jp)には一覧のサーバレンダリングHTMLが存在せず(`/service_search/`・`/purpose_search/`とも実測0件)、実データは`https://www.w-holdings.co.jp/sapa/json/map-search.json`(310件・緯度経度含む)からJSで取得される構造だった。`HtmlPage`/`parse_html`はJSONを構造化データへ復元できないため、`SapaSite`プロトコルへ`listing_kind: Literal["html", "json"]`を追加し`parse_listing`の引数型を`HtmlPage | object`へ拡張した(東日本・中日本へは`listing_kind = "html"`の1行追加のみ・既存ロジック無変更、既存テストへの影響なしを確認済み)。design.md・research.mdへも本変更を反映済み。西日本のJSON側にのみ存在する直接座標(`latitude`/`longitude`)は現行`SapaStub`/`SapaListingResult`に運搬用フィールドが無く活用できないため、西日本の全施設は常にジオコーディング(4.2)へフォールバックする。タスク3.4は`listing_kind`を意識したレジストリ配線を行い、タスク4.2の収集ループは`listing_kind`に応じて`fetch_text+parse_html`/`fetch_json`を使い分ける実装が必要。
+- タスク4.2(`sapa.collector`): `SiteCollectResult`は「このcollect_site呼び出し1回(1サイト分)の結果のみ」を表すという解釈で実装した(`partial_store`はクラッシュ復旧用の実行横断永続化に使うが、戻り値はローカル集計のみを返す)。タスク5.1・5.2のオーケストレーションは、`ALL_SITES`の各サイトについて`collect_site`を呼び出し、返された複数の`SiteCollectResult`(features/listed_urls/skipped_counts/geocoded_counts)を自ら集約(和集合・合算)する実装が必要(単一の`SiteCollectResult`や`partial_store`の累積状態だけでは全サイト分の結果にならない)。スキップ件数のバケット分けは、都道府県判明前の失敗(必須項目欠落・構造変化・住所なし・都道府県特定不可)は`"unknown"`、都道府県判明後の座標解決失敗は実際の都道府県コードを使う、という区別を実装済み。ジオコーディング成功時のINFOログは`sapa.geocoding`(住所+座標)と`sapa.collector`(URL+住所+座標)の2箇所で出力される(やや冗長だが境界順守のため許容)。
