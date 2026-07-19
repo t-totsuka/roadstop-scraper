@@ -3,6 +3,14 @@
     {
       "path": "01_hokkaido_michinoeki.geojson",
       "updated_at": "2026-07-18T16:53:57.495961+09:00"
+    },
+    {
+      "path": "23_aichi_sapa.geojson",
+      "updated_at": "2026-07-19T22:53:06.124978+09:00"
+    },
+    {
+      "path": "22_shizuoka_sapa.geojson",
+      "updated_at": "2026-07-19T22:54:34.116420+09:00"
     }
   ]
 }

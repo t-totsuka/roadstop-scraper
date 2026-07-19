@@ -1,0 +1,317 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.9634413,
+          35.3146416
+        ]
+      },
+      "properties": {
+        "name": "EXPASA足柄",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県御殿場市",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=3",
+        "road_name": "東名高速道路",
+        "area_direction": "東京方面",
+        "parking": {
+          "large": 352,
+          "standard": 516
+        },
+        "direction": "上り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.9670812,
+          35.3133615
+        ]
+      },
+      "properties": {
+        "name": "EXPASA足柄",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県駿東郡小山町",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=4",
+        "road_name": "東名高速道路",
+        "area_direction": "名古屋方面",
+        "parking": {
+          "large": 353,
+          "standard": 511
+        },
+        "direction": "下り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.9069231,
+          35.2527199
+        ]
+      },
+      "properties": {
+        "name": "駒門PA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県御殿場市",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=19",
+        "road_name": "東名高速道路",
+        "area_direction": "東京方面",
+        "parking": {
+          "large": 23,
+          "standard": 33
+        },
+        "direction": "上り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.9089627,
+          35.2389063
+        ]
+      },
+      "properties": {
+        "name": "駒門PA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県御殿場市神山",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=20",
+        "road_name": "東名高速道路",
+        "area_direction": "名古屋方面",
+        "parking": {
+          "large": 51,
+          "standard": 52
+        },
+        "direction": "下り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.8364753,
+          35.1433255
+        ]
+      },
+      "properties": {
+        "name": "愛鷹PA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県沼津市",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=5",
+        "road_name": "東名高速道路",
+        "area_direction": "東京方面",
+        "parking": {
+          "large": 49,
+          "standard": 48
+        },
+        "direction": "上り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.8367766,
+          35.1424463
+        ]
+      },
+      "properties": {
+        "name": "愛鷹PA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県沼津市",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=6",
+        "road_name": "東名高速道路",
+        "area_direction": "名古屋方面",
+        "parking": {
+          "large": 49,
+          "standard": 46
+        },
+        "direction": "下り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.6173174,
+          35.160923
+        ]
+      },
+      "properties": {
+        "name": "EXPASA富士川",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県富士市",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=33",
+        "road_name": "東名高速道路",
+        "area_direction": "東京方面",
+        "parking": {
+          "large": 107,
+          "standard": 218
+        },
+        "direction": "上り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.619289,
+          35.1582283
+        ]
+      },
+      "properties": {
+        "name": "富士川SA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県富士市",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=34",
+        "road_name": "東名高速道路",
+        "area_direction": "名古屋方面",
+        "parking": {
+          "large": 71,
+          "standard": 216
+        },
+        "direction": "下り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.5438723,
+          35.0779504
+        ]
+      },
+      "properties": {
+        "name": "由比PA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県静岡市清水区",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=43",
+        "road_name": "東名高速道路",
+        "area_direction": "東京方面",
+        "parking": {
+          "large": 10,
+          "standard": 34
+        },
+        "direction": "上り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.5427454,
+          35.0829696
+        ]
+      },
+      "properties": {
+        "name": "由比PA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県静岡市清水区",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=44",
+        "road_name": "東名高速道路",
+        "area_direction": "名古屋方面",
+        "parking": {
+          "large": 10,
+          "standard": 38
+        },
+        "direction": "下り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.4336444,
+          34.9836087
+        ]
+      },
+      "properties": {
+        "name": "日本平PA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県静岡市駿河区",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=29",
+        "road_name": "東名高速道路",
+        "area_direction": "東京方面",
+        "parking": {
+          "large": 55,
+          "standard": 102
+        },
+        "direction": "上り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          138.4321143,
+          34.9844574
+        ]
+      },
+      "properties": {
+        "name": "日本平PA",
+        "kind": "sapa",
+        "pref_code": "22",
+        "pref_name": "静岡県",
+        "address": "静岡県静岡市駿河区",
+        "source_url": "https://sapa.c-nexco.co.jp/sapa?sapainfoid=30",
+        "road_name": "東名高速道路",
+        "area_direction": "名古屋方面",
+        "parking": {
+          "large": 56,
+          "standard": 114
+        },
+        "direction": "下り",
+        "last_confirmed_at": "2026-07-19T22:54:34.116420+09:00"
+      }
+    }
+  ]
+}
