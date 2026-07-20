@@ -6,9 +6,25 @@ NEXCO東日本・中日本・西日本のSA/PA(サービスエリア・パーキ
 ``roadstop_scraper.pipeline``を利用する(design.md「Boundary Commitments」
 Allowed Dependencies参照)。
 
-現時点ではパッケージの雛形のみで、収集・ジオコーディング・出力の実装は
-後続タスク(2.x〜5.x)で追加される。実装が揃い次第、利用側が参照すべき
-主要な公開シンボル(``run_scope``・``main`` 等)をここへ再公開する。
+利用側(エントリポイント)はこのモジュールだけをimportすればよい。個別
+モジュール(``collector``・``geocoding``・``runner``・``cli``・``sites``等)への
+直接依存は不要(``michinoeki``パッケージと同じ再公開の規約)。
 """
 
-__all__: list[str] = []
+from roadstop_scraper.sapa.cli import main
+from roadstop_scraper.sapa.runner import (
+    SapaPrefectureResult,
+    SapaScopeRunResult,
+    run_prefecture,
+    run_prefectures,
+    run_scope,
+)
+
+__all__ = [
+    "SapaPrefectureResult",
+    "SapaScopeRunResult",
+    "main",
+    "run_prefecture",
+    "run_prefectures",
+    "run_scope",
+]

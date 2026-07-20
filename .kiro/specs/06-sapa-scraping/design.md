@@ -176,7 +176,8 @@ flowchart TB
     H -->|いいえ| I[住所でジオコーディング]
     I -->|成功| J
     I -->|失敗| F
-    J --> K[都道府県ごとにグルーピング]
+    J --> J2[中断前に確定済みの部分結果を読み戻して今回分と合流]
+    J2 --> K[都道府県ごとにグルーピング]
     K --> L[前回GeoJSON読み戻しとサイト帰属での分割]
     L --> M[merge_with_previous で削除状態遷移]
     M --> N[GeoJSON出力と index.json 更新]
@@ -439,6 +440,7 @@ def collect_site(
 
 **Responsibilities & Constraints**
 - `resolve_scope`で対象都道府県を解決(1.1-1.3。HTTP発生前。`InvalidScopeError`は伝播)し、`ALL_SITES`を順に`collect_site`へ渡す。`SiteListingError`はサイト失敗として記録し他サイトを継続する(2.3)
+- 収集開始前に`SapaPartialStore`の保持内容(前回の中断実行までに確定済みの施設・件数)をスナップショットとして読み戻し、グルーピング時に今回分と合流させる(7.2の出力側。中断前に収集済み=`mark_processed`済みの施設は再開実行の`collect_site`に現れないため、読み戻しが無いと出力から欠落する)。同一`source_url`は今回の新結果を優先し、失敗サイト帰属の復元施設は合流させない(現状維持で合流する前回施設との二重出力を防ぐ。除外分はキャッシュに残り当該サイト成功時に合流)
 - 成功サイトの結果を都道府県ごとにグルーピングし、範囲内の各都道府県について: 前回GeoJSON読み戻し→前回施設を`owns_url`でサイト帰属分割(失敗サイト帰属分は削除判定から除外し現状維持でそのまま出力へ合流)→成功サイト分を`merge_with_previous`(listed_urlsは成功サイトの和集合)でマージ(9.1-9.4)→`build_geojson_filename(pref, FacilityKind.SAPA)`で出力(6.1)→`index_store`更新(6.3)
 - どのサイトにも帰属しない前回施設(アダプタ構成変更後の残存等)は通常の削除判定に含める
 - 出力前検証違反(`GeoJsonValidationError`)・前回ファイル破損は当該都道府県のみ中断しERRORログで報告する(6.2、05と同じ隔離)

@@ -227,6 +227,42 @@ def run_prefecture(
     )
 
 
+def _select_restorable_features(
+    restored_features: Sequence[FacilityFeature],
+    site_results: Sequence[SiteCollectResult],
+    failed_site_keys: Set[str],
+    all_sites: Sequence[SapaSite],
+) -> list[FacilityFeature]:
+    """前回の中断実行までに部分結果へ確定済みの施設のうち、今回の出力へ合流させる分を選別する。
+
+    次の2種類を除外し、残りを返す:
+
+    - 今回の収集(``site_results``)で改めて成功した施設(``source_url``一致)。
+      同一施設は今回の新しい結果を優先する(05の``michinoeki.runner``が復元分と
+      今回分を``source_url``で重複排除し新結果を優先するのと同じ規律)
+    - 今回一覧取得に失敗したサイト(``failed_site_keys``)に帰属する施設。
+      失敗サイトの前回出力は``_split_previous_by_site_attribution``で現状維持の
+      まま合流するため、復元分も出力すると同一``source_url``が二重に出力され
+      うる。除外した分は部分結果キャッシュに残り続け(失敗が残る実行では
+      7.3のクリアが行われない)、当該サイトが成功した実行で改めて合流する
+
+    どのサイトにも帰属しない孤児施設は、前回出力の孤児と同様に通常のマージ
+    対象として含める。
+    """
+    current_urls = {feature.properties.source_url for result in site_results for feature in result.features}
+
+    selected: list[FacilityFeature] = []
+    for feature in restored_features:
+        url = feature.properties.source_url
+        if url in current_urls:
+            continue
+        owner = next((site for site in all_sites if site.owns_url(url)), None)
+        if owner is not None and owner.key in failed_site_keys:
+            continue
+        selected.append(feature)
+    return selected
+
+
 def _group_features_by_prefecture(
     site_results: Sequence[SiteCollectResult],
 ) -> dict[str, list[FacilityFeature]]:
@@ -268,6 +304,9 @@ def run_prefectures(
     all_sites: Sequence[SapaSite],
     confirmed_at: datetime,
     *,
+    restored_features: Sequence[FacilityFeature] = (),
+    restored_skipped_counts: Mapping[str, int] | None = None,
+    restored_geocoded_counts: Mapping[str, int] | None = None,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     index_path: Path | None = None,
 ) -> list[SapaPrefectureResult | None]:
@@ -291,11 +330,28 @@ def run_prefectures(
     都道府県であっても、前回出力済みの施設が削除状態へ正しく遷移できるよう
     処理対象に含める必要があるため、"今回データがある都道府県のみ"へは絞り
     込まない)。
+
+    ``restored_features``・``restored_skipped_counts``・``restored_geocoded_counts``
+    は、前回の中断実行までに``SapaPartialStore``へ確定済みの部分結果
+    (``run_scope``が収集開始前に読み戻したスナップショット)。復元施設は
+    ``_select_restorable_features``で選別(今回改めて成功した施設は新結果を
+    優先、失敗サイト帰属分は除外)したうえで今回分と同じバケットへ合流させ、
+    復元件数マップは今回分と同様に都道府県コードごとに合算する(7.2:
+    「結果保存が先」の順序規律で永続化された結果を、再開後の出力まで確実に
+    引き継ぐ。05の``michinoeki.runner``の復元・合算パターンと同じ規律)。
     """
+    restorable = _select_restorable_features(restored_features, site_results, failed_site_keys, all_sites)
     features_by_pref = _group_features_by_prefecture(site_results)
+    for feature in restorable:
+        features_by_pref.setdefault(feature.properties.pref_code, []).append(feature)
+
     listed_urls_union: frozenset[str] = frozenset().union(*(result.listed_urls for result in site_results))
-    skipped_by_pref = _aggregate_counts_by_prefecture([result.skipped_counts for result in site_results])
-    geocoded_by_pref = _aggregate_counts_by_prefecture([result.geocoded_counts for result in site_results])
+    skipped_by_pref = _aggregate_counts_by_prefecture(
+        [restored_skipped_counts or {}, *(result.skipped_counts for result in site_results)]
+    )
+    geocoded_by_pref = _aggregate_counts_by_prefecture(
+        [restored_geocoded_counts or {}, *(result.geocoded_counts for result in site_results)]
+    )
 
     results: list[SapaPrefectureResult | None] = []
     for prefecture in scope_prefectures:
@@ -365,6 +421,14 @@ def run_scope(
     サイトの識別子集合(``failed_site_keys``)も渡すことで、前回施設のサイト
     帰属分割(現状維持での隔離)が正しく機能する。
 
+    収集開始前に``partial_result_store``の保持内容(前回の中断実行までに確定
+    済みの施設・件数)をスナップショットとして読み戻し、``run_prefectures``の
+    ``restored_features``等へ渡す(7.2)。中断前に収集済み(``mark_processed``
+    済み)の施設は再開実行の``collect_site``ではスキップされ``SiteCollectResult``
+    に現れないため、この読み戻しが無いと再開実行の出力から欠落する(05の
+    ``michinoeki.runner.run_prefecture``が``_PartialResultStore``から復元する
+    のと同じ規律)。
+
     ``run_prefectures``の戻り値は``resolve_scope``が返した都道府県列と同じ順序
     であるため、``enumerate``で対応するインデックスの都道府県コードを突き合わせ、
     ``None``が返った(出力前検証違反・前回GeoJSON破損)都道府県のコード集合を
@@ -422,6 +486,16 @@ def run_scope(
     resolved_confirmed_at = confirmed_at if confirmed_at is not None else time_utility.now()
     resolved_partial_store = partial_result_store if partial_result_store is not None else SapaPartialStore()
 
+    # 7.2: 前回の中断実行までに部分結果へ確定済みの施設・件数を、今回の収集を
+    # 始める前のスナップショットとして読み戻す。collect_siteは今回分を同じ
+    # ストアへ逐次追記していくため、収集後に読むと前回分と今回分を区別できない。
+    # 読み戻した施設はrun_prefecturesで今回分と重複排除のうえ出力へ合流させる
+    # (これが無いと、中断前に収集済み=mark_processed済みの施設が再開実行の
+    # 出力から欠落し、全成功時の7.3クリアで収集結果ごと破棄されてしまう)。
+    restored_features = resolved_partial_store.features
+    restored_skipped_counts = resolved_partial_store.skipped_counts
+    restored_geocoded_counts = resolved_partial_store.geocoded_counts
+
     target = f"範囲全体(region={spec.region!r}, prefecture_code={spec.prefecture_code!r}, {len(prefectures)}都道府県)"
     log_scrape_started(_logger, target)
 
@@ -455,6 +529,9 @@ def run_scope(
         failed_site_keys,
         ALL_SITES,
         resolved_confirmed_at,
+        restored_features=restored_features,
+        restored_skipped_counts=restored_skipped_counts,
+        restored_geocoded_counts=restored_geocoded_counts,
         output_dir=output_dir,
         index_path=index_path,
     )
