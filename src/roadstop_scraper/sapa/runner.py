@@ -1,0 +1,611 @@
+"""都道府県グルーピングとマージ・出力・index更新(design.md「sapa.runner」節)。
+
+本モジュールはタスク5.1で、成功サイトの収集結果(``SiteCollectResult``)を
+都道府県ごとにグルーピングし、前回出力の読み戻し→前回施設のサイト帰属分割
+(失敗サイト帰属分は削除判定から除外し現状維持で出力へ合流)→
+``merge_with_previous``による削除状態遷移→検証付きGeoJSON出力→``index.json``
+更新を都道府県ごとに実行する処理を実装する(design.md flowchart K〜N、
+research.md「サイト単位の一覧取得失敗は『当該サイトの前回データ現状維持』で
+隔離する」)。
+
+タスク5.2で、``resolve_scope``による範囲解決(HTTP発生前)・``ALL_SITES``への
+``collect_site``呼び出し(サイト単位の失敗は隔離し他サイトを継続)・
+``run_prefectures``への結合・全サイト/全都道府県成功時のみのレジューム状態と
+``SapaPartialStore``の消去・開始/完了と件数集計のログ記録までを結合する公開
+関数``run_scope``(``SapaScopeRunResult``を返す)を追加した(design.md「System
+Flows」flowchart A〜P全体、Batch/Job Contract)。
+"""
+
+from __future__ import annotations
+
+from collections.abc import Mapping, Sequence, Set
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+from python_util import time_utility
+from roadstop_scraper.common import index_store
+from roadstop_scraper.common.logging_setup import get_logger, log_scrape_finished, log_scrape_started
+from roadstop_scraper.geojson import (
+    DEFAULT_OUTPUT_DIR,
+    FacilityFeature,
+    FacilityKind,
+    GeoJsonValidationError,
+    Prefecture,
+    build_geojson_filename,
+    read_geojson,
+    write_geojson,
+)
+from roadstop_scraper.pipeline import ScopeSpec, merge_with_previous, resolve_scope
+from roadstop_scraper.sapa.collector import SapaPartialStore, SiteCollectResult, SiteListingError, collect_site
+from roadstop_scraper.sapa.geocoding import GsiGeocoder
+from roadstop_scraper.sapa.sites import ALL_SITES
+from roadstop_scraper.scraping import PageFetcher, UrlResumeTracker, load_scraping_config
+
+if TYPE_CHECKING:
+    from roadstop_scraper.sapa.sites import SapaSite
+
+__all__ = [
+    "SapaPrefectureResult",
+    "SapaScopeRunResult",
+    "run_prefecture",
+    "run_prefectures",
+    "run_scope",
+]
+
+_logger = get_logger(__name__)
+
+
+@dataclass(frozen=True)
+class SapaPrefectureResult:
+    """1都道府県分の``run_prefecture``実行結果(design.md「sapa.runner」Batch/Job Contract)。
+
+    ``skipped_count``・``geocoded_count``は本タスクの``run_prefecture``自体は
+    計算せず、呼び出し側(``run_prefectures``、または将来の``run_scope``)が
+    ``SiteCollectResult.skipped_counts``/``geocoded_counts``(都道府県コード別
+    マップ)から当該都道府県分を集計して渡す値をそのまま保持する
+    (このモジュールのCONCERNS参照)。
+    """
+
+    prefecture: Prefecture
+    """処理対象の都道府県。"""
+
+    scraped_count: int
+    """今回この都道府県向けに集約された新規スクレイピング結果の件数
+    (成功サイトの``SiteCollectResult.features``をpref_codeで集約した件数)。"""
+
+    skipped_count: int
+    """今回この都道府県向けに集計されたスキップ件数(呼び出し側が集計して渡す値)。"""
+
+    geocoded_count: int
+    """今回この都道府県向けに集計されたジオコーディング補完件数(呼び出し側が集計して渡す値)。"""
+
+    reactivated_count: int
+    """削除状態から有効状態へ復帰した件数(9.3、``MergeResult.reactivated_count``)。"""
+
+    newly_deleted_count: int
+    """今回新たに削除状態へ遷移した件数(9.2、``MergeResult.newly_deleted_count``)。"""
+
+    purged_count: int
+    """保持期間超過により完全除去した件数(9.4、``MergeResult.purged_count``)。"""
+
+
+def _split_previous_by_site_attribution(
+    previous_features: Sequence[FacilityFeature],
+    failed_site_keys: Set[str],
+    all_sites: Sequence[SapaSite],
+) -> tuple[list[FacilityFeature], list[FacilityFeature]]:
+    """前回施設を``owns_url``でサイト帰属判定し、失敗サイト帰属分と、それ以外
+    (成功サイト帰属+どのサイトにも帰属しない孤児施設)に分割する。
+
+    research.md「サイト単位の一覧取得失敗は現状維持で隔離する」のとおり、
+    失敗サイト帰属分は``merge_with_previous``の入力から除外し、そのまま
+    最終出力へ現状維持で合流させる(戻り値の1要素目)。孤児施設(どの
+    ``SapaSite.owns_url``にも一致しない)はdesign.mdの明示のとおり通常の
+    削除判定に含める(戻り値の2要素目)。
+    """
+    carried_through_unchanged: list[FacilityFeature] = []
+    subject_to_merge: list[FacilityFeature] = []
+
+    for feature in previous_features:
+        url = feature.properties.source_url
+        owner = next((site for site in all_sites if site.owns_url(url)), None)
+        if owner is not None and owner.key in failed_site_keys:
+            carried_through_unchanged.append(feature)
+        else:
+            subject_to_merge.append(feature)
+
+    return carried_through_unchanged, subject_to_merge
+
+
+def run_prefecture(
+    prefecture: Prefecture,
+    features: Sequence[FacilityFeature],
+    listed_urls: frozenset[str],
+    failed_site_keys: Set[str],
+    all_sites: Sequence[SapaSite],
+    confirmed_at: datetime,
+    *,
+    skipped_count: int = 0,
+    geocoded_count: int = 0,
+    output_dir: Path = DEFAULT_OUTPUT_DIR,
+    index_path: Path | None = None,
+) -> SapaPrefectureResult | None:
+    """1都道府県分のマージ・出力・index更新パイプラインを実行する。
+
+    前回GeoJSON読み戻し(``read_geojson``)→前回施設のサイト帰属分割
+    (``_split_previous_by_site_attribution``)→成功サイト帰属+孤児施設分を
+    ``merge_with_previous``でマージ→失敗サイト帰属分を現状維持のまま合流→
+    ``write_geojson``で出力→``index_store``の``load_index``/``upsert_entry``/
+    ``save_index``で``index.json``を更新、という一連の処理を行う
+    (design.md「都道府県単位の実行フロー」flowchart K〜N)。
+
+    前回GeoJSONの読み込み失敗(JSON構文不正・必須キー欠落・型不整合)・
+    出力前検証違反(``GeoJsonValidationError``)の場合は``None``を返し、当該
+    都道府県の処理のみを中断する(エラーはERRORログで報告する)。この場合
+    ``index.json``は更新しない(design.md Error Handling表「都道府県単位」行、
+    6.2)。
+
+    ``features``・``listed_urls``は、この都道府県向けに集約された成功サイトの
+    寄与分(呼び出し側の``run_prefectures``が集約する。単一サイトの寄与のみを
+    渡す場合も、複数サイトの和集合を渡す場合もどちらでも動作する)。
+    ``failed_site_keys``は今回の実行で一覧取得に失敗したサイトの識別子集合、
+    ``all_sites``は前回施設のサイト帰属判定(``owns_url``)に必要な全サイト
+    (成功・失敗を問わない)の列。
+
+    ``output_dir``・``index_path``はテスト用に永続化先を差し替えるための
+    キーワード専用引数(既定はそれぞれ``geo-json/``・``output_dir/index.json``、
+    michinoeki.runner.run_prefectureと同じパターン)。
+    """
+    filename = build_geojson_filename(prefecture, FacilityKind.SAPA)
+    resolved_index_path = index_path if index_path is not None else output_dir / "index.json"
+
+    try:
+        previous_features = read_geojson(output_dir / filename)
+    except (KeyError, TypeError, ValueError) as error:
+        # 前回出力ファイルの破損は当該都道府県の処理のみを中断する
+        # (michinoeki.runner.run_prefectureと同じ判断: 破損ファイルを空扱いで
+        # 上書きすると削除状態・最終確認日時の履歴を失うため、自動再構築はせず
+        # 運用者の対処に委ねる)。
+        _logger.error(
+            "前回GeoJSONの読み込みに失敗したため都道府県処理を中断: prefecture=%s path=%s error=%r",
+            prefecture.name_ja,
+            output_dir / filename,
+            error,
+        )
+        return None
+
+    carried_through_unchanged, mergeable_previous = _split_previous_by_site_attribution(
+        previous_features, failed_site_keys, all_sites
+    )
+
+    merge_result = merge_with_previous(
+        mergeable_previous,
+        features,
+        listed_urls,
+        confirmed_at,
+    )
+
+    final_features = [*merge_result.features, *carried_through_unchanged]
+
+    try:
+        write_geojson(final_features, filename, output_dir=output_dir)
+    except GeoJsonValidationError as error:
+        # 6.2: 出力前検証違反は当該都道府県の処理のみを中断する。write_geojson
+        # 自体が検証違反時にファイルを書き込まないため、ここでの追加対応は不要。
+        _logger.error(
+            "出力前検証違反のため都道府県処理を中断: prefecture=%s error=%s",
+            prefecture.name_ja,
+            error,
+        )
+        return None
+
+    index = index_store.load_index(resolved_index_path)
+    index = index_store.upsert_entry(index, filename, confirmed_at)
+    index_store.save_index(index, resolved_index_path)
+
+    _logger.info(
+        "都道府県処理完了: prefecture=%s scraped=%d skipped=%d geocoded=%d reactivated=%d newly_deleted=%d purged=%d",
+        prefecture.name_ja,
+        len(features),
+        skipped_count,
+        geocoded_count,
+        merge_result.reactivated_count,
+        merge_result.newly_deleted_count,
+        merge_result.purged_count,
+    )
+
+    return SapaPrefectureResult(
+        prefecture=prefecture,
+        scraped_count=len(features),
+        skipped_count=skipped_count,
+        geocoded_count=geocoded_count,
+        reactivated_count=merge_result.reactivated_count,
+        newly_deleted_count=merge_result.newly_deleted_count,
+        purged_count=merge_result.purged_count,
+    )
+
+
+def _select_restorable_features(
+    restored_features: Sequence[FacilityFeature],
+    site_results: Sequence[SiteCollectResult],
+    failed_site_keys: Set[str],
+    all_sites: Sequence[SapaSite],
+    listed_urls: frozenset[str],
+) -> list[FacilityFeature]:
+    """前回の中断実行までに部分結果へ確定済みの施設のうち、今回の出力へ合流させる分を選別する。
+
+    次の3種類を除外し、残りを返す:
+
+    - 今回の収集(``site_results``)で改めて成功した施設(``source_url``一致)。
+      同一施設は今回の新しい結果を優先する(05の``michinoeki.runner``が復元分と
+      今回分を``source_url``で重複排除し新結果を優先するのと同じ規律)
+    - 今回一覧取得に失敗したサイト(``failed_site_keys``)に帰属する施設。
+      失敗サイトの前回出力は``_split_previous_by_site_attribution``で現状維持の
+      まま合流するため、復元分も出力すると同一``source_url``が二重に出力され
+      うる。除外した分は部分結果キャッシュに残り続け(失敗が残る実行では
+      7.3のクリアが行われない)、当該サイトが成功した実行で改めて合流する
+    - 今回一覧取得に成功したサイトに帰属するが、今回の``listed_urls``に含まれ
+      ない施設。中断前の収集確定から今回の再開までの間に実際にサイトの一覧
+      から消えた施設を、確認せず無条件に「今回確認済み(ACTIVE・
+      last_confirmed_at更新)」として復活させてしまうと、9.2の削除状態遷移を
+      迂回してしまうため(レビューで検出)。除外した分は``previous_features``
+      側に存在すれば``merge_with_previous``自身の``listed_urls``判定に委ねられ、
+      存在しなければ(このサイクルで初めて確定した施設が今回消えた場合)
+      静かに出力対象から外れる(前回出力自体が無いため削除状態にする対象も無い)。
+
+    どのサイトにも帰属しない孤児施設は``listed_urls``による判定対象がそもそも
+    存在しない(どのサイトの一覧にも属さないURLのため)ため、前回出力の孤児と
+    同様に上記の``listed_urls``チェックを適用せず通常のマージ対象として含める。
+    """
+    current_urls = {feature.properties.source_url for result in site_results for feature in result.features}
+
+    selected: list[FacilityFeature] = []
+    for feature in restored_features:
+        url = feature.properties.source_url
+        if url in current_urls:
+            continue
+        owner = next((site for site in all_sites if site.owns_url(url)), None)
+        if owner is not None:
+            if owner.key in failed_site_keys:
+                continue
+            if url not in listed_urls:
+                continue
+        selected.append(feature)
+    return selected
+
+
+def _group_features_by_prefecture(
+    site_results: Sequence[SiteCollectResult],
+) -> dict[str, list[FacilityFeature]]:
+    """成功サイトの``SiteCollectResult.features``を``pref_code``で都道府県別に集約する。
+
+    ``pref_code``はタスク4.2の``collect_site``が範囲内都道府県の確定値として
+    既に設定済みの``FacilityProperties``フィールドであり、ここでの再導出は
+    不要(design.md「sapa.runner」Responsibilities)。
+    """
+    grouped: dict[str, list[FacilityFeature]] = {}
+    for result in site_results:
+        for feature in result.features:
+            grouped.setdefault(feature.properties.pref_code, []).append(feature)
+    return grouped
+
+
+def _aggregate_counts_by_prefecture(
+    counts_by_site: Sequence[Mapping[str, int]],
+) -> dict[str, int]:
+    """複数サイトの都道府県コード別件数マップを都道府県コードごとに合算する。
+
+    ``"unknown"``バケット(都道府県を特定できなかった件数)は、特定の都道府県
+    に帰属させられないためここでの集計対象から除外する(このモジュールの
+    CONCERNS参照。呼び出し側が実行全体の集計ログで別途扱う想定)。
+    """
+    aggregated: dict[str, int] = {}
+    for counts in counts_by_site:
+        for pref_code, count in counts.items():
+            if pref_code == "unknown":
+                continue
+            aggregated[pref_code] = aggregated.get(pref_code, 0) + count
+    return aggregated
+
+
+def run_prefectures(
+    scope_prefectures: Sequence[Prefecture],
+    site_results: Sequence[SiteCollectResult],
+    failed_site_keys: Set[str],
+    all_sites: Sequence[SapaSite],
+    confirmed_at: datetime,
+    *,
+    restored_features: Sequence[FacilityFeature] = (),
+    restored_skipped_counts: Mapping[str, int] | None = None,
+    restored_geocoded_counts: Mapping[str, int] | None = None,
+    output_dir: Path = DEFAULT_OUTPUT_DIR,
+    index_path: Path | None = None,
+) -> list[SapaPrefectureResult | None]:
+    """複数サイトの成功収集結果を都道府県ごとにグルーピングし、範囲内の全都道府県を処理する。
+
+    ``site_results``(成功サイトのみの``SiteCollectResult``列。一覧取得に
+    失敗したサイトは``collect_site``が例外を送出するため、ここには現れない
+    ――``failed_site_keys``で別途識別子を受け取る)から:
+
+    - 各サイトの``features``を``pref_code``で都道府県別バケットへ振り分ける
+      (``_group_features_by_prefecture``)
+    - ``listed_urls``は都道府県別に分割せず、全成功サイトの和集合を単一の値
+      として全都道府県の``run_prefecture``呼び出しへ渡す(design.md
+      「listed_urlsは成功サイトの和集合」。このモジュールのCONCERNS参照)
+    - ``skipped_counts``/``geocoded_counts``(都道府県コード別マップ)も同様に
+      全サイトを都道府県コードごとに合算し、対応する都道府県の
+      ``run_prefecture``呼び出しへ渡す
+
+    ``scope_prefectures``に含まれる全都道府県を処理対象とする(design.md
+    「範囲内都道府県のファイルのみを読み書きする」9.5。今回の新規収集が0件の
+    都道府県であっても、前回出力済みの施設が削除状態へ正しく遷移できるよう
+    処理対象に含める必要があるため、"今回データがある都道府県のみ"へは絞り
+    込まない)。
+
+    ``restored_features``・``restored_skipped_counts``・``restored_geocoded_counts``
+    は、前回の中断実行までに``SapaPartialStore``へ確定済みの部分結果
+    (``run_scope``が収集開始前に読み戻したスナップショット)。復元施設は
+    ``_select_restorable_features``で選別(今回改めて成功した施設は新結果を
+    優先、失敗サイト帰属分は除外、成功サイト帰属だが今回の``listed_urls``に
+    含まれない施設も除外)したうえで今回分と同じバケットへ合流させ、
+    復元件数マップは今回分と同様に都道府県コードごとに合算する(7.2:
+    「結果保存が先」の順序規律で永続化された結果を、再開後の出力まで確実に
+    引き継ぐ。05の``michinoeki.runner``の復元・合算パターンと同じ規律)。
+    """
+    listed_urls_union: frozenset[str] = frozenset().union(*(result.listed_urls for result in site_results))
+    restorable = _select_restorable_features(
+        restored_features, site_results, failed_site_keys, all_sites, listed_urls_union
+    )
+    features_by_pref = _group_features_by_prefecture(site_results)
+    for feature in restorable:
+        features_by_pref.setdefault(feature.properties.pref_code, []).append(feature)
+
+    skipped_by_pref = _aggregate_counts_by_prefecture(
+        [restored_skipped_counts or {}, *(result.skipped_counts for result in site_results)]
+    )
+    geocoded_by_pref = _aggregate_counts_by_prefecture(
+        [restored_geocoded_counts or {}, *(result.geocoded_counts for result in site_results)]
+    )
+
+    results: list[SapaPrefectureResult | None] = []
+    for prefecture in scope_prefectures:
+        result = run_prefecture(
+            prefecture,
+            features_by_pref.get(prefecture.code, []),
+            listed_urls_union,
+            failed_site_keys,
+            all_sites,
+            confirmed_at,
+            skipped_count=skipped_by_pref.get(prefecture.code, 0),
+            geocoded_count=geocoded_by_pref.get(prefecture.code, 0),
+            output_dir=output_dir,
+            index_path=index_path,
+        )
+        results.append(result)
+
+    return results
+
+
+@dataclass(frozen=True)
+class SapaScopeRunResult:
+    """``run_scope``1回分の実行結果(design.md「sapa.runner」Batch/Job Contract)。"""
+
+    prefecture_results: tuple[SapaPrefectureResult | None, ...]
+    """``resolve_scope``で解決した都道府県列と同じ順序の``run_prefectures``戻り値。
+    出力前検証違反・前回GeoJSON破損で中断した都道府県は``None``のまま含める。"""
+
+    failed_site_keys: frozenset[str]
+    """一覧取得に失敗し実行から除外したサイトの識別子集合(2.3)。"""
+
+    failed_prefecture_codes: frozenset[str]
+    """``run_prefecture``が``None``を返した(出力前検証違反・前回GeoJSON破損)
+    都道府県の公式コード集合。"""
+
+
+def run_scope(
+    spec: ScopeSpec,
+    *,
+    fetcher: PageFetcher | None = None,
+    geocoder: GsiGeocoder | None = None,
+    resume: UrlResumeTracker | None = None,
+    confirmed_at: datetime | None = None,
+    output_dir: Path = DEFAULT_OUTPUT_DIR,
+    index_path: Path | None = None,
+    partial_result_store: SapaPartialStore | None = None,
+) -> SapaScopeRunResult:
+    """範囲全体のオーケストレーション(design.md「System Flows」flowchart A〜P)。
+
+    ``resolve_scope(spec)``→``ALL_SITES``を順に``collect_site``へ渡すサイト横断
+    収集(1.1-1.3、2.3)→``run_prefectures``による都道府県グルーピング・マージ・
+    出力・index更新(6.1-6.3、9.1-9.5)→全サイト成功かつ範囲内全都道府県の出力
+    成功時のみレジューム状態と部分結果を消去(7.3)→開始/完了と件数集計ログ
+    (10.1)、という一連の処理を結合する。
+
+    ``resolve_scope(spec)``は参照データのみに依存する純粋関数でHTTPリクエストを
+    一切発生させないため、範囲指定が不正で``InvalidScopeError``を送出する場合も
+    本関数はそのまま呼び出し側へ伝播し、以降のフェッチャー・ジオコーダー構築や
+    サイト収集は一切行わない(1.4。michinoeki.runner.run_scopeと同じ「HTTP発生
+    前にresolve_scopeを呼ぶ」規律)。
+
+    ``ALL_SITES``の各サイトについて``collect_site``を呼び出し、``SiteListingError``
+    が送出された場合はサイト単位の失敗としてERRORログ(サイト識別子・原因、
+    2.3、10.2)を記録し当該サイトの識別子を``failed_site_keys``へ加えたうえで、
+    他サイトの収集を継続する(1件のサイト失敗が実行全体を止めない)。成功した
+    サイトの``SiteCollectResult``列は``run_prefectures``へまとめて渡し、失敗
+    サイトの識別子集合(``failed_site_keys``)も渡すことで、前回施設のサイト
+    帰属分割(現状維持での隔離)が正しく機能する。
+
+    収集開始前に``partial_result_store``の保持内容(前回の中断実行までに確定
+    済みの施設・件数)をスナップショットとして読み戻し、``run_prefectures``の
+    ``restored_features``等へ渡す(7.2)。中断前に収集済み(``mark_processed``
+    済み)の施設は再開実行の``collect_site``ではスキップされ``SiteCollectResult``
+    に現れないため、この読み戻しが無いと再開実行の出力から欠落する(05の
+    ``michinoeki.runner.run_prefecture``が``_PartialResultStore``から復元する
+    のと同じ規律)。
+
+    ``run_prefectures``の戻り値は``resolve_scope``が返した都道府県列と同じ順序
+    であるため、``enumerate``で対応するインデックスの都道府県コードを突き合わせ、
+    ``None``が返った(出力前検証違反・前回GeoJSON破損)都道府県のコード集合を
+    ``failed_prefecture_codes``として算出する。
+
+    全サイトの一覧取得が成功し(``failed_site_keys``が空)、かつ範囲内の全
+    都道府県の出力が成功した(``failed_prefecture_codes``が空)場合、**かつ**
+    復元済み部分結果に今回の範囲外の都道府県帰属の施設が残っていない場合にのみ、
+    ``resolved_resume.clear()``と``resolved_partial_store.clear()``の両方を
+    呼ぶ(7.3)。1件でも失敗が残る場合、または範囲外の復元施設が残っている
+    場合はいずれもクリアせず、次回再開時に同じ状態から続行できるようにする
+    (より広い範囲の実行が中断した後、より狭い範囲で再開したケースでの
+    データ消失を防ぐ)。
+
+    集計ログ(10.1)は、``None``でない``SapaPrefectureResult``列の
+    ``scraped_count``/``skipped_count``/``geocoded_count``/``reactivated_count``/
+    ``newly_deleted_count``/``purged_count``を単純合算した値を用いる
+    (``run_prefecture``自身が既に都道府県単位でINFOログを記録済みのため、
+    ここでは範囲全体のサマリとしての合計のみを記録する)。
+
+    ``fetcher``・``geocoder``・``resume``・``confirmed_at``・``partial_result_store``
+    は省略時にそれぞれ既定値で構築する:
+
+    - ``fetcher``: ``PageFetcher(load_scraping_config())``(サイト取得用)
+    - ``geocoder``: ``GsiGeocoder(PageFetcher(load_scraping_config()))``――
+      サイト取得用``fetcher``とは別インスタンスの``PageFetcher``(design.md
+      「補完専用のフェッチャー(``PageFetcher``別インスタンス・同一
+      ``ScrapingConfig``)」。独立した``RateLimiter``を持つことで、サイト用・
+      ジオコーディング用のホストごとの最小間隔が互いを過剰待機させない、8.1)
+    - ``resume``: ``UrlResumeTracker("sapa")``――対象サイトによらず本機能全体で
+      単一のキー(design.md Requirements Traceability 7.1行)
+    - ``confirmed_at``: ``time_utility.now()``(JST)。本関数の呼び出し1回につき
+      1つの値のみを取得し、対象都道府県すべての``run_prefecture``呼び出しへ
+      同一値を渡す(1回の実行セッションとしての一貫したスナップショット、
+      michinoeki.runner.run_scopeと同じ規律)
+    - ``partial_result_store``: 新規``SapaPartialStore()``
+
+    ``output_dir``・``index_path``は各都道府県の``run_prefecture``呼び出しへ
+    そのまま転送する、テスト用の永続化先差し替え引数(5.1と同じパターン)。
+
+    CONCERNS: design.mdのBatch/Job Contractのシグネチャは``sites``引数を含まない
+    固定形であるため、本実装も``sites``オーバーライド引数を追加していない
+    (``ALL_SITES``はモジュールレベルの実行時参照として直接importし、テストは
+    ``monkeypatch.setattr("roadstop_scraper.sapa.runner.ALL_SITES", ...)``で
+    差し替える。既存の``run_prefecture``系テストが``write_geojson``を同じ手法で
+    差し替えている前例に倣う)。
+    """
+    # 1.4: 範囲解決に失敗した場合、いかなるHTTPリクエストも発生しないよう、
+    # フェッチャー・ジオコーダー等の構築より先にresolve_scopeを呼ぶ
+    # (InvalidScopeErrorはそのまま呼び出し側へ伝播する)。
+    prefectures = resolve_scope(spec)
+
+    resolved_fetcher = fetcher if fetcher is not None else PageFetcher(load_scraping_config())
+    # 8.1: ジオコーディング用は、サイト取得用とは独立したRateLimiterを持つ別
+    # PageFetcherインスタンスとする(design.md「sapa.geocoding」Responsibilities)。
+    resolved_geocoder = geocoder if geocoder is not None else GsiGeocoder(PageFetcher(load_scraping_config()))
+    resolved_resume = resume if resume is not None else UrlResumeTracker("sapa")
+    resolved_confirmed_at = confirmed_at if confirmed_at is not None else time_utility.now()
+    resolved_partial_store = partial_result_store if partial_result_store is not None else SapaPartialStore()
+
+    # 7.2: 前回の中断実行までに部分結果へ確定済みの施設・件数を、今回の収集を
+    # 始める前のスナップショットとして読み戻す。collect_siteは今回分を同じ
+    # ストアへ逐次追記していくため、収集後に読むと前回分と今回分を区別できない。
+    # 読み戻した施設はrun_prefecturesで今回分と重複排除のうえ出力へ合流させる
+    # (これが無いと、中断前に収集済み=mark_processed済みの施設が再開実行の
+    # 出力から欠落し、全成功時の7.3クリアで収集結果ごと破棄されてしまう)。
+    restored_features = resolved_partial_store.features
+    restored_skipped_counts = resolved_partial_store.skipped_counts
+    restored_geocoded_counts = resolved_partial_store.geocoded_counts
+
+    target = f"範囲全体(region={spec.region!r}, prefecture_code={spec.prefecture_code!r}, {len(prefectures)}都道府県)"
+    log_scrape_started(_logger, target)
+
+    site_results: list[SiteCollectResult] = []
+    failed_site_keys: set[str] = set()
+    for site in ALL_SITES:
+        try:
+            site_result = collect_site(
+                site,
+                prefectures,
+                fetcher=resolved_fetcher,
+                geocoder=resolved_geocoder,
+                resume=resolved_resume,
+                partial_store=resolved_partial_store,
+            )
+        except SiteListingError as error:
+            # 2.3, 10.2: 一覧取得に失敗したサイトは実行から除外し、他サイトの
+            # 収集を継続する。
+            _logger.error(
+                "サイト一覧取得に失敗したため当該サイトを除外: site=%s cause=%s",
+                error.site_key,
+                error.cause,
+            )
+            failed_site_keys.add(error.site_key)
+            continue
+        site_results.append(site_result)
+
+    prefecture_results = run_prefectures(
+        prefectures,
+        site_results,
+        failed_site_keys,
+        ALL_SITES,
+        resolved_confirmed_at,
+        restored_features=restored_features,
+        restored_skipped_counts=restored_skipped_counts,
+        restored_geocoded_counts=restored_geocoded_counts,
+        output_dir=output_dir,
+        index_path=index_path,
+    )
+
+    # run_prefecturesの戻り値はprefecturesと同じ順序で対応するため、enumerate
+    # で突き合わせてNoneだった都道府県のコードを収集する。
+    failed_prefecture_codes = frozenset(
+        prefectures[i].code for i, result in enumerate(prefecture_results) if result is None
+    )
+
+    # 7.3: 全サイトの一覧取得成功かつ範囲内全都道府県の出力成功時にのみ、
+    # レジューム状態と部分結果キャッシュの両方を消去する。ただし、より広い範囲
+    # の実行が中断した際の部分結果に、今回のscope_prefectures外の都道府県の
+    # 復元施設が残っている場合はクリアしない(run_prefecturesは範囲内の
+    # 都道府県しか処理しないため、範囲外の復元施設はどこにも出力されないまま
+    # 消去されると収集済みのデータが永久に失われる。レビューで検出)。
+    scope_codes = {prefecture.code for prefecture in prefectures}
+    restored_out_of_scope = any(feature.properties.pref_code not in scope_codes for feature in restored_features)
+    if restored_out_of_scope:
+        _logger.warning(
+            "範囲外の都道府県に帰属する復元施設が部分結果キャッシュに残っているため、"
+            "レジューム状態・部分結果キャッシュのクリアを見送ります"
+        )
+    if not failed_site_keys and not failed_prefecture_codes and not restored_out_of_scope:
+        resolved_resume.clear()
+        resolved_partial_store.clear()
+
+    success_results = [result for result in prefecture_results if result is not None]
+    total_scraped = sum(result.scraped_count for result in success_results)
+    total_skipped = sum(result.skipped_count for result in success_results)
+    total_geocoded = sum(result.geocoded_count for result in success_results)
+    total_reactivated = sum(result.reactivated_count for result in success_results)
+    total_newly_deleted = sum(result.newly_deleted_count for result in success_results)
+    total_purged = sum(result.purged_count for result in success_results)
+
+    log_scrape_finished(_logger, target, total_scraped)
+    _logger.info(
+        "範囲全体の処理完了: prefectures=%d scraped=%d skipped=%d geocoded=%d reactivated=%d "
+        "newly_deleted=%d purged=%d failed_sites=%d failed_site_keys=%s "
+        "failed_prefectures=%d failed_prefecture_codes=%s",
+        len(prefectures),
+        total_scraped,
+        total_skipped,
+        total_geocoded,
+        total_reactivated,
+        total_newly_deleted,
+        total_purged,
+        len(failed_site_keys),
+        sorted(failed_site_keys),
+        len(failed_prefecture_codes),
+        sorted(failed_prefecture_codes),
+    )
+
+    return SapaScopeRunResult(
+        prefecture_results=tuple(prefecture_results),
+        failed_site_keys=frozenset(failed_site_keys),
+        failed_prefecture_codes=failed_prefecture_codes,
+    )

@@ -1,14 +1,15 @@
 """前回出力のGeoJSONと今回のスクレイピング結果を統合し、削除状態を遷移させる(merge)。
 
-対象サイトの一覧から一時的に確認できなくなっただけの道の駅を即座に削除せず、
+対象サイトの一覧から一時的に確認できなくなっただけの施設を即座に削除せず、
 削除状態(:class:`~roadstop_scraper.geojson.FacilityStatus.DELETED`)を明示した
 うえで一定期間(既定365日)保持する。マージのキーは``FacilityProperties.source_url``
 (詳細ページURL)を用いる。名称は表記揺れ・改称の可能性があるため識別子として
-使わない(8.1〜8.5、design.md「削除状態の遷移(merge_with_previous)」参照)。
+使わない(道の駅・SA/PAいずれの施設種別にも共通するドメイン非依存の実装。
+design.md「削除状態の遷移(merge_with_previous)」参照)。
 
-``listed_urls``(``listing.ListingResult.listed_urls``)は、今回の一覧取得で存在が
-確認できた道の駅のURL集合であり、詳細抽出まで成功した``scraped_features``より
-広い。前回存在し今回``scraped_features``に無い道の駅は、この``listed_urls``に
+``listed_urls``(``listing.ListingResult.listed_urls``相当)は、今回の一覧取得で
+存在が確認できた施設のURL集合であり、詳細抽出まで成功した``scraped_features``
+より広い。前回存在し今回``scraped_features``に無い施設は、この``listed_urls``に
 含まれるか否かで「一覧には実在するが今回は確認できなかっただけ(現状維持)」と
 「一覧からも消失した(削除状態へ遷移)」を区別する。この区別が無いと、一時的な
 抽出失敗が繰り返し起きた実在施設が誤って削除・完全除去されてしまう。
@@ -51,8 +52,8 @@ def merge_with_previous(
 ) -> MergeResult:
     """前回出力と今回スクレイピング結果をsource_urlで対応付けてマージする。
 
-    listed_urlsは今回の一覧取得で存在が確認できた全道の駅のdetail_url集合
-    (listing.ListingResult.listed_urls、詳細抽出の成否を問わない)。
+    listed_urlsは今回の一覧取得で存在が確認できた全施設のdetail_url集合
+    (listing.ListingResult.listed_urls相当、詳細抽出の成否を問わない)。
     previous_featuresのうちscraped_featuresに含まれないものは、listed_urls
     に含まれるか否かで「今回確認できなかっただけ(現状維持)」と
     「一覧から消失した(削除状態へ遷移)」を区別する。
@@ -65,7 +66,7 @@ def merge_with_previous(
     newly_deleted_count = 0
     purged_count = 0
 
-    # 1. 今回結果に含まれる道の駅: ACTIVE・last_confirmed_at=confirmed_atへ更新する(8.1)。
+    # 1. 今回結果に含まれる施設: ACTIVE・last_confirmed_at=confirmed_atへ更新する(8.1)。
     #    前回DELETEDだったものは削除状態からの復帰としてカウントする(8.3)。
     for feature in scraped_features:
         url = feature.properties.source_url
@@ -80,7 +81,7 @@ def merge_with_previous(
         if previous is not None and FacilityStatus(previous.properties.status) is FacilityStatus.DELETED:
             reactivated_count += 1
 
-    # 2. 前回存在し今回結果に無い道の駅: listed_urlsに含まれるか否かで分岐する。
+    # 2. 前回存在し今回結果に無い施設: listed_urlsに含まれるか否かで分岐する。
     for url, previous in previous_by_url.items():
         if url in scraped_urls:
             continue

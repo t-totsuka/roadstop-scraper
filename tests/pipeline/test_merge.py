@@ -18,7 +18,7 @@ from roadstop_scraper.geojson import (
     FacilityProperties,
     FacilityStatus,
 )
-from roadstop_scraper.michinoeki.merge import MergeResult, merge_with_previous
+from roadstop_scraper.pipeline.merge import MergeResult, merge_with_previous
 
 _CONFIRMED_AT = datetime(2026, 7, 15, 9, 0, 0, tzinfo=UTC)
 

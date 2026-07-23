@@ -40,8 +40,7 @@ from roadstop_scraper.geojson import (
 )
 from roadstop_scraper.michinoeki.detail import extract_station_properties
 from roadstop_scraper.michinoeki.listing import fetch_station_stubs
-from roadstop_scraper.michinoeki.merge import merge_with_previous
-from roadstop_scraper.michinoeki.scope import ScopeSpec, resolve_scope
+from roadstop_scraper.pipeline import ScopeSpec, merge_with_previous, resolve_scope
 from roadstop_scraper.scraping import (
     PageFetcher,
     ScrapingEngineError,

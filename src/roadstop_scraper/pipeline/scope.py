@@ -3,6 +3,9 @@
 運用者が指定する`ScopeSpec`(地方区分または都道府県コード)を、処理対象の
 `Prefecture`列へ解決する。参照データ(`REGIONS`)のみに依存する純粋関数で
 構成し、HTTPリクエストは一切発生しない。
+
+05-michinoeki-scraping・06-sapa-scraping間で共有される実行時関心の共有層
+(`pipeline/`)に属し、site固有パッケージには依存しない。
 """
 
 from __future__ import annotations
