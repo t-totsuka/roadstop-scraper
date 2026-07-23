@@ -20,7 +20,7 @@ from roadstop_scraper.geojson import (
     from_feature_collection_dict,
     to_feature_collection_dict,
 )
-from roadstop_scraper.sapa.address import find_prefecture_by_address, split_postal_address
+from roadstop_scraper.sapa.address import find_prefecture_by_address
 from roadstop_scraper.sapa.geocoding import GsiGeocoder
 from roadstop_scraper.sapa.sites import SapaSite
 from roadstop_scraper.scraping import PageFetcher, ScrapingEngineError, UrlResumeTracker, parse_html
@@ -305,12 +305,18 @@ def collect_site(
             resume.mark_processed(stub.detail_url)
             continue
 
+        # 各サイトアダプタ(east/central/west)はSapaDetailを構築する時点で
+        # 既に住所本体と郵便番号を分離済み(east.py/central.py/west.pyの
+        # _split_address参照)のため、ここで住所本体へ再度split_postal_address
+        # を適用してはならない(再分離対象は既に郵便番号を含まないため常に
+        # 不一致となり、detail.postal_codeが握り潰されてpostal_codeが常に
+        # Noneになるバグを過去に埋め込んでいた)。address_body/postal_codeは
+        # detail側の値をそのまま使う。
         prefecture: Prefecture | None = None
-        address_body: str | None = None
-        postal_code: str | None = None
+        address_body: str | None = detail.address
+        postal_code: str | None = detail.postal_code
         if detail.address is not None:
-            postal_code, address_body = split_postal_address(detail.address)
-            prefecture = find_prefecture_by_address(address_body)
+            prefecture = find_prefecture_by_address(detail.address)
 
         if prefecture is None:
             # 3.6: 所在都道府県を特定できない場合は抽出失敗として扱う。

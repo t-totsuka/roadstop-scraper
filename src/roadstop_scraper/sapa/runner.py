@@ -232,10 +232,11 @@ def _select_restorable_features(
     site_results: Sequence[SiteCollectResult],
     failed_site_keys: Set[str],
     all_sites: Sequence[SapaSite],
+    listed_urls: frozenset[str],
 ) -> list[FacilityFeature]:
     """前回の中断実行までに部分結果へ確定済みの施設のうち、今回の出力へ合流させる分を選別する。
 
-    次の2種類を除外し、残りを返す:
+    次の3種類を除外し、残りを返す:
 
     - 今回の収集(``site_results``)で改めて成功した施設(``source_url``一致)。
       同一施設は今回の新しい結果を優先する(05の``michinoeki.runner``が復元分と
@@ -245,9 +246,18 @@ def _select_restorable_features(
       まま合流するため、復元分も出力すると同一``source_url``が二重に出力され
       うる。除外した分は部分結果キャッシュに残り続け(失敗が残る実行では
       7.3のクリアが行われない)、当該サイトが成功した実行で改めて合流する
+    - 今回一覧取得に成功したサイトに帰属するが、今回の``listed_urls``に含まれ
+      ない施設。中断前の収集確定から今回の再開までの間に実際にサイトの一覧
+      から消えた施設を、確認せず無条件に「今回確認済み(ACTIVE・
+      last_confirmed_at更新)」として復活させてしまうと、9.2の削除状態遷移を
+      迂回してしまうため(レビューで検出)。除外した分は``previous_features``
+      側に存在すれば``merge_with_previous``自身の``listed_urls``判定に委ねられ、
+      存在しなければ(このサイクルで初めて確定した施設が今回消えた場合)
+      静かに出力対象から外れる(前回出力自体が無いため削除状態にする対象も無い)。
 
-    どのサイトにも帰属しない孤児施設は、前回出力の孤児と同様に通常のマージ
-    対象として含める。
+    どのサイトにも帰属しない孤児施設は``listed_urls``による判定対象がそもそも
+    存在しない(どのサイトの一覧にも属さないURLのため)ため、前回出力の孤児と
+    同様に上記の``listed_urls``チェックを適用せず通常のマージ対象として含める。
     """
     current_urls = {feature.properties.source_url for result in site_results for feature in result.features}
 
@@ -257,8 +267,11 @@ def _select_restorable_features(
         if url in current_urls:
             continue
         owner = next((site for site in all_sites if site.owns_url(url)), None)
-        if owner is not None and owner.key in failed_site_keys:
-            continue
+        if owner is not None:
+            if owner.key in failed_site_keys:
+                continue
+            if url not in listed_urls:
+                continue
         selected.append(feature)
     return selected
 
@@ -335,17 +348,20 @@ def run_prefectures(
     は、前回の中断実行までに``SapaPartialStore``へ確定済みの部分結果
     (``run_scope``が収集開始前に読み戻したスナップショット)。復元施設は
     ``_select_restorable_features``で選別(今回改めて成功した施設は新結果を
-    優先、失敗サイト帰属分は除外)したうえで今回分と同じバケットへ合流させ、
+    優先、失敗サイト帰属分は除外、成功サイト帰属だが今回の``listed_urls``に
+    含まれない施設も除外)したうえで今回分と同じバケットへ合流させ、
     復元件数マップは今回分と同様に都道府県コードごとに合算する(7.2:
     「結果保存が先」の順序規律で永続化された結果を、再開後の出力まで確実に
     引き継ぐ。05の``michinoeki.runner``の復元・合算パターンと同じ規律)。
     """
-    restorable = _select_restorable_features(restored_features, site_results, failed_site_keys, all_sites)
+    listed_urls_union: frozenset[str] = frozenset().union(*(result.listed_urls for result in site_results))
+    restorable = _select_restorable_features(
+        restored_features, site_results, failed_site_keys, all_sites, listed_urls_union
+    )
     features_by_pref = _group_features_by_prefecture(site_results)
     for feature in restorable:
         features_by_pref.setdefault(feature.properties.pref_code, []).append(feature)
 
-    listed_urls_union: frozenset[str] = frozenset().union(*(result.listed_urls for result in site_results))
     skipped_by_pref = _aggregate_counts_by_prefecture(
         [restored_skipped_counts or {}, *(result.skipped_counts for result in site_results)]
     )
@@ -435,10 +451,13 @@ def run_scope(
     ``failed_prefecture_codes``として算出する。
 
     全サイトの一覧取得が成功し(``failed_site_keys``が空)、かつ範囲内の全
-    都道府県の出力が成功した(``failed_prefecture_codes``が空)場合にのみ、
+    都道府県の出力が成功した(``failed_prefecture_codes``が空)場合、**かつ**
+    復元済み部分結果に今回の範囲外の都道府県帰属の施設が残っていない場合にのみ、
     ``resolved_resume.clear()``と``resolved_partial_store.clear()``の両方を
-    呼ぶ(7.3)。1件でも失敗が残る場合はいずれもクリアせず、次回再開時に
-    同じ状態から続行できるようにする。
+    呼ぶ(7.3)。1件でも失敗が残る場合、または範囲外の復元施設が残っている
+    場合はいずれもクリアせず、次回再開時に同じ状態から続行できるようにする
+    (より広い範囲の実行が中断した後、より狭い範囲で再開したケースでの
+    データ消失を防ぐ)。
 
     集計ログ(10.1)は、``None``でない``SapaPrefectureResult``列の
     ``scraped_count``/``skipped_count``/``geocoded_count``/``reactivated_count``/
@@ -543,8 +562,19 @@ def run_scope(
     )
 
     # 7.3: 全サイトの一覧取得成功かつ範囲内全都道府県の出力成功時にのみ、
-    # レジューム状態と部分結果キャッシュの両方を消去する。
-    if not failed_site_keys and not failed_prefecture_codes:
+    # レジューム状態と部分結果キャッシュの両方を消去する。ただし、より広い範囲
+    # の実行が中断した際の部分結果に、今回のscope_prefectures外の都道府県の
+    # 復元施設が残っている場合はクリアしない(run_prefecturesは範囲内の
+    # 都道府県しか処理しないため、範囲外の復元施設はどこにも出力されないまま
+    # 消去されると収集済みのデータが永久に失われる。レビューで検出)。
+    scope_codes = {prefecture.code for prefecture in prefectures}
+    restored_out_of_scope = any(feature.properties.pref_code not in scope_codes for feature in restored_features)
+    if restored_out_of_scope:
+        _logger.warning(
+            "範囲外の都道府県に帰属する復元施設が部分結果キャッシュに残っているため、"
+            "レジューム状態・部分結果キャッシュのクリアを見送ります"
+        )
+    if not failed_site_keys and not failed_prefecture_codes and not restored_out_of_scope:
         resolved_resume.clear()
         resolved_partial_store.clear()
 

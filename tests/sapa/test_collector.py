@@ -142,6 +142,7 @@ def _detail(
     name: str = "テストSA",
     road_name: str | None = "テスト自動車道",
     address: str | None = "東京都新宿区西新宿1-1",
+    postal_code: str | None = None,
     coordinate: Coordinate | None = None,
 ) -> SapaDetail:
     return SapaDetail(
@@ -150,7 +151,7 @@ def _detail(
         direction=None,
         area_direction=None,
         address=address,
-        postal_code=None,
+        postal_code=postal_code,
         tel="03-1234-5678",
         opening_hours="24時間",
         parking=None,
@@ -605,7 +606,7 @@ def test_collect_siteの検証_成功した施設の場合_プロパティが正
     stub = SapaStub(display_name="テストSA(上り)", detail_url=detail_url)
     listing_url = "https://fake.example/list"
     listing_result = SapaListingResult(stubs=(stub,), listed_urls=frozenset({detail_url}), skipped_count=0)
-    detail = _detail(name="テストSA", address="東京都新宿区西新宿1-1")
+    detail = _detail(name="テストSA", address="東京都新宿区西新宿1-1", postal_code="160-0023")
     site = _FakeSite(listing_url_list=(listing_url,), details_by_url={detail_url: detail})
     fetcher = _FakeFetcher(json_by_url={listing_url: listing_result})
     resume = _make_resume(tmp_path)
@@ -624,5 +625,10 @@ def test_collect_siteの検証_成功した施設の場合_プロパティが正
     assert feature.properties.source_url == detail_url
     assert feature.properties.name == "テストSA"
     assert feature.properties.road_name == "テスト自動車道"
+    assert feature.properties.address == "東京都新宿区西新宿1-1"
+    # レビューで検出: collectorがdetail.postal_codeを使わず既に分離済みの
+    # detail.addressへsplit_postal_addressを再適用していたため、常にNoneに
+    # なっていた(サイトアダプタが正しく抽出したpostal_codeが握り潰される)。
+    assert feature.properties.postal_code == "160-0023"
     assert any(f.properties.source_url == detail_url for f in partial_store.features)
     assert resume.is_processed(detail_url) is True
